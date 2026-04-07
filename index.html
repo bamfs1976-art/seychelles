@@ -696,7 +696,7 @@ async function fetchWeather() {
     return state.weatherCache.data;
   }
 
-  const key = typeof WEATHER_API_KEY !== 'undefined' ? WEATHER_API_KEY : null;
+  const key = '%%WEATHER_API_KEY%%' !== '' && !'%%WEATHER_API_KEY%%'.includes('%%') ? '%%WEATHER_API_KEY%%' : null;
   if (!key) return WEATHER_FALLBACK;
 
   try {
