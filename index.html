@@ -31,7 +31,14 @@ h3{font-size:1.05rem;font-weight:600;margin-bottom:.5rem}
   color:#fff;padding:1.25rem 1rem .75rem;position:sticky;top:0;z-index:100;
   box-shadow:0 2px 12px rgba(0,0,0,.15);
 }
-.header-title{font-size:1.3rem;display:flex;align-items:center;gap:.5rem}
+.header-title{font-size:1.3rem;display:flex;align-items:center;gap:.5rem;justify-content:space-between}
+.refresh-btn{
+  background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:50%;
+  width:40px;height:40px;min-width:40px;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;transition:transform .3s;
+}
+.refresh-btn:active{transform:rotate(180deg)}
+.refresh-btn svg{width:20px;height:20px}
 .trip-phase{
   display:inline-block;background:rgba(255,255,255,.2);border-radius:20px;
   padding:.2rem .75rem;font-size:.8rem;font-weight:600;margin-top:.4rem;
@@ -221,7 +228,7 @@ h3{font-size:1.05rem;font-weight:600;margin-bottom:.5rem}
 <body>
 
 <header class="header" role="banner">
-  <div class="header-title">🌴 Seychelles Holiday</div>
+  <div class="header-title"><span>🌴 Seychelles Holiday</span><button class="refresh-btn" id="refreshBtn" aria-label="Refresh app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></button></div>
   <div class="trip-phase" id="tripPhase"></div>
   <div class="daily-tip" id="dailyTip"></div>
 </header>
@@ -843,6 +850,24 @@ function updateHeader() {
   document.getElementById('dailyTip').textContent = tips[now.getDay() % tips.length];
 }
 updateHeader();
+
+/* ===== REFRESH ===== */
+document.getElementById('refreshBtn').addEventListener('click', () => {
+  // Clear weather cache to force fresh fetch
+  state.weatherCache = null;
+  saveState();
+  // Re-render everything
+  updateHeader();
+  renderJourney();
+  renderPretrip();
+  renderWeather();
+  renderTransport();
+  renderTourism();
+  renderFood();
+  renderItinerary();
+  renderComfort();
+  window.scrollTo(0, 0);
+});
 
 /* ===== JOURNEY TIMELINE ===== */
 function renderJourney() {
