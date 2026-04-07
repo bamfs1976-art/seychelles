@@ -2,1168 +2,869 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Seychelles Holiday Assistant</title>
 <meta name="description" content="Travel assistant for Anthony and wife's Seychelles holiday, July 2026">
 <meta name="theme-color" content="#00BCD4">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌴</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --turquoise:#00BCD4;--ocean:#1565C0;--sand:#F5E6C8;--white:#FAFAFA;
-  --coral:#FF6F61;--dark:#1A1A2E;--coral-light:#FFF0EE;--turquoise-light:#E0F7FA;
-  --ocean-light:#E3F2FD;--green:#4CAF50;--green-light:#E8F5E9;
-  --shadow:0 2px 8px rgba(0,0,0,.1);--radius:12px;
+--turquoise:#00BCD4;--ocean:#1565C0;--sand:#F5E6C8;--white:#FAFAFA;
+--coral:#FF6F61;--dark:#1A1A2E;--coral-light:#FFF0EE;--turquoise-light:#E0F7FA;
+--ocean-light:#E3F2FD;--green:#43A047;--green-light:#E8F5E9;
+--card:#FFFFFF;--border:#E0E0E0;--grey:#9E9E9E;--text2:#616161;
+--shadow:0 2px 8px rgba(0,0,0,.08);--radius:12px;
 }
-html{font-size:16px;scroll-behavior:smooth}
+html{font-size:17px;scroll-behavior:smooth}
 body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  background:var(--white);color:var(--dark);line-height:1.6;
-  padding-bottom:80px;min-height:100vh;
+font-family:'Nunito',system-ui,-apple-system,sans-serif;
+background:var(--white);color:var(--dark);line-height:1.6;
+padding-bottom:72px;min-height:100vh;
 }
-h1{font-size:1.4rem;font-weight:700}
-h2{font-size:1.2rem;font-weight:700;margin-bottom:.75rem;color:var(--ocean)}
-h3{font-size:1.05rem;font-weight:600;margin-bottom:.5rem}
+h2{font-size:1.18rem;font-weight:800;margin-bottom:.6rem;color:var(--ocean)}
+h3{font-size:1rem;font-weight:700;margin-bottom:.4rem}
+a{color:var(--ocean);text-decoration:underline}
 
-/* Header */
-.header{
-  background:linear-gradient(135deg,var(--ocean),var(--turquoise));
-  color:#fff;padding:1.25rem 1rem .75rem;position:sticky;top:0;z-index:100;
-  box-shadow:0 2px 12px rgba(0,0,0,.15);
+/* Top bar */
+.top-bar{
+position:sticky;top:0;z-index:100;
+background:linear-gradient(135deg,var(--ocean) 0%,var(--turquoise) 100%);
+color:#fff;padding:.6rem 1rem;min-height:72px;
+display:flex;flex-direction:column;justify-content:center;
+box-shadow:0 2px 12px rgba(0,0,0,.15);
 }
-.header-title{font-size:1.3rem;display:flex;align-items:center;gap:.5rem;justify-content:space-between}
+.top-row{display:flex;justify-content:space-between;align-items:center}
+.top-phase{font-size:.72rem;font-weight:700;background:rgba(255,255,255,.2);border-radius:16px;padding:.15rem .6rem;white-space:nowrap}
+.top-date{font-size:.78rem;font-weight:600;opacity:.9}
+.top-tip{font-size:.72rem;opacity:.85;margin-top:.25rem;line-height:1.4}
 .refresh-btn{
-  background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:50%;
-  width:40px;height:40px;min-width:40px;cursor:pointer;display:flex;
-  align-items:center;justify-content:center;transition:transform .3s;
+background:rgba(255,255,255,.18);border:none;color:#fff;border-radius:50%;
+width:36px;height:36px;min-width:36px;cursor:pointer;display:flex;
+align-items:center;justify-content:center;transition:transform .3s;
 }
 .refresh-btn:active{transform:rotate(180deg)}
-.refresh-btn svg{width:20px;height:20px}
-.trip-phase{
-  display:inline-block;background:rgba(255,255,255,.2);border-radius:20px;
-  padding:.2rem .75rem;font-size:.8rem;font-weight:600;margin-top:.4rem;
-}
-.daily-tip{
-  font-size:.85rem;margin-top:.5rem;opacity:.9;
-  border-top:1px solid rgba(255,255,255,.2);padding-top:.5rem;
-}
+.refresh-btn svg{width:18px;height:18px}
 
 /* Bottom nav */
 .bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;background:#fff;
-  display:flex;justify-content:space-around;align-items:stretch;
-  box-shadow:0 -2px 12px rgba(0,0,0,.1);z-index:100;
-  padding:0 0 env(safe-area-inset-bottom,0);
-  overflow-x:auto;-webkit-overflow-scrolling:touch;
+position:fixed;bottom:0;left:0;right:0;background:var(--white);
+display:flex;justify-content:space-around;align-items:stretch;
+z-index:100;height:56px;border-top:1px solid var(--border);
+padding-bottom:env(safe-area-inset-bottom,0);
 }
 .nav-btn{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  border:none;background:none;color:#888;font-size:.65rem;font-weight:600;
-  padding:.5rem .25rem;min-width:44px;min-height:56px;cursor:pointer;
-  transition:color .2s;flex:1;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+border:none;background:none;color:var(--grey);font-size:.647rem;font-weight:700;
+padding:.25rem 0;min-width:48px;min-height:56px;cursor:pointer;
+transition:color .15s;flex:1;letter-spacing:.3px;
+font-family:'Nunito',system-ui,sans-serif;
 }
-.nav-btn svg{width:22px;height:22px;margin-bottom:2px}
+.nav-btn svg{width:28px;height:28px;margin-bottom:1px}
 .nav-btn.active{color:var(--turquoise)}
 .nav-btn:focus-visible{outline:2px solid var(--turquoise);outline-offset:-2px;border-radius:4px}
 
 /* Sections */
-.section{display:none;padding:1rem;max-width:640px;margin:0 auto}
+.section{display:none;padding:.75rem;max-width:640px;margin:0 auto}
 .section.active{display:block}
 
 /* Cards */
 .card{
-  background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
-  padding:1rem;margin-bottom:1rem;border-left:4px solid var(--turquoise);
+background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+padding:1rem;margin-bottom:.75rem;border:1px solid var(--border);min-height:80px;
 }
-.card-date{
-  font-size:.8rem;font-weight:700;color:var(--turquoise);
-  text-transform:uppercase;letter-spacing:.5px;
-}
-.card-title{font-size:1.05rem;font-weight:700;margin:.25rem 0 .5rem}
-.card-body{font-size:.9rem;line-height:1.6}
-.card-body p{margin-bottom:.5rem}
+.card-date{font-size:.7rem;font-weight:800;color:var(--turquoise);text-transform:uppercase;letter-spacing:.5px}
+.card-title{font-size:1rem;font-weight:800;margin:.15rem 0 .35rem}
+.card-body{font-size:.88rem;line-height:1.65}
+.card-body p{margin-bottom:.4rem}
 .card-tip{
-  background:var(--turquoise-light);border-radius:8px;padding:.6rem .75rem;
-  font-size:.85rem;margin-top:.75rem;
+background:var(--turquoise-light);border-radius:8px;padding:.5rem .65rem;
+font-size:.82rem;margin-top:.6rem;line-height:1.5;
 }
-.card-tip::before{content:'💡 ';font-size:1rem}
+.card-tip::before{content:'💡 '}
 
-/* Mobility banner */
-.mobility-badge{
-  display:inline-flex;align-items:center;gap:.35rem;
-  background:var(--coral);color:#fff;border-radius:20px;
-  padding:.2rem .7rem;font-size:.78rem;font-weight:700;
-  margin:.35rem .25rem .35rem 0;
-}
-.mobility-badge::before{content:'♿'}
-.mobility-banner{
-  background:var(--coral-light);border:2px solid var(--coral);
-  border-radius:8px;padding:.6rem .75rem;font-size:.85rem;
-  margin-bottom:.75rem;font-weight:500;
-}
-.mobility-banner::before{content:'♿ ';font-size:1.1rem}
+/* Status badges */
+.badge{display:inline-block;border-radius:12px;padding:.12rem .55rem;font-size:.68rem;font-weight:700;margin:.2rem .2rem .2rem 0}
+.badge-upcoming{background:var(--ocean-light);color:var(--ocean)}
+.badge-today{background:var(--green-light);color:var(--green)}
+.badge-complete{background:#eee;color:#888}
 
-/* Tight connection warning */
-.tight-warning{
-  background:#FFF3E0;border:2px solid #FF9800;border-radius:8px;
-  padding:.6rem .75rem;font-size:.85rem;margin:.5rem 0;font-weight:600;
+/* Mobility */
+.mob{
+display:inline-flex;align-items:center;gap:.3rem;
+background:var(--coral);color:#fff;border-radius:16px;
+padding:.15rem .6rem;font-size:.72rem;font-weight:700;
+margin:.2rem .15rem .2rem 0;
 }
-.tight-warning::before{content:'⚠️ '}
+.mob::before{content:'♿'}
+.mob-banner{
+background:var(--coral-light);border:2px solid var(--coral);
+border-radius:8px;padding:.5rem .65rem;font-size:.82rem;
+margin-bottom:.6rem;font-weight:600;line-height:1.5;
+}
+.mob-banner::before{content:'♿ '}
+
+/* Tight warning */
+.tight{
+background:#FFF3E0;border:2px solid #FF9800;border-radius:8px;
+padding:.5rem .65rem;font-size:.82rem;margin:.4rem 0;font-weight:700;
+}
+.tight::before{content:'⚠️ '}
 
 /* Lounge badge */
-.lounge-badge{
-  display:inline-flex;align-items:center;gap:.35rem;
-  background:var(--ocean-light);border-radius:20px;
-  padding:.2rem .7rem;font-size:.78rem;font-weight:600;color:var(--ocean);
-  margin:.25rem .25rem .25rem 0;
+.lounge{
+display:inline-flex;align-items:center;gap:.3rem;
+background:var(--ocean-light);border-radius:16px;
+padding:.15rem .6rem;font-size:.72rem;font-weight:600;color:var(--ocean);
+margin:.2rem .15rem .2rem 0;
 }
-.lounge-badge::before{content:'🛋️'}
+.lounge::before{content:'🛋️'}
 
 /* Checklist */
-.checklist-item{
-  display:flex;align-items:flex-start;gap:.75rem;padding:.65rem 0;
-  border-bottom:1px solid #eee;
+.chk{display:flex;align-items:flex-start;gap:.65rem;padding:.55rem 0;border-bottom:1px solid #f0f0f0}
+.chk:last-child{border-bottom:none}
+.chk-box{
+width:32px;height:32px;min-width:32px;border-radius:8px;
+border:2px solid #ccc;background:#fff;cursor:pointer;
+display:flex;align-items:center;justify-content:center;
+transition:all .15s;
 }
-.checklist-item:last-child{border-bottom:none}
-.check-box{
-  width:28px;height:28px;min-width:28px;border-radius:6px;
-  border:2px solid #ccc;background:#fff;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .2s;
-}
-.check-box.checked{background:var(--green);border-color:var(--green)}
-.check-box.checked::after{content:'✓';color:#fff;font-weight:700;font-size:.9rem}
-.check-label{font-size:.9rem;line-height:1.5;padding-top:2px}
-.check-label.done{text-decoration:line-through;opacity:.6}
-
-/* Weather */
-.weather-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(85px,1fr));gap:.5rem;margin-top:.75rem}
-.weather-day{
-  background:var(--turquoise-light);border-radius:8px;padding:.5rem;
-  text-align:center;font-size:.8rem;
-}
-.weather-day .temp{font-size:1.1rem;font-weight:700;color:var(--ocean)}
-.weather-day .day-name{font-weight:600;color:var(--dark)}
-.weather-current{
-  background:linear-gradient(135deg,var(--ocean),var(--turquoise));
-  color:#fff;border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;
-}
-.weather-current .big-temp{font-size:2.5rem;font-weight:700}
-.weather-current .desc{font-size:1rem;text-transform:capitalize;opacity:.9}
-.weather-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.75rem}
-.weather-info-item{font-size:.82rem;opacity:.9}
-.weather-fallback{font-size:.85rem;font-style:italic;color:#888;margin-top:.5rem}
+.chk-box.on{background:var(--green);border-color:var(--green)}
+.chk-box.on::after{content:'✓';color:#fff;font-weight:800;font-size:.85rem}
+.chk-label{font-size:.85rem;line-height:1.5;padding-top:3px}
+.chk-label.done{text-decoration:line-through;opacity:.5}
 
 /* Filters */
-.filter-bar{
-  display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem;
-  padding-bottom:.75rem;border-bottom:1px solid #eee;
+.filters{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.75rem;padding-bottom:.6rem;border-bottom:1px solid #f0f0f0}
+.fbtn{
+border:2px solid var(--turquoise);background:#fff;color:var(--turquoise);
+border-radius:16px;padding:.25rem .65rem;font-size:.75rem;font-weight:700;
+cursor:pointer;min-height:36px;transition:all .15s;
+font-family:'Nunito',system-ui,sans-serif;
 }
-.filter-btn{
-  border:2px solid var(--turquoise);background:#fff;color:var(--turquoise);
-  border-radius:20px;padding:.3rem .75rem;font-size:.8rem;font-weight:600;
-  cursor:pointer;min-height:36px;transition:all .2s;
-}
-.filter-btn.active{background:var(--turquoise);color:#fff}
-.filter-btn:focus-visible{outline:2px solid var(--ocean);outline-offset:2px}
+.fbtn.on{background:var(--turquoise);color:#fff}
+.fbtn:focus-visible{outline:2px solid var(--ocean);outline-offset:2px}
 
 /* Tags */
 .tag{
-  display:inline-block;background:var(--sand);color:var(--dark);
-  border-radius:12px;padding:.15rem .5rem;font-size:.72rem;
-  font-weight:600;margin:.15rem .15rem .15rem 0;
+display:inline-block;background:var(--sand);color:var(--dark);
+border-radius:10px;padding:.1rem .45rem;font-size:.68rem;
+font-weight:700;margin:.1rem .1rem .1rem 0;
 }
-.tag.mobility{background:var(--coral-light);color:var(--coral)}
+.tag.mob-tag{background:var(--coral-light);color:var(--coral)}
 
-/* Transport */
-.transport-card{
-  background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
-  padding:1rem;margin-bottom:.75rem;
-}
-.transport-label{
-  display:inline-block;background:var(--green-light);color:var(--green);
-  border-radius:8px;padding:.15rem .6rem;font-size:.78rem;font-weight:700;
-  margin-bottom:.5rem;
-}
-.transport-label.recommended{background:var(--green);color:#fff}
+/* Access rating */
+.feet{font-size:.75rem;letter-spacing:1px}
 
 /* Itinerary */
-.itin-card{
-  background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
-  padding:1rem;margin-bottom:.75rem;border-left:4px solid var(--turquoise);
+.itin{
+background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+padding:.85rem;margin-bottom:.6rem;border-left:4px solid var(--turquoise);
+border:1px solid var(--border);
 }
-.itin-day{font-size:.78rem;font-weight:700;color:var(--turquoise);text-transform:uppercase}
-.itin-title{font-size:1rem;font-weight:700;margin:.2rem 0 .4rem}
+.itin-day{font-size:.7rem;font-weight:800;color:var(--turquoise);text-transform:uppercase;letter-spacing:.4px}
+.itin-title{font-size:.95rem;font-weight:800;margin:.15rem 0 .3rem}
 .itin-note{
-  width:100%;border:1px solid #ddd;border-radius:8px;padding:.5rem;
-  font-size:.85rem;margin-top:.5rem;min-height:44px;resize:vertical;
-  font-family:inherit;
+width:100%;border:1px solid #ddd;border-radius:8px;padding:.45rem;
+font-size:.82rem;margin-top:.4rem;min-height:48px;resize:vertical;
+font-family:'Nunito',system-ui,sans-serif;
 }
-.itin-actions{display:flex;gap:.4rem;margin-top:.5rem;justify-content:flex-end}
+.itin-actions{display:flex;gap:.35rem;margin-top:.4rem;justify-content:flex-end}
 .itin-btn{
-  border:none;background:var(--turquoise-light);color:var(--turquoise);
-  border-radius:6px;padding:.3rem .6rem;font-size:.78rem;font-weight:600;
-  cursor:pointer;min-width:44px;min-height:36px;
+border:none;background:var(--turquoise-light);color:var(--turquoise);
+border-radius:6px;padding:.3rem .55rem;font-size:.75rem;font-weight:700;
+cursor:pointer;min-width:48px;min-height:40px;
+font-family:'Nunito',system-ui,sans-serif;
 }
-.itin-btn:disabled{opacity:.3;cursor:default}
+.itin-btn:disabled{opacity:.25;cursor:default}
 
-/* Comfort */
-.comfort-section{margin-bottom:1.25rem}
-.comfort-section h3{
-  background:var(--sand);padding:.5rem .75rem;border-radius:8px;
-  font-size:.9rem;margin-bottom:.5rem;
+/* Editable fields */
+.efield{
+width:100%;border:1px solid #ddd;border-radius:8px;padding:.4rem .55rem;
+font-size:.85rem;font-family:'Nunito',system-ui,sans-serif;
+min-height:48px;margin-top:.3rem;
 }
+.efield-sm{width:120px;display:inline-block}
+
+/* Mood selector */
+.mood-row{display:flex;gap:.5rem;margin:.4rem 0}
+.mood-btn{
+font-size:1.4rem;background:none;border:2px solid transparent;
+border-radius:8px;padding:.2rem .35rem;cursor:pointer;min-width:48px;min-height:48px;
+display:flex;align-items:center;justify-content:center;
+}
+.mood-btn.on{border-color:var(--turquoise);background:var(--turquoise-light)}
+
+/* Budget bar */
+.budget-bar{height:12px;background:#eee;border-radius:6px;overflow:hidden;margin:.4rem 0}
+.budget-fill{height:100%;background:var(--green);border-radius:6px;transition:width .3s}
+.budget-fill.over{background:var(--coral)}
+
+/* Phrasebook */
+.phrase{cursor:pointer;transition:background .15s}
+.phrase:hover{background:var(--turquoise-light)}
+.phrase-pron{display:none;font-style:italic;color:var(--text2);font-size:.82rem;margin-top:.2rem}
+.phrase.open .phrase-pron{display:block}
+
+/* Weather */
+.wx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:.4rem;margin-top:.6rem}
+.wx-day{background:var(--turquoise-light);border-radius:8px;padding:.45rem;text-align:center;font-size:.75rem}
+.wx-day .temp{font-size:1rem;font-weight:800;color:var(--ocean)}
+.wx-day .dn{font-weight:700;color:var(--dark)}
+.wx-current{
+background:linear-gradient(135deg,var(--ocean),var(--turquoise));
+color:#fff;border-radius:var(--radius);padding:1rem;margin-bottom:.75rem;
+}
+.wx-current .big{font-size:2.2rem;font-weight:800}
+.wx-current .desc{font-size:.9rem;text-transform:capitalize;opacity:.9}
+.wx-info{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;margin-top:.6rem}
+.wx-info div{font-size:.78rem;opacity:.9}
+.wx-fallback{font-size:.8rem;font-style:italic;color:#999;margin-top:.4rem}
+
+/* Skeleton */
+.skel{background:linear-gradient(90deg,#eee 25%,#f5f5f5 50%,#eee 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:var(--radius);min-height:100px;margin-bottom:.75rem}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Reminder chips */
+.chip{
+display:inline-flex;align-items:center;gap:.3rem;
+background:var(--sand);border-radius:16px;padding:.3rem .7rem;
+font-size:.78rem;font-weight:600;cursor:pointer;margin:.2rem;
+transition:all .15s;border:2px solid transparent;min-height:40px;
+}
+.chip.done{background:var(--green-light);border-color:var(--green);text-decoration:line-through;opacity:.6}
+
+/* Detail overlay */
+.overlay{
+display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+background:var(--white);z-index:200;overflow-y:auto;
+padding:0 0 72px;
+}
+.overlay.open{display:block}
+.overlay-header{
+position:sticky;top:0;background:var(--card);padding:.75rem 1rem;
+border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem;z-index:10;
+}
+.overlay-back{
+border:none;background:none;font-size:1.2rem;cursor:pointer;
+min-width:48px;min-height:48px;display:flex;align-items:center;justify-content:center;
+color:var(--ocean);font-weight:700;
+}
+.overlay-body{padding:1rem;max-width:640px;margin:0 auto}
+
+/* Sunset */
+.sunset-card{background:linear-gradient(135deg,#FF9800,#FF6F61);color:#fff;border-radius:var(--radius);padding:.85rem;margin-bottom:.75rem}
+.sunset-card .time{font-size:1.4rem;font-weight:800}
+
+/* Section title */
+.sec-title{font-size:.72rem;font-weight:800;color:var(--grey);text-transform:uppercase;letter-spacing:.8px;margin:1rem 0 .4rem}
 
 /* Accessibility */
 :focus-visible{outline:2px solid var(--turquoise);outline-offset:2px}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-
-/* Responsive */
-@media(min-width:480px){
-  .nav-btn{font-size:.7rem}
-  .nav-btn svg{width:24px;height:24px}
-}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(min-width:480px){.nav-btn{font-size:.7rem}}
 </style>
 </head>
 <body>
 
-<header class="header" role="banner">
-  <div class="header-title"><span>🌴 Seychelles Holiday</span><button class="refresh-btn" id="refreshBtn" aria-label="Refresh app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></button></div>
-  <div class="trip-phase" id="tripPhase"></div>
-  <div class="daily-tip" id="dailyTip"></div>
+<header class="top-bar" role="banner">
+<div class="top-row">
+  <span class="top-phase" id="tPhase"></span>
+  <span class="top-date" id="tDate"></span>
+  <button class="refresh-btn" id="refreshBtn" aria-label="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></button>
+</div>
+<div class="top-tip" id="tTip"></div>
 </header>
 
 <main>
-  <!-- JOURNEY -->
-  <section class="section active" id="sec-journey" aria-label="Journey Timeline">
-    <h2>Journey Timeline</h2>
-    <div id="journeyCards"></div>
-  </section>
+<!-- TODAY -->
+<section class="section active" id="sec-today" aria-label="Today">
+<div id="todayContent"></div>
+</section>
 
-  <!-- PRE-TRIP -->
-  <section class="section" id="sec-pretrip" aria-label="Pre-Trip Checklist">
-    <h2>Pre-Trip Checklist</h2>
-    <div class="mobility-banner">Ensure Emirates mobility assistance is pre-booked for all four flights before departure.</div>
+<!-- JOURNEY -->
+<section class="section" id="sec-journey" aria-label="Journey">
+<div id="journeyContent"></div>
+</section>
 
-    <div class="card" style="border-left-color:var(--ocean);margin-bottom:1.25rem">
-      <h3 style="color:var(--ocean);margin-bottom:.5rem">🛂 Seychelles Travel Authorisation (TA)</h3>
-      <p style="font-size:.9rem;margin-bottom:.5rem">UK citizens do <strong>not</strong> need a visa. You need a <strong>Travel Authorisation</strong> — a free online form for each traveller, submitted within <strong>30 days of arrival</strong>.</p>
-      <p style="font-size:.88rem;font-weight:700;margin-bottom:.5rem">Apply here: <a href="https://seychelles.govtas.com" target="_blank" rel="noopener" style="color:var(--ocean)">seychelles.govtas.com</a></p>
+<!-- EXPLORE -->
+<section class="section" id="sec-explore" aria-label="Explore">
+<div id="exploreContent"></div>
+</section>
 
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">📋 What you need to apply (per person):</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li><strong>Valid passport</strong> — must cover the full duration of stay</li>
-        <li><strong>Return flight booking</strong> — confirmation for EK708 on 14th July</li>
-        <li><strong>Accommodation booking</strong> — DoubleTree Hilton confirmation</li>
-        <li><strong>Travel &amp; health insurance</strong> — must be valid for Seychelles dates (required)</li>
-        <li><strong>Passport-style photo</strong> — digital copy, clear and recent</li>
-        <li><strong>Email address</strong> — approval is sent by email</li>
-      </ul>
+<!-- PLAN -->
+<section class="section" id="sec-plan" aria-label="Plan">
+<div id="planContent"></div>
+</section>
 
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">⏱️ Timeline:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li>Apply <strong>within 30 days of arrival</strong> — earliest date to apply: <strong>5th June 2026</strong></li>
-        <li>Approval typically within <strong>3–5 days</strong></li>
-        <li>Apply for <strong>both travellers</strong> — one form each</li>
-        <li>Free of charge</li>
-        <li>Print or save the approval email — may be checked at boarding</li>
-      </ul>
-
-      <p style="font-size:.82rem;margin-top:.75rem;color:#666">Also available via the <strong>Seychelles e-Border app</strong> on iOS and Android. Source: <a href="https://seychelles.govtas.com/en/pages/HOWTO" target="_blank" rel="noopener" style="color:var(--ocean)">Official TA guide</a></p>
-    </div>
-
-    <div class="card" style="border-left-color:var(--green);margin-bottom:1.25rem">
-      <h3 style="color:var(--green);margin-bottom:.5rem">💉 Vaccinations</h3>
-      <p style="font-size:.9rem;margin-bottom:.5rem"><strong>No mandatory vaccinations</strong> for UK travellers flying via Dubai. Yellow fever vaccination is only required if arriving from or transiting through an endemic country — neither the UK nor UAE are endemic.</p>
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Recommended by NHS / NaTHNaC:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li><strong>Routine UK vaccinations up to date</strong> — check with GP</li>
-        <li><strong>Hepatitis A</strong> — recommended for Seychelles. Single dose, effective within 2 weeks. Book at least <strong>2 weeks before travel</strong> (by 19th June)</li>
-        <li><strong>Tetanus</strong> — booster if last dose was more than 10 years ago</li>
-        <li><strong>Hepatitis B</strong> — consider if not already vaccinated</li>
-        <li><strong>Typhoid</strong> — consider, especially if eating outside hotel</li>
-      </ul>
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Action:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li>Book a travel health appointment with GP or pharmacy <strong>6–8 weeks before travel</strong> (mid-May)</li>
-        <li>Some vaccines need time to take effect — don't leave it late</li>
-        <li>No malaria risk in Seychelles — no antimalarials needed</li>
-      </ul>
-      <p style="font-size:.82rem;margin-top:.75rem;color:#666">Source: <a href="https://travelhealthpro.org.uk/country/194/seychelles" target="_blank" rel="noopener" style="color:var(--ocean)">NaTHNaC — Seychelles</a> · <a href="https://www.fitfortravel.nhs.uk/destinations/africa/seychelles" target="_blank" rel="noopener" style="color:var(--ocean)">NHS Fit for Travel</a></p>
-    </div>
-
-    <div class="card" style="border-left-color:var(--turquoise);margin-bottom:1.25rem">
-      <h3 style="color:var(--ocean);margin-bottom:.5rem">🏨 Hilton Garden Inn — Heathrow T2/T3 (3rd–4th July)</h3>
-      <p style="font-size:.9rem;margin-bottom:.5rem">Connected to Terminal 2 via covered walkway and Terminal 3 via pedestrian underpass. Easy access for Emirates T3 departure on 4th July.</p>
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Facilities:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li>369 air-conditioned rooms with free Wi-Fi, safe, tea/coffee</li>
-        <li>24-hour front desk</li>
-        <li>Fitness centre</li>
-        <li>Runway Bar — rooftop with runway views</li>
-      </ul>
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Evening Meal — 3rd July:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li><strong>The Apron Restaurant</strong> (on-site) — dinner 5:30pm–10:30pm. Pizzas, curries, rib-eye steaks, burgers, chicken wings, gyozas. Relaxed, modern setting. <em>Easiest option after travel.</em></li>
-        <li><strong>The Apron Bar</strong> (on-site) — 5pm–10:30pm. Lighter options: paninis, wraps, burgers, drinks.</li>
-        <li><strong>The Runway Bar</strong> (on-site) — cocktails and drinks with runway views. Good for a pre-dinner drink.</li>
-      </ul>
-      <p style="font-size:.85rem;margin-top:.5rem"><strong>Recommendation:</strong> Eat at The Apron on-site — no transfer needed, good menu, and you'll arrive around 6pm after travel from Swansea. Keep it simple.</p>
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">🚶 Getting to Emirates Check-in (T3) on 4th July:</h4>
-      <ol style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li>Leave hotel via the <strong>covered walkway bridge</strong> into the Terminal 2 car park</li>
-        <li>Enter Terminal 2 and follow signs for <strong>Terminal 3</strong></li>
-        <li>Take the <strong>lift or escalator down</strong> to the pedestrian underpass</li>
-        <li>Follow the underpass — it leads directly to <strong>Terminal 3 departures</strong></li>
-        <li>Emirates check-in desks are in the <strong>Terminal 3 check-in hall</strong></li>
-      </ol>
-      <div class="mobility-banner" style="margin-top:.5rem">Allow 20–30 minutes with luggage and reduced mobility. The underpass is flat but it's a long walk. Consider requesting a wheelchair or buggy at the T2 information desk for transfer to T3. Alternatively, ask the hotel to arrange a drop-off at T3 departures.</div>
-      <p style="font-size:.82rem;margin-top:.75rem;color:#666">Source: <a href="https://www.hilton.com/en/hotels/lhrhegi-hilton-garden-inn-london-heathrow-terminals-2-and-3/dining/" target="_blank" rel="noopener" style="color:var(--ocean)">Hilton — Dining</a> · <a href="https://www.tripadvisor.com/ShowTopic-g186338-i17-k13687986-o20-Heathrow_Airport_Hilton_Garden_Inn_to_T3_walking-London_England.html" target="_blank" rel="noopener" style="color:var(--ocean)">TripAdvisor — route guide</a></p>
-    </div>
-
-    <div class="card" style="border-left-color:var(--turquoise);margin-bottom:1.25rem">
-      <h3 style="color:var(--ocean);margin-bottom:.5rem">🌴 DoubleTree by Hilton — Seychelles Allamanda (5th–14th July)</h3>
-      <p style="font-size:.9rem;margin-bottom:.5rem">Boutique 30-room beachfront resort at Anse Forbans, surrounded by tropical gardens. Approx. 30 min transfer from airport.</p>
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Facilities:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li>Private beach — direct access, flat paths from room</li>
-        <li>Infinity pool with ocean views</li>
-        <li><strong>eForea Spa</strong> — massage, manicure/pedicure, body treatments</li>
-        <li>24-hour fitness centre</li>
-        <li>Concierge and tour desk</li>
-        <li>Free parking and EV charging</li>
-        <li>Grocery/convenience store on-site</li>
-      </ul>
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Dining:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li><strong>Les Palms Restaurant</strong> — breakfast buffet (included), lunch and dinner. Fresh seafood, Creole specialities, international dishes.</li>
-        <li><strong>Oceanview Bar</strong> — cocktails, drinks, and light bites with sea views.</li>
-        <li><strong>Room service</strong> — available for easy rest days.</li>
-      </ul>
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Rooms:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li>Balcony, seating area, flat-screen TV, coffee machine, minibar</li>
-        <li>Premium King and Grand Deluxe King room options</li>
-        <li>Some rooms have hot tub with ocean view</li>
-      </ul>
-      <p style="font-size:.82rem;margin-top:.75rem;color:#666">Source: <a href="https://www.hilton.com/en/hotels/sezdtdi-doubletree-seychelles-allamanda-resort-and-spa/" target="_blank" rel="noopener" style="color:var(--ocean)">Hilton — DoubleTree Seychelles</a></p>
-    </div>
-
-    <div class="card" style="border-left-color:var(--ocean);margin-bottom:1.25rem">
-      <h3 style="color:var(--ocean);margin-bottom:.5rem">💳 Banking &amp; Cards</h3>
-      <p style="font-size:.9rem;margin-bottom:.5rem">Both Monzo and Chase are excellent travel cards. Take both and keep one as backup.</p>
-
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Chase UK (recommended as primary):</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li><strong>No foreign transaction fees</strong> — Mastercard exchange rate, no markup</li>
-        <li><strong>No ATM fees abroad</strong> — up to £500/day and £1,500/month</li>
-        <li>Local ATM operators may charge their own fee (Chase won't reimburse these)</li>
-        <li>Always pay in <strong>local currency (SCR)</strong> — never accept GBP conversion at the till</li>
-      </ul>
-
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Monzo:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li><strong>No fees on card spending abroad</strong> — Mastercard exchange rate</li>
-        <li><strong>ATM withdrawals:</strong> first £200 free per 30 days outside EEA, then 2.5% fee</li>
-        <li>Good as a backup card or for smaller purchases</li>
-        <li>Instant spending notifications useful for tracking holiday budget</li>
-      </ul>
-
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Before you go:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li>Notify both banks you're travelling to Seychelles (3rd–15th July) and Dubai (transit) — prevents cards being blocked</li>
-        <li>Check daily/monthly ATM limits are sufficient</li>
-        <li>Ensure PINs are memorised (chip and PIN used in Seychelles)</li>
-        <li>Cards widely accepted at hotels and restaurants — smaller shops and taxis may be cash only</li>
-        <li>ATMs available at Mahé airport and in Victoria</li>
-      </ul>
-      <p style="font-size:.82rem;margin-top:.75rem;color:#666">Sources: <a href="https://www.chase.co.uk/gb/en/support/travel-with-chase/" target="_blank" rel="noopener" style="color:var(--ocean)">Chase UK — Travel</a> · <a href="https://monzo.com/help/travelling/understanding-fees" target="_blank" rel="noopener" style="color:var(--ocean)">Monzo — Fees abroad</a></p>
-    </div>
-
-    <div class="card" style="border-left-color:var(--coral);margin-bottom:1.25rem">
-      <h3 style="color:var(--coral);margin-bottom:.5rem">📱 Mobile Data &amp; Coverage (O2)</h3>
-      <p style="font-size:.9rem;margin-bottom:.5rem">Seychelles is in O2's <strong>"Rest of World"</strong> zone. Standard roaming is extremely expensive — up to <strong>£7.20 per MB</strong> for data. You need a plan or alternative.</p>
-
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Option 1: O2 Travel Bolt On (easiest):</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li><strong>£7.50 per day</strong> — only charged on days you connect to a network</li>
-        <li>Includes 500 mins, 500 texts, and 1GB data per day</li>
-        <li>Add via My O2 app before you travel</li>
-        <li>Works for both phones — add to each O2 account separately</li>
-        <li>For 10 days on holiday: approx. <strong>£75 per phone</strong> (£150 total)</li>
-        <li>Check Seychelles is included in the bolt-on destination list — <a href="https://www.o2.co.uk/international/using-your-phone-abroad" target="_blank" rel="noopener" style="color:var(--ocean)">use O2's travel search tool</a> to confirm</li>
-      </ul>
-
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Option 2: Travel eSIM (cheaper, recommended):</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li>Buy a Seychelles data eSIM before you go — installs alongside your O2 SIM</li>
-        <li>Providers: <strong>Airalo</strong>, <strong>Saily</strong>, <strong>Holafly</strong> — from approx. <strong>£6–15 for 1–5GB</strong> over 7–30 days</li>
-        <li>Data only — use Wi-Fi calling or WhatsApp for calls</li>
-        <li>Check your phone supports eSIM (most iPhones from XS onwards, most Samsung S20+)</li>
-        <li>Buy and install before you leave the UK — activate on arrival</li>
-        <li>Much cheaper than O2 roaming for data-heavy use</li>
-      </ul>
-
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Option 3: Hotel Wi-Fi only (free):</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li>DoubleTree has free Wi-Fi — fine for hotel days</li>
-        <li>No data when out and about (taxis, Victoria, beaches)</li>
-        <li>Download offline maps (Google Maps) before you go as backup</li>
-      </ul>
-
-      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Before you go:</h4>
-      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-        <li><strong>Turn off data roaming</strong> on both phones before leaving the UK (re-enable only if you have a bolt-on or eSIM active)</li>
-        <li>Download offline Google Maps for Mahé</li>
-        <li>Download any entertainment (Netflix, Kindle) on hotel Wi-Fi</li>
-        <li>Network coverage on Mahé is generally good in tourist areas (Airtel and Cable &amp; Wireless)</li>
-      </ul>
-      <p style="font-size:.82rem;margin-top:.75rem;color:#666">Sources: <a href="https://www.o2.co.uk/international/using-your-phone-abroad" target="_blank" rel="noopener" style="color:var(--ocean)">O2 — Using phone abroad</a> · <a href="https://www.monito.com/en/best-esim-for/seychelles" target="_blank" rel="noopener" style="color:var(--ocean)">Best eSIM for Seychelles</a></p>
-    </div>
-
-    <div id="pretripChecklist"></div>
-  </section>
-
-  <!-- WEATHER -->
-  <section class="section" id="sec-weather" aria-label="Weather">
-    <h2>Weather — Anse Forbans, Mahé</h2>
-    <div id="weatherContent"></div>
-  </section>
-
-  <!-- TRANSPORT -->
-  <section class="section" id="sec-transport" aria-label="Transport">
-    <h2>Getting Around Mahé</h2>
-    <div class="mobility-banner">For reduced mobility: always use hotel transfer or pre-booked taxi. Avoid bus routes and excessive walking.</div>
-    <div id="transportContent"></div>
-  </section>
-
-  <!-- TOURISM -->
-  <section class="section" id="sec-tourism" aria-label="Tourism">
-    <h2>Things to Do — Mahé</h2>
-    <div class="mobility-banner">All suggestions are low-walking and accessible by car or taxi. Activities flagged for mobility suitability.</div>
-    <div id="tourismFilters" class="filter-bar"></div>
-    <div id="tourismCards"></div>
-  </section>
-
-  <!-- FOOD -->
-  <section class="section" id="sec-food" aria-label="Food">
-    <h2>Where to Eat — Mahé</h2>
-    <div id="foodFilters" class="filter-bar"></div>
-    <div id="foodCards"></div>
-  </section>
-
-  <!-- ITINERARY -->
-  <section class="section" id="sec-itinerary" aria-label="Itinerary">
-    <h2>Daily Itinerary — 5th to 14th July</h2>
-    <div id="itineraryCards"></div>
-  </section>
-
-  <!-- COMFORT -->
-  <section class="section" id="sec-comfort" aria-label="Comfort">
-    <h2>Comfort &amp; Wellbeing</h2>
-    <div class="mobility-banner" style="border-color:var(--coral);background:var(--coral-light);font-weight:700">
-      Use mobility assistance at all airports. Do not rush transfers. Wife's comfort is the priority throughout.
-    </div>
-    <div id="comfortContent"></div>
-  </section>
+<!-- INFO -->
+<section class="section" id="sec-info" aria-label="Info">
+<div id="infoContent"></div>
+</section>
 </main>
 
-<nav class="bottom-nav" role="navigation" aria-label="Main navigation">
-  <button class="nav-btn active" data-section="journey" aria-label="Journey">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-    Journey
-  </button>
-  <button class="nav-btn" data-section="pretrip" aria-label="Pre-Trip">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-    Pre-Trip
-  </button>
-  <button class="nav-btn" data-section="weather" aria-label="Weather">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-    Weather
-  </button>
-  <button class="nav-btn" data-section="transport" aria-label="Transport">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-    Transport
-  </button>
-  <button class="nav-btn" data-section="tourism" aria-label="Tourism">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M9 21V8l-4 4M15 21V8l4 4M9 8l3-6 3 6"/></svg>
-    Tourism
-  </button>
-  <button class="nav-btn" data-section="food" aria-label="Food">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path d="M6 1v3M10 1v3M14 1v3"/></svg>
-    Food
-  </button>
-  <button class="nav-btn" data-section="itinerary" aria-label="Itinerary">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
-    Itinerary
-  </button>
-  <button class="nav-btn" data-section="comfort" aria-label="Comfort">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-    Comfort
-  </button>
+<!-- Detail overlay -->
+<div class="overlay" id="overlay">
+<div class="overlay-header">
+  <button class="overlay-back" id="overlayBack" aria-label="Back">← Back</button>
+  <h2 id="overlayTitle" style="margin:0;font-size:1rem"></h2>
+</div>
+<div class="overlay-body" id="overlayBody"></div>
+</div>
+
+<nav class="bottom-nav" role="navigation" aria-label="Main">
+<button class="nav-btn active" data-tab="today" aria-label="Today">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+  Today
+</button>
+<button class="nav-btn" data-tab="journey" aria-label="Journey">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+  Journey
+</button>
+<button class="nav-btn" data-tab="explore" aria-label="Explore">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>
+  Explore
+</button>
+<button class="nav-btn" data-tab="plan" aria-label="Plan">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+  Plan
+</button>
+<button class="nav-btn" data-tab="info" aria-label="Info">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+  Info
+</button>
 </nav>
 
 <script>
-/* ===== DATA ===== */
+/* ========== CONFIG ========== */
+const WEATHER_API_KEY = '%%WEATHER_API_KEY%%';
+const LAT=-4.7236,LON=55.5089;
+const TRIP_DATES={train:new Date('2026-07-03'),outFlight:new Date('2026-07-04'),arrive:new Date('2026-07-05'),holStart:new Date('2026-07-05'),holEnd:new Date('2026-07-14'),depart:new Date('2026-07-14'),home:new Date('2026-07-15')};
 
-const JOURNEY_DATA = [
-  {
-    date: 'Before 3rd July',
-    title: 'Pre-Trip Preparation',
-    body: `<p>Complete all checklist items in the Pre-Trip tab before departure.</p>
-<p>Key actions: submit Seychelles Travel Authorisation at <strong>seychelles.govtas.com</strong> (apply from 5th June, both travellers), confirm travel insurance, book Emirates mobility assistance for all four flights, ensure medication supply covers full trip plus 3-day buffer, obtain Seychellois Rupee and Euros.</p>`,
-    tip: 'No visa needed — just the free online Travel Authorisation. Apply within 30 days of arrival. Both SCR and Euros are widely accepted.',
-    mobility: ['Emirates mobility assistance pre-booked'],
-    lounge: [],
-    tight: false
-  },
-  {
-    date: '3rd July',
-    title: 'Swansea → London Heathrow',
-    body: `<p><strong>Train departs Swansea 2:20pm</strong> → arrives London Heathrow approx. 6:00pm.</p>
-<p>Check in: <strong>Hilton Garden Inn London Heathrow Terminals 2 &amp; 3</strong>. Standard check-in 3pm — room should be ready on arrival.</p>
-<p>Book airport transfer or taxi from Heathrow Express / Elizabeth Line to hotel in advance.</p>`,
-    tip: 'The Hilton Garden Inn is connected to T2 via covered walkway and T3 via underpass. No taxi needed.',
-    mobility: ['Pre-book taxi to hotel', 'Request porter assistance at hotel'],
-    lounge: [],
-    tight: false
-  },
-  {
-    date: '4th July',
-    title: 'Heathrow → Dubai',
-    body: `<p>Check out Hilton Garden Inn.</p>
-<p><strong>Flight EK002</strong> departs Heathrow Terminal 3 at <strong>2:25pm</strong>.</p>
-<p>Recommend arriving at check-in by <strong>10:30am</strong> given mobility needs. Emirates check-in opens approx. 4 hours before departure.</p>`,
-    tip: 'Allow extra time for security and the walk to the gate. Request wheelchair assistance at Emirates check-in.',
-    mobility: ['Request wheelchair at Emirates check-in', 'Allow extra time for security'],
-    lounge: ['No.1 Lounge Heathrow T3', 'Plaza Premium T3 — check Priority Pass app'],
-    tight: false
-  },
-  {
-    date: '4th–5th July (overnight)',
-    title: 'Dubai Transit (Outbound)',
-    body: `<p><strong>EK002 arrives Dubai 00:25am</strong> (5th July local time) — Terminal 3, typically Concourse C.</p>
-<p>Transit to <strong>EK705</strong> — Terminal 3, typically Concourse B (gate B26 area).</p>
-<p><strong>EK705 departs Dubai 2:15am.</strong> Layover: <strong>1hr 50min</strong>.</p>
-<h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Step-by-step transit:</h4>
-<ol style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-<li><strong>On landing</strong> — wheelchair assistance should meet you at the aircraft door (pre-booked with Emirates)</li>
-<li><strong>Follow "Connections" signs</strong> — do NOT follow Arrivals/Immigration. You are in transit only</li>
-<li><strong>Transit security</strong> — short bag X-ray check. Wheelchair users get an expedited lane</li>
-<li><strong>Concourse C → Concourse B</strong> — connected by walkway. Allow approx. 15–20 mins by wheelchair. No train needed between B and C</li>
-<li><strong>Check departure screens</strong> for your EK705 gate (typically B gates)</li>
-<li><strong>Go directly to gate</strong> — boarding likely starts 45 mins before departure</li>
-</ol>
-<p style="font-size:.85rem;margin-top:.5rem"><strong>Baggage:</strong> Checked bags are tagged through to Seychelles. No need to collect and re-check.</p>
-<p style="font-size:.85rem"><strong>Immigration:</strong> Not required — you are transiting airside only.</p>`,
-    tip: 'Emirates minimum connection time is 75 mins — you have 1hr 50min, which is enough but leaves no room for delay. Do NOT attempt a lounge visit. Go straight to the gate.',
-    mobility: ['Wheelchair meets at aircraft door', 'Fast-track transit security', 'Wheelchair escort to Concourse B gate'],
-    lounge: [],
-    tight: true,
-    tightMsg: 'TIGHT CONNECTION — 1hr 50min. Concourse C to Concourse B transfer. Wheelchair pre-booked. Go directly to gate. No lounge, no shopping, no detours.'
-  },
-  {
-    date: '5th July',
-    title: 'Arrive Seychelles',
-    body: `<p><strong>EK705 arrives Seychelles (SEZ) 6:50am</strong> local time.</p>
-<p>Check in: <strong>DoubleTree by Hilton Seychelles Allamanda Resort &amp; Spa</strong>, Anse Forbans, Mahé.</p>
-<p>Standard check-in 3pm. Early check-in worth requesting given overnight travel.</p>`,
-    tip: 'Mahé airport is small with limited facilities. Expect a short walk to arrivals. Hotel transfer approx. 30 mins.',
-    mobility: ['Request wheelchair/mobility assistance on arrival at SEZ', 'Pre-arrange hotel transfer'],
-    lounge: [],
-    tight: false
-  },
-  {
-    date: '5th–14th July',
-    title: 'Holiday at DoubleTree Hilton',
-    body: `<p>10 nights at <strong>DoubleTree by Hilton Seychelles Allamanda Resort &amp; Spa</strong>, Anse Forbans, Mahé.</p>
-<p>See the Itinerary tab for a daily plan designed for relaxation and reduced mobility.</p>`,
-    tip: 'The hotel is beachfront at Anse Forbans. Short, flat paths to the beach. Pool and spa on-site.',
-    mobility: [],
-    lounge: [],
-    tight: false
-  },
-  {
-    date: '14th July',
-    title: 'Checkout & Depart Seychelles',
-    body: `<p>Check out <strong>12:00pm</strong>. Day at leisure at hotel or nearby — flight not until 11:55pm.</p>
-<p><strong>EK708 departs Seychelles (SEZ) 11:55pm.</strong></p>
-<p>Hotel-arranged transfer recommended, departing no later than <strong>9:30pm</strong>.</p>`,
-    tip: 'Use hotel facilities after checkout. Most hotels will store luggage and let you use the pool/restaurant.',
-    mobility: ['Arrange hotel transfer to airport', 'Request wheelchair at SEZ check-in'],
-    lounge: [],
-    tight: false
-  },
-  {
-    date: '15th July',
-    title: 'Dubai → London → Swansea',
-    body: `<p><strong>EK708 arrives Dubai 4:20am</strong> local time — Terminal 3, typically Concourse B.</p>
-<p>Layover <strong>3hr 25min</strong> — comfortable for a lounge visit.</p>
-<p><strong>EK001 departs Dubai 7:47am</strong> — Terminal 3, typically Concourse C → arrives Heathrow T3 <strong>12:25pm</strong>.</p>
-<h4 style="font-size:.88rem;margin:.75rem 0 .35rem">Step-by-step transit:</h4>
-<ol style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
-<li><strong>On landing</strong> — wheelchair assistance meets you at the aircraft door</li>
-<li><strong>Follow "Connections" signs</strong> — transit only, no immigration</li>
-<li><strong>Transit security</strong> — bag X-ray, expedited lane for wheelchair users</li>
-<li><strong>Lounge visit</strong> — with 3hr 25min you have time. Check Priority Pass app for open T3 lounges (likely Concourse B or C). Allow 30 mins to reach the lounge after security</li>
-<li><strong>Concourse B → Concourse C</strong> — walkway connection, approx. 15–20 mins by wheelchair</li>
-<li><strong>Head to gate</strong> — check screens for EK001 gate. Aim to be at gate 45 mins before departure (by 7:00am)</li>
-</ol>
-<p style="font-size:.85rem;margin-top:.5rem"><strong>Baggage:</strong> Tagged through to Heathrow. No collection needed.</p>
-<p style="font-size:.85rem;margin-top:.5rem"><strong>Train to Swansea:</strong> <span id="returnTrainDisplay">earliest realistic departure 2:30pm (editable below)</span>.</p>
-<p style="margin-top:.5rem"><label for="returnTrain" style="font-weight:600;font-size:.85rem">Return train time:</label>
-<input type="text" id="returnTrain" value="" placeholder="e.g. 2:30pm" style="border:1px solid #ccc;border-radius:6px;padding:.35rem .5rem;font-size:.9rem;width:120px;margin-left:.35rem;min-height:44px"></p>`,
-    tip: 'Dubai T3 lounges are excellent. Have breakfast in the lounge, freshen up, then head to the gate by 7:00am. You have plenty of time on this connection.',
-    mobility: ['Wheelchair meets at aircraft door', 'Wheelchair escort to lounge', 'Wheelchair escort to Concourse C gate', 'Request wheelchair at Heathrow arrival'],
-    lounge: ['Dubai International Terminal 3 — check Priority Pass app for open lounges at 4:30am'],
-    tight: false
-  }
-];
+/* ========== STATE ========== */
+const SK='sey_v2';
+let S=load();
+function load(){try{return JSON.parse(localStorage.getItem(SK))||def()}catch{return def()}}
+function def(){return{pretrip:{},retPack:{},comfort:{},itin:null,journal:{},budget:{rate:60,daily:100,entries:[]},hotel:{},emergency:{},health:{},moments:[{title:'First evening in Seychelles',date:'5th July',loc:'',ref:'',notes:''},{title:'Final evening dinner',date:'13th July',loc:'',ref:'',notes:''}],returnTrain:'',todayChips:{}}}
+function save(){localStorage.setItem(SK,JSON.stringify(S))}
 
-const PRETRIP_ITEMS = [
-  'Seychelles Travel Authorisation (TA) submitted for Anthony — apply from 5th June at seychelles.govtas.com',
-  'Seychelles Travel Authorisation (TA) submitted for wife — apply from 5th June at seychelles.govtas.com',
-  'TA approval emails saved and printed for both travellers',
-  'Travel insurance confirmed (required for TA application)',
-  'Emirates mobility assistance pre-booked for all four flights (EK002, EK705, EK708, EK001)',
-  'Medication packed — enough for full trip plus 3-day buffer',
-  'Seychellois Rupee obtained',
-  'Euros obtained',
-  'Priority Pass card packed',
-  'Phone roaming activated',
-  'Hotel confirmations printed (Hilton Garden Inn T2/T3 + DoubleTree)',
-  'DoubleTree early check-in requested (arriving 5th July after overnight flight)',
-  "Wife's mobility aid packed",
-  'Sun cream SPF 50+ packed',
-  'Lightweight wheelchair or mobility aid confirmed for trip',
-  'Travel health appointment booked with GP or pharmacy (by mid-May)',
-  'Hepatitis A vaccination — at least 2 weeks before travel (by 19th June)',
-  'Tetanus booster — if last dose was more than 10 years ago',
-  'Check routine UK vaccinations are up to date',
-  'Notify Chase bank of travel to Seychelles and Dubai (3rd–15th July)',
-  'Notify Monzo of travel to Seychelles and Dubai (3rd–15th July)',
-  'Check PINs memorised for both cards',
-  'O2 roaming sorted — bolt-on added or eSIM purchased for both phones',
-  'Turn off data roaming on both phones (re-enable only with bolt-on or eSIM)',
-  'Download offline Google Maps for Mahé'
-];
+/* ========== NAV ========== */
+const navBtns=document.querySelectorAll('.nav-btn');
+const overlay=document.getElementById('overlay');
+document.getElementById('overlayBack').onclick=()=>overlay.classList.remove('open');
+navBtns.forEach(b=>b.addEventListener('click',()=>{
+  navBtns.forEach(n=>n.classList.remove('active'));b.classList.add('active');
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+b.dataset.tab).classList.add('active');
+  window.scrollTo(0,0);
+}));
+function openDetail(title,html){
+  document.getElementById('overlayTitle').textContent=title;
+  document.getElementById('overlayBody').innerHTML=html;
+  overlay.classList.add('open');
+  overlay.scrollTo(0,0);
+  bindEditable();
+}
 
-const TRANSPORT_DATA = [
-  {
-    label: 'Hotel Transfer', recommended: true,
-    title: 'Hotel-Arranged Transfer',
-    body: 'Best option for mobility. DoubleTree can arrange car transfers to most destinations on Mahé. Book at reception the day before. Air-conditioned, door-to-door.',
-    price: 'Varies — ask reception. Typically 500–1500 SCR depending on distance.'
-  },
-  {
-    label: 'Taxi', recommended: false,
-    title: 'Taxi from Hotel',
-    body: 'Taxis available at the hotel or by phone. Not metered — agree fare before departure. Drivers are generally helpful with mobility needs if asked.',
-    price: 'Victoria Market ≈ 800 SCR · Beau Vallon ≈ 1,200 SCR · Anse Royale ≈ 300 SCR · Airport ≈ 600 SCR'
-  },
-  {
-    label: 'Stay Local', recommended: false,
-    title: 'Stay at Hotel / Anse Forbans',
-    body: 'The hotel beach, pool, spa, and restaurant are all within flat, short walks. Anse Forbans beach is directly accessible. Best option on rest days.',
-    price: 'Free — hotel facilities included.'
-  },
-  {
-    label: 'Bus (reference only)', recommended: false,
-    title: 'Public Bus',
-    body: 'Very cheap (7 SCR per journey) but limited accessibility. Buses may not have step-free access. Stops may require walking on uneven roads. NOT recommended for reduced mobility — listed for reference only.',
-    price: '7 SCR per journey. Routes along coast road.'
-  }
-];
+/* ========== HELPERS ========== */
+function today(){return new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())}
+function fmtDate(d){const o={weekday:'long',day:'numeric',month:'long',year:'numeric'};return d.toLocaleDateString('en-GB',o)}
+function tripPhase(){
+  const t=today();
+  if(t<TRIP_DATES.train)return'Pre-Trip';
+  if(+t===+TRIP_DATES.train)return'Travel Day';
+  if(t>TRIP_DATES.train&&t<TRIP_DATES.arrive)return'In Transit';
+  if(t>=TRIP_DATES.holStart&&t<=TRIP_DATES.holEnd)return'On Holiday';
+  if(+t===+TRIP_DATES.home)return'Heading Home';
+  if(t>TRIP_DATES.home)return'Home';
+  return'Pre-Trip';
+}
+function holDay(){const t=today();if(t>=TRIP_DATES.holStart&&t<=TRIP_DATES.holEnd){return Math.floor((t-TRIP_DATES.holStart)/(864e5))}return-1}
+const TIPS=['Check the Pre-Trip checklist — have you packed everything?','July UV in Seychelles hits 8–11. Reapply sun cream every 90 minutes.','Hotel transfers are the easiest option. Book at reception the evening before.','Stay hydrated — aim for 2+ litres per day in tropical heat.','Keep medication in hand luggage at all times during flights.','Both SCR and Euros accepted. Cards work at hotels and larger restaurants.','Download offline Google Maps for Mahé before you leave.'];
+function dailyTip(){return TIPS[new Date().getDay()%TIPS.length]}
+function makeChk(list,stateKey,onChange){
+  return list.map((item,i)=>{
+    const k=stateKey+'_'+i,c=S[stateKey]?.[i]||false;
+    return`<div class="chk"><div class="chk-box${c?' on':''}" role="checkbox" aria-checked="${c}" tabindex="0" data-sk="${stateKey}" data-idx="${i}"></div><div class="chk-label${c?' done':''}">${item}</div></div>`;
+  }).join('');
+}
+function bindChk(container,cb){
+  container.querySelectorAll('.chk-box').forEach(b=>{
+    const h=()=>{const sk=b.dataset.sk,i=b.dataset.idx;if(!S[sk])S[sk]={};S[sk][i]=!S[sk][i];save();if(cb)cb();};
+    b.onclick=h;b.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();h()}};
+  });
+}
+function bindEditable(){
+  document.querySelectorAll('[data-save]').forEach(el=>{
+    const[obj,key]=el.dataset.save.split('.');
+    if(!S[obj])S[obj]={};
+    if(S[obj][key]!=null)el.value=S[obj][key];
+    el.addEventListener('input',()=>{S[obj][key]=el.value;save()});
+  });
+}
+function feetIcons(n){return '🦶'.repeat(n)}
 
-const TOURISM_DATA = [
-  {
-    title: 'Anse Forbans Beach',
-    desc: 'Your hotel beach. Calm, shallow water. Short flat walk from room. Loungers and shade available.',
-    tags: ['Near Hotel', 'No Walking'], access: 'Direct from hotel. Flat path.'
-  },
-  {
-    title: 'Anse Royale Beach',
-    desc: 'Beautiful long beach, 10 min taxi. Calm waters, good for paddling. Cafés and shops nearby.',
-    tags: ['Half Day', 'Near Hotel'], access: 'Short taxi. Taxi drops at beach edge. Minimal walking.'
-  },
-  {
-    title: 'Petite Police Beach',
-    desc: 'Quiet, secluded cove south of Anse Forbans. Very peaceful. Limited facilities.',
-    tags: ['Near Hotel', 'No Walking'], access: 'Short taxi. Some uneven ground from road to sand.'
-  },
-  {
-    title: 'South Mahé Scenic Drive',
-    desc: 'Stunning coastal road from Anse Forbans south and around to Baie Lazare. Dramatic granite boulders and views.',
-    tags: ['Scenic Drive', 'No Walking'], access: 'Entirely by car. Stop at viewpoints without leaving the vehicle.'
-  },
-  {
-    title: 'Victoria Market (Sir Selwyn Selwyn-Clarke)',
-    desc: 'Colourful market in the capital. Fresh fish, spices, fruits, souvenirs. Authentic Creole atmosphere.',
-    tags: ['Half Day'], access: 'Taxi to Victoria (≈800 SCR). Short walk from taxi drop. Uneven ground inside market — take care.'
-  },
-  {
-    title: 'DoubleTree Spa',
-    desc: 'On-site spa with massage, facial, and body treatments. Book at reception.',
-    tags: ['Near Hotel', 'No Walking', 'Indoors'], access: 'Within hotel grounds. Flat access.'
-  },
-  {
-    title: 'Creole Cooking Class',
-    desc: 'Learn to cook traditional Seychellois dishes. Check with hotel or nearby venues for sessions.',
-    tags: ['Half Day', 'Indoors'], access: 'At hotel or short taxi ride. Seated activity — excellent for reduced mobility.'
-  },
-  {
-    title: 'Glass-Bottom Boat Trip',
-    desc: 'See coral and tropical fish without getting wet. Trips depart from various beaches on Mahé.',
-    tags: ['Half Day'], access: 'Taxi to departure point. Check boarding accessibility — may need to step down into boat. Ask operator about mobility suitability before booking.'
-  },
-  {
-    title: 'Morne Seychellois Views by Car',
-    desc: 'Drive through Morne Seychellois National Park for mountain and jungle views. Sans Souci viewpoint is spectacular.',
-    tags: ['Scenic Drive', 'Half Day'], access: 'Entirely by car. Viewpoints accessible from roadside. No hiking required.'
-  }
-];
+/* ========== TOP BAR ========== */
+function renderTop(){
+  document.getElementById('tPhase').textContent=tripPhase();
+  document.getElementById('tDate').textContent=fmtDate(today());
+  document.getElementById('tTip').textContent=dailyTip();
+}
+renderTop();
 
-const FOOD_DATA = [
-  {
-    title: 'DoubleTree Hotel Restaurant',
-    desc: 'On-site dining. Breakfast buffet, lunch and dinner. Creole and international dishes. Easiest option — no transfer needed.',
-    tags: ['Breakfast', 'Hotel', 'Creole'], access: 'Within hotel. Flat access from room.'
-  },
-  {
-    title: 'Kaz Kreol, Anse Royale',
-    desc: 'Authentic Creole restaurant. Grilled fish, octopus curry, tropical flavours. Casual beachside setting.',
-    tags: ['Creole', 'Beachfront', 'Short Transfer'], access: '10 min taxi. Drops near entrance. Short walk to table.'
-  },
-  {
-    title: 'Marie-Antoinette, Victoria',
-    desc: 'Iconic Creole restaurant in a colonial house. Fixed menu of traditional dishes. A Seychelles institution since 1972.',
-    tags: ['Creole'], access: '25 min taxi to Victoria. Steps at entrance — check accessibility before visiting.'
-  },
-  {
-    title: 'Les Dauphins Heureux, Anse Royale',
-    desc: 'Beach café with fresh seafood and cold drinks. Relaxed atmosphere, feet-in-the-sand dining.',
-    tags: ['Beachfront', 'Creole', 'Short Transfer'], access: '10 min taxi. Beach-level seating. Sand surface — plan for foot comfort.'
-  },
-  {
-    title: 'Surfer Beach Restaurant, Anse Royale',
-    desc: 'Casual beachfront spot. Good for lunch. Grilled fish, salads, and cocktails.',
-    tags: ['Beachfront', 'Short Transfer', 'Breakfast'], access: '10 min taxi. Flat access to seating area.'
-  },
-  {
-    title: 'Anchor Café, Anse Royale',
-    desc: 'Small café for coffee, pastries, and light meals. Good for a morning stop.',
-    tags: ['Breakfast', 'Short Transfer'], access: '10 min taxi. Easy access from road.'
-  },
-  {
-    title: 'Hotel Room Service',
-    desc: 'Available at DoubleTree for days when you want to take it easy.',
-    tags: ['Hotel'], access: 'In-room. No walking required.'
-  }
-];
-
-const ITINERARY_DEFAULT = [
-  { day: 1, date: '5th July', title: 'Arrival & Rest', plan: 'Rest day after overnight travel. Check in to DoubleTree (early check-in requested). Unpack, hydrate, apply sun cream. Light lunch at hotel restaurant. Afternoon nap. Evening meal at hotel. Early night.' },
-  { day: 2, date: '6th July', title: 'Gentle Beach Day', plan: 'Breakfast at hotel. Morning on Anse Forbans beach — loungers and shade. Hydrate frequently. Light lunch. Afternoon rest or hotel pool. Dinner at hotel.' },
-  { day: 3, date: '7th July', title: 'Spa & Relax', plan: 'Breakfast at hotel. Morning spa treatment (book at reception). Light beach time. Lunch at hotel. Afternoon reading or pool. Dinner at hotel or room service.' },
-  { day: 4, date: '8th July', title: 'Beach & Anse Royale', plan: 'Breakfast at hotel. Morning beach. Short taxi to Anse Royale for lunch at Kaz Kreol or Surfer Beach. Return by taxi. Afternoon rest. Hotel dinner.' },
-  { day: 5, date: '9th July', title: 'Scenic Drive', plan: 'Breakfast at hotel. Mid-morning hotel transfer for south Mahé scenic drive. Stop at viewpoints (stay in car where possible). Return for late lunch. Afternoon rest. Hotel dinner.' },
-  { day: 6, date: '10th July', title: 'Victoria Market', plan: 'Breakfast at hotel. Taxi to Victoria (≈800 SCR). Browse market — take it slow, rest breaks as needed. Light lunch in Victoria. Taxi back. Afternoon rest. Hotel dinner.' },
-  { day: 7, date: '11th July', title: 'Glass-Bottom Boat', plan: 'Breakfast at hotel. Check boat trip accessibility before booking. If suitable: morning boat trip. If not: Morne Seychellois views by car instead. Lunch at hotel. Afternoon rest. Dinner at hotel.' },
-  { day: 8, date: '12th July', title: 'Favourite Revisit', plan: 'Breakfast at hotel. Revisit your favourite spot from the week — Anse Royale, scenic drive, or stay at hotel. Keep it gentle. Lunch wherever you are. Afternoon spa or pool. Hotel dinner.' },
-  { day: 9, date: '13th July', title: 'Full Rest Day', plan: 'Breakfast at hotel. Full rest day. Beach, pool, reading, napping. Room service for lunch if preferred. Afternoon at leisure. Special dinner at hotel — last full evening.' },
-  { day: 10, date: '14th July', title: 'Checkout & Departure', plan: 'Breakfast at hotel. Check out 12pm. Hotel will store luggage. Afternoon by pool or at nearby café. Light early dinner. Hotel transfer to airport by 9:30pm. Flight EK708 departs 11:55pm.' }
-];
-
-const COMFORT_DATA = {
-  arrival: {
-    title: '🛬 Arrival Day (5th July)',
-    items: ['Medication taken', 'Sun cream applied', 'Hydrated — drink water after flight', 'Room checked and comfortable', 'Early check-in status confirmed', "Wife's mobility aid accessible"]
-  },
-  beach: {
-    title: '🏖️ Beach Day',
-    items: ['Hat packed', 'Sun cream SPF 50+ applied and reapply every 2 hours', 'Water bottle filled', 'Shade plan agreed (umbrella or lounger)', 'Return time agreed', "Wife's foot protected from hot sand and direct sun"]
-  },
-  market: {
-    title: '🏪 Market / Excursion Day',
-    items: ['Cash in SCR', 'Comfortable supportive footwear for wife', 'Water bottle', 'Rest break plan agreed', 'Taxi return pre-booked or number saved']
-  },
-  departure: {
-    title: '✈️ Departure Day (14th July)',
-    items: ['Luggage weighed (Emirates allowance checked)', 'Passports checked and accessible', 'Medication in hand luggage', 'Airport transfer booked (depart by 9:30pm)', 'Checkout confirmed', 'Hotel luggage storage arranged']
-  },
-  daily: {
-    title: '☀️ Daily Reminders',
-    items: ['UV reminder — very high in July (index 8–11). Avoid midday sun 11am–2pm', 'Hydration — drink at least 2 litres of water per day', 'Morning weather check — see Weather tab', 'Sun cream reapplication every 2 hours when outdoors', 'Medication check — taken today?']
-  }
+/* ========== REFRESH ========== */
+document.getElementById('refreshBtn').onclick=()=>{
+  S.wxCache=null;save();
+  renderTop();renderToday();renderJourney();renderExplore();renderPlan();renderInfo();
+  window.scrollTo(0,0);
 };
 
-/* ===== APP STATE ===== */
-const STATE_KEY = 'seychelles_app_state';
-let state = loadState();
-
-function loadState() {
-  try {
-    const s = JSON.parse(localStorage.getItem(STATE_KEY));
-    return s || { pretrip: {}, comfort: {}, itinerary: null, returnTrain: '', weatherCache: null };
-  } catch { return { pretrip: {}, comfort: {}, itinerary: null, returnTrain: '', weatherCache: null }; }
+/* ========== WEATHER ========== */
+const WX_FALLBACK={
+  current:{temp:28,desc:'Partly cloudy (typical July)',humidity:78,wind:15,uv:9,rain:20},
+  forecast:[{d:'Mon',t:28,i:'🌤️'},{d:'Tue',t:29,i:'☀️'},{d:'Wed',t:27,i:'🌦️'},{d:'Thu',t:28,i:'🌤️'},{d:'Fri',t:29,i:'☀️'},{d:'Sat',t:28,i:'🌦️'},{d:'Sun',t:27,i:'🌤️'}],
+  fb:true
+};
+async function getWx(){
+  if(S.wxCache&&(Date.now()-S.wxCache.ts<18e5))return S.wxCache.data;
+  const k=WEATHER_API_KEY&&!WEATHER_API_KEY.includes('%%')?WEATHER_API_KEY:null;
+  if(!k)return WX_FALLBACK;
+  try{
+    const[cr,fr]=await Promise.all([
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&units=metric&appid=${k}`),
+      fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&units=metric&cnt=56&appid=${k}`)
+    ]);
+    if(!cr.ok||!fr.ok)return WX_FALLBACK;
+    const c=await cr.json(),f=await fr.json();
+    const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const dm={};
+    f.list.forEach(it=>{const d=new Date(it.dt*1000),k2=d.toDateString();if(!dm[k2])dm[k2]={temps:[],day:days[d.getDay()],descs:[]};dm[k2].temps.push(it.main.temp);dm[k2].descs.push(it.weather[0].main)});
+    const iconMap={Clear:'☀️',Clouds:'⛅',Rain:'🌧️',Drizzle:'🌦️',Thunderstorm:'⛈️'};
+    const fc=Object.values(dm).slice(0,7).map(d=>{
+      const avg=Math.round(d.temps.reduce((a,b)=>a+b,0)/d.temps.length);
+      const most=d.descs.sort((a,b)=>d.descs.filter(v=>v===a).length-d.descs.filter(v=>v===b).length).pop();
+      return{d:d.day,t:avg,i:iconMap[most]||'🌤️'};
+    });
+    const data={current:{temp:Math.round(c.main.temp),desc:c.weather[0].description,humidity:c.main.humidity,wind:Math.round(c.wind.speed*3.6),uv:null,rain:c.clouds?.all||0},forecast:fc,fb:false};
+    S.wxCache={ts:Date.now(),data};save();return data;
+  }catch{return WX_FALLBACK}
 }
-function saveState() { localStorage.setItem(STATE_KEY, JSON.stringify(state)); }
+function wxCard(w,full){
+  let h=`<div class="wx-current"><div class="big">${w.current.temp}°C</div><div class="desc">${w.current.desc}</div><div class="wx-info"><div>💧 Humidity: ${w.current.humidity}%</div><div>💨 Wind: ${w.current.wind} km/h</div><div>☀️ UV: ${w.current.uv||'8–11 (very high)'}</div><div>🌧️ Rain chance: ${w.current.rain}%</div></div></div>`;
+  if(w.fb)h+='<div class="wx-fallback">Showing typical July weather. Add OpenWeatherMap API key for live data.</div>';
+  if(full){
+    h+='<h3>7-Day Forecast</h3><div class="wx-grid">';
+    w.forecast.forEach(d=>h+=`<div class="wx-day"><div class="dn">${d.d}</div><div style="font-size:1.3rem">${d.i}</div><div class="temp">${d.t}°C</div></div>`);
+    h+='</div>';
+  }
+  h+=`<div class="card" style="margin-top:.6rem;border-left:3px solid var(--coral)"><h3>Best Time to Go Out</h3><p style="font-size:.85rem">Early morning (6:30–10am) and late afternoon (4–6pm). Avoid midday sun 11am–2pm. UV index is very high in July.</p><p style="font-size:.85rem;margin-top:.3rem"><strong>Beach:</strong> Mornings ideal. Afternoon showers pass quickly. Always have shade.</p></div>`;
+  return h;
+}
 
-/* ===== NAVIGATION ===== */
-const navBtns = document.querySelectorAll('.nav-btn');
-navBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    navBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById('sec-' + btn.dataset.section).classList.add('active');
-    window.scrollTo(0, 0);
+/* ========== TAB 1: TODAY ========== */
+async function renderToday(){
+  const el=document.getElementById('todayContent');
+  el.innerHTML='<div class="skel"></div><div class="skel" style="min-height:60px"></div>';
+  const w=await getWx();
+  const hd=holDay();
+  const itin=getItin();
+  const todayPlan=hd>=0&&hd<itin.length?itin[hd]:null;
+  let h='';
+
+  // Weather snapshot
+  h+=wxCard(w,false);
+
+  // Sunset
+  h+=`<div class="sunset-card"><div style="font-size:.78rem;font-weight:600;opacity:.8">🌅 Sunset today</div><div class="time">≈ 6:15 PM</div><div style="font-size:.78rem;margin-top:.2rem;opacity:.85">Best viewpoint: Anse Forbans beach, looking west from the rocks</div></div>`;
+
+  // Today's itinerary
+  if(todayPlan){
+    h+=`<div class="card" style="cursor:pointer" onclick="navTo('plan')"><div class="card-date">Day ${todayPlan.day} — ${todayPlan.date}</div><div class="card-title">${todayPlan.title}</div><p style="font-size:.85rem">${todayPlan.plan.substring(0,120)}...</p><p style="font-size:.75rem;color:var(--turquoise);margin-top:.3rem;font-weight:700">Tap to view full plan →</p></div>`;
+  } else {
+    h+=`<div class="card"><div class="card-title">Today's Plan</div><p style="font-size:.85rem;color:var(--text2)">No itinerary for today. Check the Plan tab during your holiday.</p></div>`;
+  }
+
+  // Comfort reminders
+  const chipTypes=['☀️ Apply sun cream','💧 Drink water','🦶 Wife foot check','💊 Medication taken','🧴 Reapply sun cream'];
+  const chipDate=today().toDateString();
+  h+='<div class="sec-title">Today\'s Reminders</div><div style="margin-bottom:.75rem">';
+  chipTypes.forEach((c,i)=>{
+    const k=chipDate+'_'+i;
+    const done=S.todayChips[k]||false;
+    h+=`<span class="chip${done?' done':''}" data-chip="${k}">${c}</span>`;
   });
-});
+  h+='</div>';
 
-/* ===== HEADER ===== */
-function updateHeader() {
-  const now = new Date();
-  const phases = [
-    { start: new Date('2026-07-03'), end: new Date('2026-07-03'), label: '🚂 Travel Day — Swansea to London' },
-    { start: new Date('2026-07-04'), end: new Date('2026-07-04'), label: '✈️ In Transit — Heathrow to Dubai' },
-    { start: new Date('2026-07-05'), end: new Date('2026-07-13'), label: '🌴 On Holiday — Seychelles' },
-    { start: new Date('2026-07-14'), end: new Date('2026-07-15'), label: '🏠 Heading Home' },
-  ];
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  let phase = '📋 Pre-Trip Preparation';
-  if (today > new Date('2026-07-15')) phase = '✅ Trip Complete';
-  for (const p of phases) {
-    if (today >= p.start && today <= p.end) { phase = p.label; break; }
-  }
-  document.getElementById('tripPhase').textContent = phase;
+  el.innerHTML=h;
 
-  const tips = [
-    'Check the Pre-Trip tab to make sure everything is packed and booked.',
-    'July in Seychelles: 27–30°C, humid, short afternoon showers. UV very high — always wear sun cream.',
-    "Emirates check-in opens 4 hours before departure. Arrive early for mobility assistance.",
-    "Keep medication in hand luggage at all times during transit.",
-    "Seychellois Rupee and Euros both accepted. Cards widely accepted at hotels and restaurants.",
-    "Stay hydrated — aim for 2+ litres of water per day in tropical heat.",
-    "Hotel transfers are the easiest transport option. Book at reception the evening before."
-  ];
-  document.getElementById('dailyTip').textContent = tips[now.getDay() % tips.length];
+  // Bind chips
+  el.querySelectorAll('[data-chip]').forEach(ch=>{
+    ch.onclick=()=>{const k=ch.dataset.chip;S.todayChips[k]=!S.todayChips[k];save();renderToday()};
+  });
 }
-updateHeader();
+function navTo(tab){
+  navBtns.forEach(n=>{n.classList.remove('active');if(n.dataset.tab===tab)n.classList.add('active')});
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+tab).classList.add('active');
+  window.scrollTo(0,0);
+}
+renderToday();
 
-/* ===== REFRESH ===== */
-document.getElementById('refreshBtn').addEventListener('click', () => {
-  // Clear weather cache to force fresh fetch
-  state.weatherCache = null;
-  saveState();
-  // Re-render everything
-  updateHeader();
-  renderJourney();
-  renderPretrip();
-  renderWeather();
-  renderTransport();
-  renderTourism();
-  renderFood();
-  renderItinerary();
-  renderComfort();
-  window.scrollTo(0, 0);
-});
+/* ========== TAB 2: JOURNEY ========== */
+const PRETRIP=['Travel insurance confirmed','Emirates mobility assistance pre-booked for all four flights (EK002, EK705, EK708, EK001)','Medication packed — enough for full trip plus 3-day buffer','Seychellois Rupee and Euros obtained','Priority Pass card packed','Phone roaming activated or eSIM purchased','Hotel confirmations printed or saved offline','DoubleTree early check-in requested for 5th July','Sun cream SPF 50+ packed','Wife mobility aid confirmed and packed','Lightweight foldable wheelchair or scooter confirmed if needed','Seychelles Travel Authorisation submitted for Anthony','Seychelles Travel Authorisation submitted for wife','TA approval emails saved and printed','Notify Chase and Monzo banks of travel dates','Download offline Google Maps for Mahé','Travel health appointment completed — Hep A and tetanus checked'];
+const RETPACK=['Medication in hand luggage confirmed','Liquids in 100ml containers in clear bag','UK customs: declare any food, plants or wildlife products','Duty free within UK allowance','Coco de mer: check export permit if purchased','Luggage weighed and within limit'];
 
-/* ===== JOURNEY TIMELINE ===== */
-function renderJourney() {
-  const el = document.getElementById('journeyCards');
-  el.innerHTML = JOURNEY_DATA.map(j => {
-    let html = `<div class="card"><div class="card-date">${j.date}</div><div class="card-title">${j.title}</div><div class="card-body">${j.body}</div>`;
-    if (j.tight) html += `<div class="tight-warning">${j.tightMsg}</div>`;
-    if (j.mobility.length) html += j.mobility.map(m => `<span class="mobility-badge">${m}</span>`).join('');
-    if (j.lounge.length) html += j.lounge.map(l => `<span class="lounge-badge">${l}</span>`).join('');
-    if (j.tip) html += `<div class="card-tip">${j.tip}</div>`;
-    html += '</div>';
-    return html;
-  }).join('');
+const JOURNEY=[
+{date:'3rd July',title:'Swansea → London Heathrow',status:'upcoming',
+body:`<p><strong>Train departs Swansea 2:20pm</strong> → arrives Heathrow approx. 6:00pm.</p><p>Check in: <strong>Hilton Garden Inn Heathrow T2/T3</strong>. Standard check-in 3pm — room should be ready.</p><p>Arrange transfer from Elizabeth Line or Heathrow Express to hotel in advance.</p>`,
+tip:'The Hilton Garden Inn is connected to T2 via covered walkway and T3 via underpass.',mob:['Pre-book transfer to hotel'],lounge:[],tight:false},
 
-  // Restore return train
-  const input = document.getElementById('returnTrain');
-  if (input) {
-    input.value = state.returnTrain || '';
-    input.addEventListener('input', () => { state.returnTrain = input.value; saveState(); });
-  }
+{date:'4th July',title:'London → Dubai',status:'upcoming',
+body:`<p>Check out Hilton Garden Inn. <strong>Leave room by 9:30am.</strong></p><p><strong>EK002 departs Heathrow T3 at 2:25pm.</strong></p><p>Arrive at Emirates check-in by <strong>10:30am</strong> — allow extra time for mobility needs.</p><p>Route to T3: hotel → T2 covered walkway → lift/escalator to underpass → T3 departures (20–30 mins with luggage).</p><p>Inform Emirates agent about tight Dubai connection — request fast-track transit flag on booking.</p>`,
+tip:'Check-in opens approx. 4 hours before departure. Confirm wheelchair assistance at the desk.',mob:['Wheelchair at Emirates check-in','Flag tight Dubai transit at check-in'],lounge:['No.1 Lounge Heathrow T3','Plaza Premium T3 — check Priority Pass app'],tight:false},
+
+{date:'4th–5th July',title:'Dubai Transit (Outbound)',status:'upcoming',
+body:`<p><strong>EK002 arrives Dubai 00:25am</strong> (5th July) — Terminal 3, typically Concourse C.</p><p>Transit to <strong>EK705</strong> — Terminal 3, Concourse B (gate B26 area). Layover: <strong>1hr 50min</strong>.</p><p><strong>EK705 departs Dubai 2:15am.</strong></p><h4 style="margin:.5rem 0 .3rem">Step-by-step transit:</h4><ol style="padding-left:1.2rem;font-size:.85rem;line-height:1.7"><li>Wheelchair meets you at aircraft door (pre-booked)</li><li>Follow "Connections" signs — NOT Arrivals/Immigration</li><li>Transit security — expedited lane for wheelchair</li><li>Concourse C → Concourse B via walkway (15–20 mins by wheelchair)</li><li>Check departure screens for EK705 gate</li><li>Go directly to gate — boarding starts 45 mins before</li></ol><p style="margin-top:.4rem"><strong>Bags:</strong> Tagged through to Seychelles. <strong>Immigration:</strong> Not required.</p>`,
+tip:'Emirates minimum connection is 75 mins — you have 1hr 50min. Enough but no room for delay. No lounge, no shopping.',mob:['Wheelchair at aircraft door','Fast-track transit security','Escort to Concourse B gate'],lounge:[],tight:true,tightMsg:'TIGHT CONNECTION — 1hr 50min. Go directly to gate. No lounge, no shopping, no detours.'},
+
+{date:'5th July',title:'Arrive Seychelles',status:'upcoming',
+body:`<p><strong>EK705 arrives Seychelles (SEZ) 6:50am.</strong></p><p>Check in: <strong>DoubleTree by Hilton Allamanda Resort &amp; Spa</strong>, Anse Forbans. Check-in 3pm — request early check-in on arrival.</p><p>Mahé airport is small and manageable. Transfer to hotel approx. 30 mins.</p>`,
+tip:'Rest day. After overnight travel, don\'t plan anything. Hotel restaurant, pool, sleep.',mob:['Request wheelchair at SEZ arrival','Pre-arrange hotel transfer'],lounge:[],tight:false},
+
+{date:'14th July',title:'Seychelles Departure',status:'upcoming',
+body:`<p>Check out <strong>12:00pm</strong>. Day at leisure — flight not until 11:55pm.</p><p><strong>EK708 departs SEZ 11:55pm.</strong></p><p>Hotel transfer: depart no later than <strong>9:30pm</strong>.</p>`,
+tip:'Use hotel facilities after checkout. Most will store luggage. Final beach or spa in the afternoon.',mob:['Book hotel transfer to airport','Wheelchair at SEZ check-in'],lounge:[],tight:false},
+
+{date:'15th July',title:'Dubai Transit (Return)',status:'upcoming',
+body:`<p><strong>EK708 arrives Dubai 4:20am</strong> — Terminal 3, Concourse B.</p><p>Layover <strong>3hr 25min</strong> — comfortable for a lounge visit.</p><p><strong>EK001 departs Dubai 7:47am</strong> — Concourse C.</p><h4 style="margin:.5rem 0 .3rem">Step-by-step:</h4><ol style="padding-left:1.2rem;font-size:.85rem;line-height:1.7"><li>Wheelchair meets at aircraft door</li><li>Follow "Connections" signs — transit only</li><li>Transit security — expedited lane</li><li>Lounge visit if desired (check Priority Pass for open T3 lounges at 4:30am)</li><li>Concourse B → C via walkway (15–20 mins by wheelchair)</li><li>Be at gate by 7:00am</li></ol><p style="margin-top:.4rem"><strong>Bags:</strong> Tagged through to Heathrow.</p>`,
+tip:'Have breakfast in the lounge, freshen up, then head to gate by 7am. Plenty of time.',mob:['Wheelchair at aircraft door','Escort to lounge','Escort to Concourse C gate'],lounge:['Dubai T3 lounges — check Priority Pass app'],tight:false},
+
+{date:'15th July',title:'Dubai → London → Swansea',status:'upcoming',
+body:`<p><strong>EK001 arrives Heathrow T3 12:25pm.</strong></p><p>Train to Swansea: <span id="rtDisp">earliest realistic departure 2:30pm</span>.</p><p><label style="font-weight:700;font-size:.82rem">Return train time: <input type="text" class="efield efield-sm" data-save="returnTrain.val" placeholder="e.g. 2:30pm"></label></p>`,
+tip:'Allow time for immigration, baggage claim, and getting to the train. Consider wheelchair assistance at Heathrow too.',mob:['Request wheelchair at Heathrow arrival'],lounge:[],tight:false}
+];
+
+const LOUNGES=[
+{name:'Heathrow T3',body:'<strong>No.1 Lounge T3:</strong> Priority Pass. Hot food, bar, showers. Wheelchair accessible.<br><strong>Plaza Premium T3:</strong> Priority Pass. Lighter food, good seating.<br><em>Check Priority Pass app for current access before travel.</em>'},
+{name:'Dubai T3',body:'<strong>Multiple Priority Pass lounges</strong> across Concourse B and C. Hot food, showers, rest areas. Open 24hrs.<br><strong>Emirates Lounge:</strong> Business class or Skywards Gold only.<br><em>Outbound layover (1hr 50min): NO lounge visit. Return layover (3hr 25min): lounge recommended.</em>'},
+{name:'Mahé SEZ',body:'Small airport with <strong>very limited facilities</strong>. One small café airside. <strong>No Priority Pass lounge.</strong><br>Arrive with snacks and water. Duty free shop is small.'}
+];
+
+function renderJourney(){
+  const el=document.getElementById('journeyContent');
+  let h='<h2>Pre-Trip Checklist</h2>';
+  h+='<div class="mob-banner">Ensure Emirates mobility assistance is pre-booked for all four flights before departure.</div>';
+  h+='<div class="card">'+makeChk(PRETRIP,'pretrip')+'</div>';
+
+  h+='<h2 style="margin-top:1rem">Journey Timeline</h2>';
+  JOURNEY.forEach(j=>{
+    h+=`<div class="card"><div class="card-date">${j.date} <span class="badge badge-${j.status}">${j.status}</span></div><div class="card-title">${j.title}</div><div class="card-body">${j.body}</div>`;
+    if(j.tight)h+=`<div class="tight">${j.tightMsg}</div>`;
+    if(j.mob.length)h+=j.mob.map(m=>`<span class="mob">${m}</span>`).join('');
+    if(j.lounge.length)h+=j.lounge.map(l=>`<span class="lounge">${l}</span>`).join('');
+    if(j.tip)h+=`<div class="card-tip">${j.tip}</div>`;
+    h+='</div>';
+  });
+
+  h+='<h2 style="margin-top:1rem">Return Packing Checklist</h2>';
+  h+='<div class="card">'+makeChk(RETPACK,'retPack')+'</div>';
+
+  h+='<h2 style="margin-top:1rem">Airport Lounges</h2>';
+  LOUNGES.forEach(l=>h+=`<div class="card"><div class="card-title">${l.name}</div><p style="font-size:.85rem;line-height:1.6">${l.body}</p></div>`);
+
+  el.innerHTML=h;
+  bindChk(el);bindEditable();
 }
 renderJourney();
 
-/* ===== PRE-TRIP CHECKLIST ===== */
-function renderPretrip() {
-  const el = document.getElementById('pretripChecklist');
-  el.innerHTML = PRETRIP_ITEMS.map((item, i) => {
-    const checked = state.pretrip[i] || false;
-    return `<div class="checklist-item">
-      <div class="check-box${checked ? ' checked' : ''}" role="checkbox" aria-checked="${checked}" tabindex="0" data-pretrip="${i}"></div>
-      <div class="check-label${checked ? ' done' : ''}">${item}</div>
-    </div>`;
-  }).join('');
+/* ========== TAB 3: EXPLORE ========== */
+const ACTIVITIES=[
+{title:'Anse Forbans Beach',desc:'Hotel doorstep. Calm water, sunbeds, shade. Excellent accessibility.',tags:['Beach','Near Hotel'],feet:1,dist:'0 min'},
+{title:'Anse Royale Beach',desc:'Beautiful long beach. Calm waters, sunbeds, cafés nearby.',tags:['Beach','Half Day'],feet:1,dist:'10 min taxi'},
+{title:'Petite Police Beach',desc:'Quiet, secluded cove. Very peaceful. Limited facilities.',tags:['Beach','Near Hotel'],feet:2,dist:'15 min taxi'},
+{title:'Victoria Botanical Gardens',desc:'Giant tortoises, tropical plants, flat paths throughout. Lovely morning visit.',tags:['Half Day'],feet:2,dist:'20 min taxi'},
+{title:'Morne Seychellois Viewpoint',desc:'Spectacular mountain and jungle views. Entirely by car — no walking.',tags:['Scenic','No Walking'],feet:1,dist:'30 min taxi'},
+{title:'South Mahé Coastal Drive',desc:'Dramatic granite boulders and ocean views. Full scenic drive, stop at viewpoints.',tags:['Scenic','No Walking'],feet:1,dist:'By taxi'},
+{title:'DoubleTree Spa',desc:'On-site spa. Massage, manicure/pedicure, body treatments. Book early.',tags:['Near Hotel','Indoors','No Walking'],feet:1,dist:'0 min'},
+{title:'Glass-Bottom Boat Trip',desc:'See coral and fish without getting wet. Seated throughout. Check mobility with concierge.',tags:['Half Day'],feet:2,dist:'Varies'},
+{title:'Creole Cooking Class',desc:'Learn traditional Seychellois dishes. Seated activity. Check hotel for on-site options.',tags:['Half Day','Indoors'],feet:1,dist:'Hotel or nearby'}
+];
+const RESTAURANTS=[
+{title:'DoubleTree Restaurant (Les Palms)',desc:'On-site. Breakfast buffet, lunch, dinner. Fresh seafood and Creole. Easiest option.',tags:['Food','Near Hotel'],feet:1,dist:'0 min',price:'💰💰'},
+{title:'Kaz Kreol, Anse Royale',desc:'Authentic Creole. Grilled fish, octopus curry. Casual beachside.',tags:['Food'],feet:1,dist:'10 min taxi',price:'💰💰'},
+{title:'Marie-Antoinette, Victoria',desc:'Iconic Creole set menu since 1972. Colonial house. Some steps at entrance.',tags:['Food'],feet:2,dist:'20 min taxi',price:'💰💰💰'},
+{title:'Loutier Coco Beach Café',desc:'Casual beachfront. Cold drinks, light meals, very relaxed.',tags:['Food','Beach'],feet:1,dist:'10 min taxi',price:'💰'},
+{title:'Le Reduit, Anse Royale',desc:'Good seafood restaurant. Accessible entrance. Popular for dinner.',tags:['Food'],feet:1,dist:'10 min taxi',price:'💰💰'}
+];
 
-  el.querySelectorAll('.check-box').forEach(box => {
-    const handler = () => {
-      const idx = box.dataset.pretrip;
-      state.pretrip[idx] = !state.pretrip[idx];
-      saveState();
-      renderPretrip();
-    };
-    box.addEventListener('click', handler);
-    box.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); handler(); } });
-  });
-}
-renderPretrip();
+const FIRST_TIMER=[
+{t:'Currency',b:'SCR is local. Euros widely accepted. Cards work at hotels and larger restaurants. Exchange at airport or hotel. Avoid street exchange. Approx. 60 SCR = £1.'},
+{t:'Tipping',b:'10% appreciated, not mandatory. Check if service charge is already added to bill.'},
+{t:'Safety',b:'Mahé is safe. Keep bags attended at beaches. No significant crime concerns for tourists.'},
+{t:'Water',b:'Tap water is safe to drink on Mahé.'},
+{t:'Plugs',b:'UK plugs work — same voltage (240V). No adapter needed.'},
+{t:'Language',b:'English widely spoken. French and Seychellois Creole also used.'},
+{t:'Dress',b:'Relaxed. Cover up slightly for markets and restaurants away from the beach.'},
+{t:'Wildlife',b:'Do not touch or feed wildlife. Respect turtle nesting areas.'},
+{t:'July Weather',b:'Hot and humid, 27–30°C. Short afternoon showers common. UV very high (8–11).'},
+{t:'Sunburn Risk',b:'UV index 8–11 in July. Reapply sun cream every 90 minutes outdoors. Wear a hat.'}
+];
 
-/* ===== WEATHER ===== */
-const WEATHER_FALLBACK = {
-  current: { temp: 28, desc: 'Partly cloudy (typical July)', humidity: 78, wind: 15, uv: 9 },
-  forecast: [
-    { day: 'Mon', temp: 28, icon: '🌤️' }, { day: 'Tue', temp: 29, icon: '☀️' },
-    { day: 'Wed', temp: 27, icon: '🌦️' }, { day: 'Thu', temp: 28, icon: '🌤️' },
-    { day: 'Fri', temp: 29, icon: '☀️' }, { day: 'Sat', temp: 28, icon: '🌦️' },
-    { day: 'Sun', temp: 27, icon: '🌤️' }
-  ],
-  isFallback: true
+const PHRASES=[
+{w:'Bonjour',p:'bon-ZHOOR',m:'Good morning'},{w:'Bonswar',p:'bon-SWAR',m:'Good evening'},
+{w:'Mersi',p:'MER-see',m:'Thank you'},{w:'Silvouplé',p:'sil-voo-PLAY',m:'Please'},
+{w:'Komman sava?',p:'KOH-man SAH-vah',m:'How are you?'},{w:'Mon byen',p:'mon BEE-en',m:'I am well'},
+{w:'Konbyen?',p:'kon-BEE-en',m:'How much?'},{w:'En taxi silvouplé',p:'en TAK-see sil-voo-PLAY',m:'A taxi please'},
+{w:'Sa i bon',p:'sa ee BON',m:'That is good'},{w:'Orevwar',p:'or-ev-WAR',m:'Goodbye'}
+];
+
+const WILDLIFE=[
+{n:'Aldabra Giant Tortoise',where:'Botanical Gardens Victoria',when:'Anytime',feet:2},
+{n:'Seychelles Fruit Bat',where:'Hotel terrace at dusk',when:'Every evening',feet:1},
+{n:'Hawksbill Turtle',where:'Anse Forbans beach (seasonal)',when:'Night — ask hotel',feet:1},
+{n:'Seychelles Sunbird',where:'Gardens and hotel grounds',when:'Common, daytime',feet:1},
+{n:'Fairy Tern',where:'Coastal areas',when:'Seen from beach',feet:1},
+{n:'Coco de Mer Palm',where:'Botanical Gardens',when:'Anytime',feet:2},
+{n:'Jellyfish Alert',where:'Check with hotel daily',when:'July generally safe',feet:0}
+];
+
+const MARKET={
+  title:'Victoria Market & Shopping',
+  body:`<h3>Sir Selwyn Selwyn-Clarke Market</h3>
+<p>Monday to Saturday, best before 10am.</p>
+<p><strong>Taxi drop:</strong> Main entrance on Market Street. ≈800 SCR from hotel.</p>
+<div class="mob-banner">Some uneven ground and narrow aisles. Go early before crowds. Take rest breaks.</div>
+<h4 style="margin:.5rem 0 .3rem">What to buy:</h4>
+<ul style="padding-left:1.2rem;font-size:.85rem;line-height:1.7">
+<li>Vanilla pods (≈150 SCR/pod)</li><li>Cinnamon sticks</li><li>Coconut oil</li>
+<li>Takamaka rum (≈300 SCR/bottle)</li><li>Local spices</li><li>Woven crafts</li></ul>
+<p style="margin-top:.4rem;font-size:.85rem"><strong>Avoid:</strong> Certain coco de mer products require export permits — check before buying.</p>
+<p style="font-size:.85rem"><strong>Budget:</strong> ≈60 SCR = £1. Set manually on arrival in the Info tab.</p>`
 };
 
-async function fetchWeather() {
-  // Check cache
-  if (state.weatherCache && (Date.now() - state.weatherCache.ts < 30 * 60 * 1000)) {
-    return state.weatherCache.data;
+const EXPLORE_FILTERS=['All','Near Hotel','No Walking','Half Day','Indoors','Scenic','Beach','Food'];
+let expFilter='All';
+
+function renderExplore(){
+  const el=document.getElementById('exploreContent');
+  let h='<div class="filters" id="expFilters">';
+  EXPLORE_FILTERS.forEach(f=>h+=`<button class="fbtn${f===expFilter?' on':''}" data-ef="${f}">${f}</button>`);
+  h+='</div>';
+
+  const all=[...ACTIVITIES,...RESTAURANTS];
+  const filtered=expFilter==='All'?all:all.filter(a=>a.tags.includes(expFilter));
+
+  h+='<div class="sec-title">Activities & Places</div>';
+  filtered.filter(a=>!a.price).forEach(a=>{
+    h+=`<div class="card"><div class="card-title">${a.title}</div><p style="font-size:.85rem">${a.desc}</p><div style="margin:.3rem 0">${a.tags.map(t=>`<span class="tag">${t}</span>`).join('')}<span class="tag">${a.dist}</span></div><div class="feet">${feetIcons(a.feet)} ${a.feet===1?'Minimal walking':a.feet===2?'Some walking':'More walking'}</div></div>`;
+  });
+
+  h+='<div class="sec-title">Restaurants</div>';
+  filtered.filter(a=>a.price).forEach(a=>{
+    h+=`<div class="card"><div class="card-title">${a.title} <span style="font-size:.8rem">${a.price}</span></div><p style="font-size:.85rem">${a.desc}</p><div style="margin:.3rem 0">${a.tags.map(t=>`<span class="tag">${t}</span>`).join('')}<span class="tag">${a.dist}</span></div><div class="feet">${feetIcons(a.feet)} ${a.feet===1?'Minimal walking':'Some walking'}</div></div>`;
+  });
+
+  h+='<div class="sec-title">First Timer\'s Guide</div>';
+  FIRST_TIMER.forEach(f=>h+=`<div class="card"><h3>${f.t}</h3><p style="font-size:.85rem">${f.b}</p></div>`);
+
+  h+='<div class="sec-title">Creole Phrasebook</div><p style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">Tap to reveal pronunciation</p>';
+  PHRASES.forEach(p=>h+=`<div class="card phrase" style="cursor:pointer;padding:.7rem"><div style="display:flex;justify-content:space-between"><strong>${p.w}</strong><span style="font-size:.85rem;color:var(--text2)">${p.m}</span></div><div class="phrase-pron">🔊 ${p.p}</div></div>`);
+
+  h+='<div class="sec-title">Wildlife Spotter</div>';
+  WILDLIFE.forEach(w=>h+=`<div class="card"><div class="card-title">${w.n}</div><p style="font-size:.85rem">📍 ${w.where} · 🕐 ${w.when}</p>${w.feet?`<div class="feet">${feetIcons(w.feet)}</div>`:''}</div>`);
+
+  h+=`<div class="sec-title">Shopping</div><div class="card">${MARKET.body}</div>`;
+
+  el.innerHTML=h;
+  el.querySelectorAll('[data-ef]').forEach(b=>b.onclick=()=>{expFilter=b.dataset.ef;renderExplore()});
+  el.querySelectorAll('.phrase').forEach(p=>p.onclick=()=>p.classList.toggle('open'));
+}
+renderExplore();
+
+/* ========== TAB 4: PLAN ========== */
+const ITIN_DEFAULT=[
+{day:1,date:'5th July',title:'Arrival & Rest',plan:'Rest day. Arrival morning. Sleep, settle in, gentle hotel explore. Room service or hotel restaurant for all meals. Early night.'},
+{day:2,date:'6th July',title:'Beach & Spa',plan:'Breakfast at hotel. Morning at Anse Forbans beach (hotel beach). Afternoon spa session — book at reception. Dinner at hotel restaurant.'},
+{day:3,date:'7th July',title:'Scenic Drive',plan:'Breakfast at hotel. Mid-morning scenic coastal drive around south Mahé by taxi. Light lunch at a beach café. Afternoon rest at hotel.'},
+{day:4,date:'8th July',title:'Botanical Gardens',plan:'Breakfast at hotel. Taxi to Victoria Botanical Gardens — giant tortoises, flat paths. Lunch in Victoria. Afternoon rest. Hotel dinner.'},
+{day:5,date:'9th July',title:'Full Beach Day',plan:'Full beach day at Anse Forbans. Sunbeds, shade, gentle swim. Hotel lunch and dinner. Total relaxation.'},
+{day:6,date:'10th July',title:'Anse Royale',plan:'Breakfast at hotel. Kaz Kreol lunch at Anse Royale. Afternoon on Anse Royale beach. Taxi back. Hotel dinner or room service.'},
+{day:7,date:'11th July',title:'Rest Day',plan:'Rest day. Hotel pool, spa, room service. Light evening walk on hotel beach if comfortable. No taxi needed.'},
+{day:8,date:'12th July',title:'Victoria Market',plan:'Victoria market morning (early, before heat). Afternoon rest at hotel. Marie-Antoinette dinner if accessible — check steps.'},
+{day:9,date:'13th July',title:'Boat Trip & Farewell',plan:'Glass-bottom boat trip (check with concierge for mobility). Afternoon at hotel. Farewell dinner at hotel restaurant.'},
+{day:10,date:'14th July',title:'Checkout & Departure',plan:'Morning beach or spa. Checkout 12pm. Lunch at hotel. Afternoon by pool. Transfer to airport by 9:30pm. EK708 departs 11:55pm.'}
+];
+
+function getItin(){if(S.itin)return S.itin;return ITIN_DEFAULT.map(d=>({...d,note:''}))}
+function saveItin(d){S.itin=d;save()}
+
+function renderPlan(){
+  const el=document.getElementById('planContent');
+  let h='<h2>Daily Itinerary — 5th to 14th July</h2>';
+  const data=getItin();
+  data.forEach((d,i)=>{
+    h+=`<div class="itin"><div class="itin-day">Day ${d.day} — ${d.date}</div><div class="itin-title">${d.title}</div><p style="font-size:.85rem;line-height:1.6">${d.plan}</p><textarea class="itin-note" placeholder="Personal notes..." data-ni="${i}">${d.note||''}</textarea><div class="itin-actions"><button class="itin-btn" data-mu="${i}" ${i===0?'disabled':''}>▲</button><button class="itin-btn" data-md="${i}" ${i===data.length-1?'disabled':''}>▼</button></div></div>`;
+  });
+
+  // Special Moments
+  h+='<h2 style="margin-top:1rem">Special Moments</h2>';
+  (S.moments||[]).forEach((m,i)=>{
+    h+=`<div class="card"><h3>${m.title}</h3><label style="font-size:.82rem;font-weight:600">Date<input class="efield" data-save="moments.${i}_date" value="${m.date||''}"></label><label style="font-size:.82rem;font-weight:600">Location<input class="efield" data-save="moments.${i}_loc" value="${m.loc||''}"></label><label style="font-size:.82rem;font-weight:600">Booking Ref<input class="efield" data-save="moments.${i}_ref" value="${m.ref||''}"></label><label style="font-size:.82rem;font-weight:600">Notes<textarea class="efield" data-save="moments.${i}_notes">${m.notes||''}</textarea></label></div>`;
+  });
+
+  // Memory Journal
+  h+='<h2 style="margin-top:1rem">Memory Journal</h2>';
+  const moods=['😊','😍','😌','🤩','😴'];
+  for(let day=0;day<10;day++){
+    const jk='j_'+day;const j=S.journal[jk]||{title:'',notes:'',mood:''};
+    const dd=ITIN_DEFAULT[day];
+    h+=`<div class="card"><div class="card-date">Day ${day+1} — ${dd.date}</div><input class="efield" placeholder="Title this day..." value="${j.title||''}" data-jfield="${jk}.title"><div class="mood-row">${moods.map(m=>`<button class="mood-btn${j.mood===m?' on':''}" data-jmood="${jk}" data-mv="${m}">${m}</button>`).join('')}</div><textarea class="efield" placeholder="What happened today?" style="min-height:60px" data-jfield="${jk}.notes">${j.notes||''}</textarea></div>`;
   }
 
-  const key = '%%WEATHER_API_KEY%%' !== '' && !'%%WEATHER_API_KEY%%'.includes('%%') ? '%%WEATHER_API_KEY%%' : null;
-  if (!key) return WEATHER_FALLBACK;
+  // Budget
+  h+='<h2 style="margin-top:1rem">Daily Budget</h2>';
+  h+=`<div class="card"><label style="font-size:.82rem;font-weight:600">Daily budget (GBP): <input class="efield efield-sm" type="number" id="budgetDaily" value="${S.budget.daily}"></label><label style="font-size:.82rem;font-weight:600;margin-left:.5rem">SCR/GBP rate: <input class="efield efield-sm" type="number" id="budgetRate" value="${S.budget.rate}"></label></div>`;
+  const todaySpend=S.budget.entries.filter(e=>e.date===today().toDateString()).reduce((a,e)=>a+e.amt,0);
+  const tripSpend=S.budget.entries.reduce((a,e)=>a+e.amt,0);
+  const pct=Math.min(100,Math.round(todaySpend/S.budget.daily*100));
+  h+=`<div class="card"><h3>Today: £${todaySpend.toFixed(2)} / £${S.budget.daily}</h3><div class="budget-bar"><div class="budget-fill${pct>100?' over':''}" style="width:${pct}%"></div></div><p style="font-size:.82rem;color:var(--text2)">Trip total: £${tripSpend.toFixed(2)}</p></div>`;
+  h+=`<div class="card"><h3>Log Spend</h3><div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.4rem"><select id="budgetCat" class="efield" style="width:auto;min-width:100px"><option>Food</option><option>Transport</option><option>Activities</option><option>Shopping</option><option>Other</option></select><input id="budgetAmt" class="efield efield-sm" type="number" placeholder="£ amount" step="0.01"><button class="itin-btn" id="budgetAdd" style="background:var(--green);color:#fff">Add</button></div></div>`;
 
-  try {
-    const lat = -4.7236, lon = 55.5089;
-    const [currentRes, forecastRes] = await Promise.all([
-      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${key}`),
-      fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&cnt=56&appid=${key}`)
-    ]);
-    if (!currentRes.ok || !forecastRes.ok) return WEATHER_FALLBACK;
-    const current = await currentRes.json();
-    const forecast = await forecastRes.json();
+  // Health tracker
+  h+='<h2 style="margin-top:1rem">Health & Wellbeing</h2>';
+  h+=`<div class="card" style="border-left:3px solid var(--coral)"><h3>🦶 Wife\'s Foot Recovery Tracker</h3>
+<label style="font-size:.82rem;font-weight:600">Pain level today (1–5): <select class="efield" style="width:80px" data-save="health.pain"><option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+<label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Swelling? <select class="efield" style="width:100px" data-save="health.swell"><option value="">-</option><option>None</option><option>Mild</option><option>Moderate</option><option>Severe</option></select></label>
+<label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Elevation rest done today? <select class="efield" style="width:80px" data-save="health.elev"><option value="">-</option><option>Yes</option><option>No</option></select></label>
+<label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Walking limit (mins): <input class="efield efield-sm" type="number" data-save="health.walkLimit" placeholder="e.g. 30"></label>
+<div class="card-tip" style="margin-top:.5rem">Rest in air-conditioned room during peak heat (11am–3pm). Humidity affects recovery.</div></div>`;
 
-    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    const dailyMap = {};
-    forecast.list.forEach(item => {
-      const d = new Date(item.dt * 1000);
-      const key2 = d.toDateString();
-      if (!dailyMap[key2]) dailyMap[key2] = { temps: [], day: days[d.getDay()], descs: [] };
-      dailyMap[key2].temps.push(item.main.temp);
-      dailyMap[key2].descs.push(item.weather[0].main);
-    });
-    const forecastDays = Object.values(dailyMap).slice(0, 7).map(d => {
-      const avg = Math.round(d.temps.reduce((a,b)=>a+b,0)/d.temps.length);
-      const iconMap = { Clear:'☀️', Clouds:'⛅', Rain:'🌧️', Drizzle:'🌦️', Thunderstorm:'⛈️' };
-      const most = d.descs.sort((a,b) => d.descs.filter(v=>v===a).length - d.descs.filter(v=>v===b).length).pop();
-      return { day: d.day, temp: avg, icon: iconMap[most] || '🌤️' };
-    });
+  h+=`<div class="card"><h3>Emergency Contacts</h3>
+<p style="font-size:.85rem">🏥 Seychelles Hospital Victoria: <strong>+248 438 8000</strong></p>
+<p style="font-size:.85rem">🚔 Seychelles Police: <strong>999</strong></p>
+<label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Hotel medical: <input class="efield" data-save="health.hotelMed" placeholder="Ask at reception"></label>
+<label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Insurance emergency: <input class="efield" data-save="health.insNum" placeholder="Policy emergency number"></label>
+<label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Wife medical notes: <textarea class="efield" data-save="health.wifeNotes" placeholder="Medications, allergies, GP info..." style="min-height:60px"></textarea></label></div>`;
 
-    const data = {
-      current: {
-        temp: Math.round(current.main.temp),
-        desc: current.weather[0].description,
-        humidity: current.main.humidity,
-        wind: Math.round(current.wind.speed * 3.6),
-        uv: null
-      },
-      forecast: forecastDays,
-      isFallback: false
+  el.innerHTML=h;
+  bindEditable();
+
+  // Itinerary notes
+  el.querySelectorAll('.itin-note').forEach(ta=>{
+    ta.oninput=()=>{const d=getItin();d[ta.dataset.ni].note=ta.value;saveItin(d)};
+  });
+  // Reorder
+  el.querySelectorAll('[data-mu]').forEach(b=>b.onclick=()=>{const d=getItin(),i=+b.dataset.mu;if(i>0){[d[i],d[i-1]]=[d[i-1],d[i]];d.forEach((x,j)=>x.day=j+1);saveItin(d);renderPlan()}});
+  el.querySelectorAll('[data-md]').forEach(b=>b.onclick=()=>{const d=getItin(),i=+b.dataset.md;if(i<d.length-1){[d[i],d[i+1]]=[d[i+1],d[i]];d.forEach((x,j)=>x.day=j+1);saveItin(d);renderPlan()}});
+
+  // Journal
+  el.querySelectorAll('[data-jfield]').forEach(f=>{
+    const[jk,field]=f.dataset.jfield.split('.');
+    if(!S.journal[jk])S.journal[jk]={};
+    f.oninput=()=>{S.journal[jk][field]=f.value;save()};
+  });
+  el.querySelectorAll('[data-jmood]').forEach(b=>{
+    b.onclick=()=>{const jk=b.dataset.jmood;if(!S.journal[jk])S.journal[jk]={};S.journal[jk].mood=b.dataset.mv;save();renderPlan()};
+  });
+
+  // Budget
+  const addBtn=document.getElementById('budgetAdd');
+  if(addBtn)addBtn.onclick=()=>{
+    const amt=parseFloat(document.getElementById('budgetAmt').value);
+    if(!amt||isNaN(amt))return;
+    S.budget.entries.push({date:today().toDateString(),cat:document.getElementById('budgetCat').value,amt});
+    save();renderPlan();
+  };
+  const dailyEl=document.getElementById('budgetDaily');
+  const rateEl=document.getElementById('budgetRate');
+  if(dailyEl)dailyEl.oninput=()=>{S.budget.daily=+dailyEl.value||100;save();renderPlan()};
+  if(rateEl)rateEl.oninput=()=>{S.budget.rate=+rateEl.value||60;save()};
+
+  // Special moments save
+  el.querySelectorAll('[data-save^="moments."]').forEach(f=>{
+    f.oninput=()=>{
+      const parts=f.dataset.save.split('.');
+      const[idx,field]=parts[1].split('_');
+      if(!S.moments[idx])return;
+      S.moments[idx][field]=f.value;save();
     };
-    state.weatherCache = { ts: Date.now(), data };
-    saveState();
-    return data;
-  } catch {
-    return WEATHER_FALLBACK;
+  });
+}
+renderPlan();
+
+/* ========== TAB 5: INFO ========== */
+async function renderInfo(){
+  const el=document.getElementById('infoContent');
+  let h='';
+
+  // Hotel
+  h+=`<h2>DoubleTree Hilton — Anse Forbans</h2>
+<div class="card">
+<p style="font-size:.85rem;margin-bottom:.5rem">30-room beachfront resort. Private beach, infinity pool, eForea Spa, Les Palms Restaurant.</p>
+<p style="font-size:.85rem">📍 Anse Forbans, Mahé, Seychelles</p>
+<div style="margin-top:.5rem">
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Pool hours: <input class="efield" data-save="hotel.pool" placeholder="Fill on arrival"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Spa phone: <input class="efield" data-save="hotel.spa" placeholder="Fill on arrival"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Breakfast hours: <input class="efield" data-save="hotel.bfast" placeholder="e.g. 7am–10am"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Dinner hours: <input class="efield" data-save="hotel.dinner" placeholder="e.g. 7pm–10pm"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Room service hours: <input class="efield" data-save="hotel.roomsvc" placeholder="Fill on arrival"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">WiFi name: <input class="efield" data-save="hotel.wifi" placeholder="Fill on arrival"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">WiFi password: <input class="efield" data-save="hotel.wifiPw" placeholder="Fill on arrival"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Reception: <input class="efield" data-save="hotel.recep" placeholder="Dial from room"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Concierge: <input class="efield" data-save="hotel.concierge" placeholder="Fill on arrival"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Beach equipment: <input class="efield" data-save="hotel.beach" placeholder="Free sunbeds? Umbrellas?"></label>
+</div></div>`;
+
+  // Weather
+  h+='<h2 style="margin-top:1rem">7-Day Weather Forecast</h2>';
+  const w=await getWx();
+  h+=wxCard(w,true);
+
+  // Transport
+  h+=`<h2 style="margin-top:1rem">Transport — Mahé</h2>
+<div class="mob-banner">Always use hotel transfer or pre-booked taxi for reduced mobility.</div>
+<div class="card"><h3>🚗 Hotel Transfer (Recommended)</h3><p style="font-size:.85rem">Door-to-door, air-conditioned. Book at reception the day before. Best for mobility.</p></div>
+<div class="card"><h3>🚕 Taxi</h3><p style="font-size:.85rem">Available at hotel or by phone. Not metered — agree fare first.</p><p style="font-size:.82rem;color:var(--text2);margin-top:.3rem">Victoria Market ≈ 800 SCR · Beau Vallon ≈ 1,200 SCR · Anse Royale ≈ 400 SCR · Airport ≈ 600 SCR</p></div>
+<div class="card"><h3>🚌 Bus (reference only)</h3><p style="font-size:.85rem">7 SCR per journey. Limited accessibility — NOT recommended for reduced mobility.</p></div>`;
+
+  // Emergency
+  h+=`<h2 style="margin-top:1rem">Emergency Contacts</h2>
+<div class="card" style="border-left:3px solid var(--coral)">
+<p style="font-size:.88rem"><strong>🚔 Seychelles Police:</strong> 999</p>
+<p style="font-size:.88rem"><strong>🏥 Seychelles Hospital Victoria:</strong> +248 438 8000</p>
+<p style="font-size:.88rem"><strong>✈️ Emirates 24hr:</strong> +44 344 800 2777</p>
+<p style="font-size:.88rem"><strong>🇬🇧 UK FCDO Abroad:</strong> +44 207 008 5000</p>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.5rem">DoubleTree hotel: <input class="efield" data-save="emergency.hotel" placeholder="Fill on arrival"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Travel insurance emergency: <input class="efield" data-save="emergency.insurance" placeholder="Policy emergency number"></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Wife medical notes: <textarea class="efield" data-save="emergency.wifeNotes" placeholder="Medications, allergies, GP contact..." style="min-height:60px"></textarea></label>
+</div>`;
+
+  // Currency
+  h+=`<h2 style="margin-top:1rem">Currency & Tipping</h2>
+<div class="card">
+<label style="font-size:.85rem;font-weight:600">SCR per £1: <input class="efield efield-sm" type="number" id="fxRate" data-save="hotel.fxRate" value="${S.hotel.fxRate||60}" style="width:80px"></label>
+<div style="margin-top:.5rem"><label style="font-size:.85rem;font-weight:600">Convert £ to SCR: <input type="number" id="fxGbp" class="efield efield-sm" placeholder="£" style="width:80px"></label> <span id="fxResult" style="font-weight:700;font-size:.9rem"></span></div>
+<p style="font-size:.85rem;margin-top:.5rem">💳 Cards accepted at hotels, larger restaurants. Carry cash for markets and small cafés.</p>
+<p style="font-size:.85rem">💰 <strong>Tipping:</strong> 10% at restaurants if no service charge. Taxi: round up. Housekeeping: 20–50 SCR/day.</p>
+<p style="font-size:.85rem">🏧 ATMs available in Victoria. Hotel may offer cash advance.</p>
+</div>`;
+
+  el.innerHTML=h;
+  bindEditable();
+
+  // FX converter
+  const fxGbp=document.getElementById('fxGbp');
+  const fxRes=document.getElementById('fxResult');
+  const fxRate=document.getElementById('fxRate');
+  if(fxGbp&&fxRes){
+    const calc=()=>{const g=parseFloat(fxGbp.value),r=parseFloat(fxRate?.value)||60;fxRes.textContent=g?`= ${Math.round(g*r)} SCR`:''};
+    fxGbp.oninput=calc;
+    if(fxRate)fxRate.addEventListener('input',calc);
   }
 }
-
-async function renderWeather() {
-  const el = document.getElementById('weatherContent');
-  el.innerHTML = '<p style="text-align:center;padding:2rem;color:#888">Loading weather...</p>';
-  const w = await fetchWeather();
-
-  let html = `<div class="weather-current">
-    <div class="big-temp">${w.current.temp}°C</div>
-    <div class="desc">${w.current.desc}</div>
-    <div class="weather-info-grid">
-      <div class="weather-info-item">💧 Humidity: ${w.current.humidity}%</div>
-      <div class="weather-info-item">💨 Wind: ${w.current.wind} km/h</div>
-      <div class="weather-info-item">☀️ UV Index: ${w.current.uv || '8–11 (very high)'}</div>
-      <div class="weather-info-item">🌅 Sunrise ≈ 6:15am / Sunset ≈ 6:15pm</div>
-    </div>
-  </div>`;
-
-  if (w.isFallback) {
-    html += '<div class="weather-fallback">⚠️ Showing typical July weather for Anse Forbans. Live data unavailable — add your OpenWeatherMap API key for real-time forecasts.</div>';
-  }
-
-  html += '<h3>7-Day Forecast</h3><div class="weather-grid">';
-  w.forecast.forEach(d => {
-    html += `<div class="weather-day"><div class="day-name">${d.day}</div><div style="font-size:1.5rem">${d.icon}</div><div class="temp">${d.temp}°C</div></div>`;
-  });
-  html += '</div>';
-
-  // Guidance
-  html += `<div class="card" style="margin-top:1rem;border-left-color:var(--coral)">
-    <h3>☀️ Best Time to Go Out</h3>
-    <p style="font-size:.9rem">Early morning (6:30–10am) and late afternoon (4–6pm) are the most comfortable times. Avoid direct sun between 11am and 2pm — UV index is very high in July (8–11).</p>
-    <p style="font-size:.9rem;margin-top:.5rem"><strong>Beach suitability:</strong> Mornings are ideal. Afternoons may bring short showers — these pass quickly. Always have shade available and reapply sun cream every 2 hours.</p>
-  </div>`;
-
-  el.innerHTML = html;
-}
-renderWeather();
-
-/* ===== TRANSPORT ===== */
-function renderTransport() {
-  const el = document.getElementById('transportContent');
-  el.innerHTML = TRANSPORT_DATA.map(t => `
-    <div class="transport-card">
-      <span class="transport-label${t.recommended ? ' recommended' : ''}">${t.label}${t.recommended ? ' ✓ Recommended' : ''}</span>
-      <h3>${t.title}</h3>
-      <p style="font-size:.9rem">${t.body}</p>
-      <p style="font-size:.82rem;margin-top:.5rem;color:#666"><strong>Cost:</strong> ${t.price}</p>
-    </div>
-  `).join('');
-}
-renderTransport();
-
-/* ===== TOURISM ===== */
-const tourismFilters = ['All', 'Near Hotel', 'No Walking', 'Half Day', 'Indoors', 'Scenic Drive'];
-let activeTourismFilter = 'All';
-
-function renderTourism() {
-  document.getElementById('tourismFilters').innerHTML = tourismFilters.map(f =>
-    `<button class="filter-btn${f === activeTourismFilter ? ' active' : ''}" data-tf="${f}">${f}</button>`
-  ).join('');
-
-  const filtered = activeTourismFilter === 'All' ? TOURISM_DATA : TOURISM_DATA.filter(t => t.tags.includes(activeTourismFilter));
-  document.getElementById('tourismCards').innerHTML = filtered.map(t => `
-    <div class="card">
-      <div class="card-title">${t.title}</div>
-      <p style="font-size:.9rem">${t.desc}</p>
-      <div style="margin:.4rem 0">${t.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
-      <p style="font-size:.82rem;color:#666"><span class="mobility-badge" style="font-size:.72rem">Access: ${t.access}</span></p>
-    </div>
-  `).join('');
-
-  document.querySelectorAll('[data-tf]').forEach(btn => {
-    btn.addEventListener('click', () => { activeTourismFilter = btn.dataset.tf; renderTourism(); });
-  });
-}
-renderTourism();
-
-/* ===== FOOD ===== */
-const foodTags = ['All', 'Breakfast', 'Creole', 'Beachfront', 'Hotel', 'Short Transfer'];
-let activeFoodFilter = 'All';
-
-function renderFood() {
-  document.getElementById('foodFilters').innerHTML = foodTags.map(f =>
-    `<button class="filter-btn${f === activeFoodFilter ? ' active' : ''}" data-ff="${f}">${f}</button>`
-  ).join('');
-
-  const filtered = activeFoodFilter === 'All' ? FOOD_DATA : FOOD_DATA.filter(t => t.tags.includes(activeFoodFilter));
-  document.getElementById('foodCards').innerHTML = filtered.map(t => `
-    <div class="card">
-      <div class="card-title">${t.title}</div>
-      <p style="font-size:.9rem">${t.desc}</p>
-      <div style="margin:.4rem 0">${t.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
-      <p style="font-size:.82rem;color:#666"><span class="mobility-badge" style="font-size:.72rem">Access: ${t.access}</span></p>
-    </div>
-  `).join('');
-
-  document.querySelectorAll('[data-ff]').forEach(btn => {
-    btn.addEventListener('click', () => { activeFoodFilter = btn.dataset.ff; renderFood(); });
-  });
-}
-renderFood();
-
-/* ===== ITINERARY ===== */
-function getItinerary() {
-  if (state.itinerary) return state.itinerary;
-  return ITINERARY_DEFAULT.map(d => ({ ...d, note: '' }));
-}
-
-function saveItinerary(data) {
-  state.itinerary = data;
-  saveState();
-}
-
-function renderItinerary() {
-  const data = getItinerary();
-  const el = document.getElementById('itineraryCards');
-  el.innerHTML = data.map((d, i) => `
-    <div class="itin-card" data-idx="${i}">
-      <div class="itin-day">Day ${d.day} — ${d.date}</div>
-      <div class="itin-title">${d.title}</div>
-      <p style="font-size:.88rem;line-height:1.6">${d.plan}</p>
-      <textarea class="itin-note" placeholder="Add a personal note..." data-note="${i}">${d.note || ''}</textarea>
-      <div class="itin-actions">
-        <button class="itin-btn" data-move="up" data-mi="${i}" ${i === 0 ? 'disabled' : ''} aria-label="Move up">▲ Up</button>
-        <button class="itin-btn" data-move="down" data-mi="${i}" ${i === data.length - 1 ? 'disabled' : ''} aria-label="Move down">▼ Down</button>
-      </div>
-    </div>
-  `).join('');
-
-  el.querySelectorAll('.itin-note').forEach(ta => {
-    ta.addEventListener('input', () => {
-      const d = getItinerary();
-      d[ta.dataset.note].note = ta.value;
-      saveItinerary(d);
-    });
-  });
-
-  el.querySelectorAll('[data-move]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const d = getItinerary();
-      const idx = parseInt(btn.dataset.mi);
-      const dir = btn.dataset.move === 'up' ? -1 : 1;
-      const target = idx + dir;
-      if (target < 0 || target >= d.length) return;
-      [d[idx], d[target]] = [d[target], d[idx]];
-      // Fix day numbers
-      d.forEach((item, j) => item.day = j + 1);
-      saveItinerary(d);
-      renderItinerary();
-    });
-  });
-}
-renderItinerary();
-
-/* ===== COMFORT ===== */
-function renderComfort() {
-  const el = document.getElementById('comfortContent');
-  let html = '';
-  for (const [key, section] of Object.entries(COMFORT_DATA)) {
-    html += `<div class="comfort-section"><h3>${section.title}</h3>`;
-    html += section.items.map((item, i) => {
-      const id = `comfort_${key}_${i}`;
-      const checked = state.comfort[id] || false;
-      return `<div class="checklist-item">
-        <div class="check-box${checked ? ' checked' : ''}" role="checkbox" aria-checked="${checked}" tabindex="0" data-comfort="${id}"></div>
-        <div class="check-label${checked ? ' done' : ''}">${item}</div>
-      </div>`;
-    }).join('');
-    html += '</div>';
-  }
-  el.innerHTML = html;
-
-  el.querySelectorAll('.check-box').forEach(box => {
-    const handler = () => {
-      const id = box.dataset.comfort;
-      state.comfort[id] = !state.comfort[id];
-      saveState();
-      renderComfort();
-    };
-    box.addEventListener('click', handler);
-    box.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); handler(); } });
-  });
-}
-renderComfort();
+renderInfo();
 </script>
 </body>
 </html>
