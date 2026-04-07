@@ -237,6 +237,34 @@ h3{font-size:1.05rem;font-weight:600;margin-bottom:.5rem}
   <section class="section" id="sec-pretrip" aria-label="Pre-Trip Checklist">
     <h2>Pre-Trip Checklist</h2>
     <div class="mobility-banner">Ensure Emirates mobility assistance is pre-booked for all four flights before departure.</div>
+
+    <div class="card" style="border-left-color:var(--ocean);margin-bottom:1.25rem">
+      <h3 style="color:var(--ocean);margin-bottom:.5rem">🛂 Seychelles Travel Authorisation (TA)</h3>
+      <p style="font-size:.9rem;margin-bottom:.5rem">UK citizens do <strong>not</strong> need a visa. You need a <strong>Travel Authorisation</strong> — a free online form for each traveller, submitted within <strong>30 days of arrival</strong>.</p>
+      <p style="font-size:.88rem;font-weight:700;margin-bottom:.5rem">Apply here: <a href="https://seychelles.govtas.com" target="_blank" rel="noopener" style="color:var(--ocean)">seychelles.govtas.com</a></p>
+
+      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">📋 What you need to apply (per person):</h4>
+      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
+        <li><strong>Valid passport</strong> — must cover the full duration of stay</li>
+        <li><strong>Return flight booking</strong> — confirmation for EK708 on 14th July</li>
+        <li><strong>Accommodation booking</strong> — DoubleTree Hilton confirmation</li>
+        <li><strong>Travel &amp; health insurance</strong> — must be valid for Seychelles dates (required)</li>
+        <li><strong>Passport-style photo</strong> — digital copy, clear and recent</li>
+        <li><strong>Email address</strong> — approval is sent by email</li>
+      </ul>
+
+      <h4 style="font-size:.88rem;margin:.75rem 0 .35rem">⏱️ Timeline:</h4>
+      <ul style="font-size:.85rem;padding-left:1.25rem;line-height:1.7">
+        <li>Apply <strong>within 30 days of arrival</strong> — earliest date to apply: <strong>5th June 2026</strong></li>
+        <li>Approval typically within <strong>3–5 days</strong></li>
+        <li>Apply for <strong>both travellers</strong> — one form each</li>
+        <li>Free of charge</li>
+        <li>Print or save the approval email — may be checked at boarding</li>
+      </ul>
+
+      <p style="font-size:.82rem;margin-top:.75rem;color:#666">Also available via the <strong>Seychelles e-Border app</strong> on iOS and Android. Source: <a href="https://seychelles.govtas.com/en/pages/HOWTO" target="_blank" rel="noopener" style="color:var(--ocean)">Official TA guide</a></p>
+    </div>
+
     <div id="pretripChecklist"></div>
   </section>
 
@@ -327,8 +355,8 @@ const JOURNEY_DATA = [
     date: 'Before 3rd July',
     title: 'Pre-Trip Preparation',
     body: `<p>Complete all checklist items in the Pre-Trip tab before departure.</p>
-<p>Key actions: confirm travel insurance, book Emirates mobility assistance for all four flights, ensure medication supply covers full trip plus 3-day buffer, obtain Seychellois Rupee and Euros.</p>`,
-    tip: 'Both SCR and Euros are widely accepted in Seychelles. ATMs available at the airport and Victoria.',
+<p>Key actions: submit Seychelles Travel Authorisation at <strong>seychelles.govtas.com</strong> (apply from 5th June, both travellers), confirm travel insurance, book Emirates mobility assistance for all four flights, ensure medication supply covers full trip plus 3-day buffer, obtain Seychellois Rupee and Euros.</p>`,
+    tip: 'No visa needed — just the free online Travel Authorisation. Apply within 30 days of arrival. Both SCR and Euros are widely accepted.',
     mobility: ['Emirates mobility assistance pre-booked'],
     lounge: [],
     tight: false
@@ -415,7 +443,10 @@ const JOURNEY_DATA = [
 ];
 
 const PRETRIP_ITEMS = [
-  'Travel insurance confirmed',
+  'Seychelles Travel Authorisation (TA) submitted for Anthony — apply from 5th June at seychelles.govtas.com',
+  'Seychelles Travel Authorisation (TA) submitted for wife — apply from 5th June at seychelles.govtas.com',
+  'TA approval emails saved and printed for both travellers',
+  'Travel insurance confirmed (required for TA application)',
   'Emirates mobility assistance pre-booked for all four flights (EK002, EK705, EK708, EK001)',
   'Medication packed — enough for full trip plus 3-day buffer',
   'Seychellois Rupee obtained',
