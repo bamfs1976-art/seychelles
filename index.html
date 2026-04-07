@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Seychelles Holiday Assistant</title>
-<meta name="description" content="Travel assistant for Anthony and wife's Seychelles holiday, July 2026">
+<meta name="description" content="Travel assistant for Anthony and Lesley's Seychelles holiday, July 2026">
 <meta name="theme-color" content="#00BCD4">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌴</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -270,8 +270,9 @@ color:var(--ocean);font-weight:700;
 <body>
 
 <header class="top-bar" role="banner">
+<div style="font-size:1.1rem;font-weight:800;letter-spacing:.3px;margin-bottom:.2rem">🌴 Bamfords Seychelles Holiday</div>
 <div class="top-row">
-  <span class="top-phase" id="tPhase"></span>
+  <button class="top-phase" id="tPhase" style="border:none;cursor:pointer;font-family:inherit" aria-label="Go to journey"></button>
   <span class="top-date" id="tDate"></span>
   <button class="refresh-btn" id="refreshBtn" aria-label="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></button>
 </div>
@@ -392,7 +393,18 @@ function makeChk(list,stateKey,onChange){
 }
 function bindChk(container,cb){
   container.querySelectorAll('.chk-box').forEach(b=>{
-    const h=()=>{const sk=b.dataset.sk,i=b.dataset.idx;if(!S[sk])S[sk]={};S[sk][i]=!S[sk][i];save();if(cb)cb();};
+    const h=()=>{
+      const sk=b.dataset.sk,i=b.dataset.idx;
+      if(!S[sk])S[sk]={};
+      S[sk][i]=!S[sk][i];save();
+      // Update DOM directly
+      const on=S[sk][i];
+      b.classList.toggle('on',on);
+      b.setAttribute('aria-checked',String(on));
+      const label=b.nextElementSibling;
+      if(label)label.classList.toggle('done',on);
+      if(cb)cb();
+    };
     b.onclick=h;b.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();h()}};
   });
 }
@@ -408,7 +420,9 @@ function feetIcons(n){return '🦶'.repeat(n)}
 
 /* ========== TOP BAR ========== */
 function renderTop(){
-  document.getElementById('tPhase').textContent=tripPhase();
+  const phaseEl=document.getElementById('tPhase');
+  phaseEl.textContent=tripPhase();
+  phaseEl.onclick=()=>navTo('journey');
   document.getElementById('tDate').textContent=fmtDate(today());
   document.getElementById('tTip').textContent=dailyTip();
 }
@@ -452,7 +466,7 @@ async function getWx(){
   }catch{return WX_FALLBACK}
 }
 function wxCard(w,full){
-  let h=`<div class="wx-current"><div class="big">${w.current.temp}°C</div><div class="desc">${w.current.desc}</div><div class="wx-info"><div>💧 Humidity: ${w.current.humidity}%</div><div>💨 Wind: ${w.current.wind} km/h</div><div>☀️ UV: ${w.current.uv||'8–11 (very high)'}</div><div>🌧️ Rain chance: ${w.current.rain}%</div></div></div>`;
+  let h=`<div class="wx-current"><div class="big">${w.current.temp}°C</div><div class="desc">${w.current.desc}</div><div class="wx-info"><div>💧 Humidity: ${w.current.humidity}%</div><div>💨 Wind: ${w.current.wind} km/h</div><div>☀️ UV: ${w.current.uv||'8–11 (very high)'}</div><div>🌧️ Rain chance: ${w.current.rain}%</div><div>🌅 Sunrise ≈ 6:15am</div><div>🌇 Sunset ≈ 6:15pm</div></div></div>`;
   if(w.fb)h+='<div class="wx-fallback">Showing typical July weather. Add OpenWeatherMap API key for live data.</div>';
   if(full){
     h+='<h3>7-Day Forecast</h3><div class="wx-grid">';
@@ -487,7 +501,7 @@ async function renderToday(){
   }
 
   // Comfort reminders
-  const chipTypes=['☀️ Apply sun cream','💧 Drink water','🦶 Wife foot check','💊 Medication taken','🧴 Reapply sun cream'];
+  const chipTypes=['☀️ Apply sun cream','💧 Drink water','🦶 Lesley foot check','💊 Medication taken','🧴 Reapply sun cream'];
   const chipDate=today().toDateString();
   h+='<div class="sec-title">Today\'s Reminders</div><div style="margin-bottom:.75rem">';
   chipTypes.forEach((c,i)=>{
@@ -497,11 +511,43 @@ async function renderToday(){
   });
   h+='</div>';
 
+  // Comfort checklists
+  const COMFORT={
+    arrival:{title:'🛬 Arrival Day (5th July)',items:['Medication taken','Sun cream applied','Hydrated — drink water after flight','Room checked and comfortable','Early check-in status confirmed','Lesley\'s mobility aid accessible']},
+    beach:{title:'🏖️ Beach Day',items:['Hat packed','Sun cream SPF 50+ applied (reapply every 2 hours)','Water bottle filled','Shade plan agreed (umbrella or lounger)','Return time agreed','Lesley\'s foot protected from hot sand and direct sun']},
+    market:{title:'🏪 Market / Excursion Day',items:['Cash in SCR','Comfortable supportive footwear for Lesley','Water bottle','Rest break plan agreed','Taxi return pre-booked or number saved']},
+    departure:{title:'✈️ Departure Day (14th July)',items:['Luggage weighed (Emirates allowance checked)','Passports checked and accessible','Medication in hand luggage','Airport transfer booked (depart by 9:30pm)','Checkout confirmed','Hotel luggage storage arranged']},
+    daily:{title:'☀️ Daily Reminders',items:['UV reminder — very high in July (8–11). Avoid midday sun 11am–2pm','Hydration — drink at least 2 litres of water per day','Morning weather check — see weather above','Sun cream reapplication every 2 hours when outdoors','Medication check — taken today?']}
+  };
+  h+='<div class="sec-title">Comfort &amp; Wellbeing Checklists</div>';
+  h+='<div class="mob-banner">Use mobility assistance at all airports. Do not rush transfers. Lesley\'s comfort is the priority throughout.</div>';
+  for(const[key,section] of Object.entries(COMFORT)){
+    h+=`<div class="card"><h3>${section.title}</h3>`;
+    h+=section.items.map((item,i)=>{
+      const id='comfort_'+key+'_'+i,checked=S.comfort[id]||false;
+      return`<div class="chk"><div class="chk-box${checked?' on':''}" role="checkbox" aria-checked="${checked}" tabindex="0" data-sk="comfort" data-idx="${id}"></div><div class="chk-label${checked?' done':''}">${item}</div></div>`;
+    }).join('');
+    h+='</div>';
+  }
+
   el.innerHTML=h;
 
   // Bind chips
   el.querySelectorAll('[data-chip]').forEach(ch=>{
     ch.onclick=()=>{const k=ch.dataset.chip;S.todayChips[k]=!S.todayChips[k];save();renderToday()};
+  });
+  // Bind comfort checklists
+  el.querySelectorAll('.chk-box[data-sk="comfort"]').forEach(b=>{
+    const h2=()=>{
+      const id=b.dataset.idx;
+      S.comfort[id]=!S.comfort[id];save();
+      const on=S.comfort[id];
+      b.classList.toggle('on',on);
+      b.setAttribute('aria-checked',String(on));
+      const label=b.nextElementSibling;
+      if(label)label.classList.toggle('done',on);
+    };
+    b.onclick=h2;b.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();h2()}};
   });
 }
 function navTo(tab){
@@ -513,17 +559,17 @@ function navTo(tab){
 renderToday();
 
 /* ========== TAB 2: JOURNEY ========== */
-const PRETRIP=['Travel insurance confirmed','Emirates mobility assistance pre-booked for all four flights (EK002, EK705, EK708, EK001)','Medication packed — enough for full trip plus 3-day buffer','Seychellois Rupee and Euros obtained','Priority Pass card packed','Phone roaming activated or eSIM purchased','Hotel confirmations printed or saved offline','DoubleTree early check-in requested for 5th July','Sun cream SPF 50+ packed','Wife mobility aid confirmed and packed','Lightweight foldable wheelchair or scooter confirmed if needed','Seychelles Travel Authorisation submitted for Anthony','Seychelles Travel Authorisation submitted for wife','TA approval emails saved and printed','Notify Chase and Monzo banks of travel dates','Download offline Google Maps for Mahé','Travel health appointment completed — Hep A and tetanus checked'];
+const PRETRIP=['Seychelles Travel Authorisation (TA) submitted for Anthony — apply from 5th June at seychelles.govtas.com','Seychelles Travel Authorisation (TA) submitted for Lesley — apply from 5th June at seychelles.govtas.com','TA approval emails saved and printed for both travellers','Travel insurance confirmed (required for TA application)','Emirates mobility assistance pre-booked for all four flights (EK002, EK705, EK708, EK001)','Medication packed — enough for full trip plus 3-day buffer','Seychellois Rupee obtained','Euros obtained','Priority Pass card packed','Phone roaming activated or eSIM purchased for both phones','O2 data roaming turned off on both phones (re-enable only with bolt-on or eSIM)','Hotel confirmations printed (Hilton Garden Inn T2/T3 + DoubleTree)','DoubleTree early check-in requested (arriving 5th July after overnight flight)','Sun cream SPF 50+ packed','Lesley mobility aid confirmed and packed','Lightweight foldable wheelchair or scooter confirmed if needed','Travel health appointment booked with GP or pharmacy (by mid-May)','Hepatitis A vaccination — at least 2 weeks before travel (by 19th June)','Tetanus booster — if last dose was more than 10 years ago','Check routine UK vaccinations are up to date','Notify Chase bank of travel to Seychelles and Dubai (3rd–15th July)','Notify Monzo of travel to Seychelles and Dubai (3rd–15th July)','Check PINs memorised for both cards','Download offline Google Maps for Mahé'];
 const RETPACK=['Medication in hand luggage confirmed','Liquids in 100ml containers in clear bag','UK customs: declare any food, plants or wildlife products','Duty free within UK allowance','Coco de mer: check export permit if purchased','Luggage weighed and within limit'];
 
 const JOURNEY=[
 {date:'3rd July',title:'Swansea → London Heathrow',status:'upcoming',
 body:`<p><strong>Train departs Swansea 2:20pm</strong> → arrives Heathrow approx. 6:00pm.</p><p>Check in: <strong>Hilton Garden Inn Heathrow T2/T3</strong>. Standard check-in 3pm — room should be ready.</p><p>Arrange transfer from Elizabeth Line or Heathrow Express to hotel in advance.</p>`,
-tip:'The Hilton Garden Inn is connected to T2 via covered walkway and T3 via underpass.',mob:['Pre-book transfer to hotel'],lounge:[],tight:false},
+tip:'The Hilton Garden Inn is connected to T2 via covered walkway and T3 via underpass.',mob:['Pre-book transfer to hotel','Request porter assistance at hotel'],lounge:[],tight:false},
 
 {date:'4th July',title:'London → Dubai',status:'upcoming',
 body:`<p>Check out Hilton Garden Inn. <strong>Leave room by 9:30am.</strong></p><p><strong>EK002 departs Heathrow T3 at 2:25pm.</strong></p><p>Arrive at Emirates check-in by <strong>10:30am</strong> — allow extra time for mobility needs.</p><p>Route to T3: hotel → T2 covered walkway → lift/escalator to underpass → T3 departures (20–30 mins with luggage).</p><p>Inform Emirates agent about tight Dubai connection — request fast-track transit flag on booking.</p>`,
-tip:'Check-in opens approx. 4 hours before departure. Confirm wheelchair assistance at the desk.',mob:['Wheelchair at Emirates check-in','Flag tight Dubai transit at check-in'],lounge:['No.1 Lounge Heathrow T3','Plaza Premium T3 — check Priority Pass app'],tight:false},
+tip:'Check-in opens approx. 4 hours before departure. Confirm wheelchair assistance at the desk.',mob:['Wheelchair at Emirates check-in','Allow extra time for security','Flag tight Dubai transit at check-in'],lounge:['No.1 Lounge Heathrow T3','Plaza Premium T3 — check Priority Pass app'],tight:false},
 
 {date:'4th–5th July',title:'Dubai Transit (Outbound)',status:'upcoming',
 body:`<p><strong>EK002 arrives Dubai 00:25am</strong> (5th July) — Terminal 3, typically Concourse C.</p><p>Transit to <strong>EK705</strong> — Terminal 3, Concourse B (gate B26 area). Layover: <strong>1hr 50min</strong>.</p><p><strong>EK705 departs Dubai 2:15am.</strong></p><h4 style="margin:.5rem 0 .3rem">Step-by-step transit:</h4><ol style="padding-left:1.2rem;font-size:.85rem;line-height:1.7"><li>Wheelchair meets you at aircraft door (pre-booked)</li><li>Follow "Connections" signs — NOT Arrivals/Immigration</li><li>Transit security — expedited lane for wheelchair</li><li>Concourse C → Concourse B via walkway (15–20 mins by wheelchair)</li><li>Check departure screens for EK705 gate</li><li>Go directly to gate — boarding starts 45 mins before</li></ol><p style="margin-top:.4rem"><strong>Bags:</strong> Tagged through to Seychelles. <strong>Immigration:</strong> Not required.</p>`,
@@ -558,6 +604,71 @@ function renderJourney(){
   h+='<div class="mob-banner">Ensure Emirates mobility assistance is pre-booked for all four flights before departure.</div>';
   h+='<div class="card">'+makeChk(PRETRIP,'pretrip')+'</div>';
 
+  // TA info card
+  h+=`<div class="card" style="border-left:3px solid var(--ocean)"><h3 style="color:var(--ocean)">🛂 Seychelles Travel Authorisation (TA)</h3>
+<p style="font-size:.88rem;margin-bottom:.4rem">UK citizens do <strong>not</strong> need a visa. You need a <strong>Travel Authorisation</strong> — a free online form per traveller, within <strong>30 days of arrival</strong>.</p>
+<p style="font-size:.85rem;font-weight:700">Apply: <a href="https://seychelles.govtas.com" target="_blank" rel="noopener">seychelles.govtas.com</a></p>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">📋 What you need (per person):</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li><strong>Valid passport</strong> — must cover full duration of stay</li><li><strong>Return flight booking</strong> — EK708 on 14th July</li><li><strong>Accommodation booking</strong> — DoubleTree confirmation</li><li><strong>Travel &amp; health insurance</strong> — valid for Seychelles dates (required)</li><li><strong>Passport-style photo</strong> — digital copy</li><li><strong>Email address</strong> — approval sent by email</li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">⏱️ Timeline:</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li>Earliest to apply: <strong>5th June 2026</strong></li><li>Approval: <strong>3–5 days</strong></li><li>Apply for <strong>both travellers</strong> — one form each</li><li>Free of charge</li><li>Print or save approval email — may be checked at boarding</li></ul>
+<p style="font-size:.78rem;margin-top:.5rem;color:var(--text2)">Also via <strong>Seychelles e-Border app</strong> (iOS/Android). Source: <a href="https://seychelles.govtas.com/en/pages/HOWTO" target="_blank" rel="noopener">Official TA guide</a></p></div>`;
+
+  // Vaccinations
+  h+=`<div class="card" style="border-left:3px solid var(--green)"><h3 style="color:var(--green)">💉 Vaccinations</h3>
+<p style="font-size:.88rem;margin-bottom:.4rem"><strong>No mandatory vaccinations</strong> for UK travellers via Dubai. Yellow fever only required if arriving from an endemic country — neither UK nor UAE are endemic.</p>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Recommended by NHS / NaTHNaC:</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li><strong>Routine UK vaccinations up to date</strong> — check with GP</li><li><strong>Hepatitis A</strong> — single dose, effective within 2 weeks. Book by <strong>19th June</strong></li><li><strong>Tetanus</strong> — booster if last dose more than 10 years ago</li><li><strong>Hepatitis B</strong> — consider if not already vaccinated</li><li><strong>Typhoid</strong> — consider, especially if eating outside hotel</li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Action:</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li>Book travel health appointment <strong>6–8 weeks before</strong> (mid-May)</li><li>Some vaccines need time — don't leave it late</li><li>No malaria risk in Seychelles — no antimalarials needed</li></ul>
+<p style="font-size:.78rem;margin-top:.5rem;color:var(--text2)">Sources: <a href="https://travelhealthpro.org.uk/country/194/seychelles" target="_blank" rel="noopener">NaTHNaC</a> · <a href="https://www.fitfortravel.nhs.uk/destinations/africa/seychelles" target="_blank" rel="noopener">NHS Fit for Travel</a></p></div>`;
+
+  // Hilton Garden Inn
+  h+=`<div class="card" style="border-left:3px solid var(--turquoise)"><h3 style="color:var(--ocean)">🏨 Hilton Garden Inn — Heathrow T2/T3 (3rd–4th July)</h3>
+<p style="font-size:.88rem;margin-bottom:.4rem">Connected to T2 via covered walkway. T3 via pedestrian underpass. 369 air-conditioned rooms, free Wi-Fi, safe, tea/coffee. 24-hour front desk, fitness centre, Runway Bar with runway views.</p>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Evening Meal — 3rd July:</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li><strong>The Apron Restaurant</strong> (on-site) — dinner 5:30pm–10:30pm. Pizzas, curries, rib-eye steaks, burgers, chicken wings, gyozas. <em>Easiest option after travel.</em></li><li><strong>The Apron Bar</strong> (on-site) — 5pm–10:30pm. Paninis, wraps, burgers, drinks.</li><li><strong>The Runway Bar</strong> (on-site) — cocktails with runway views.</li></ul>
+<p style="font-size:.85rem;margin-top:.4rem"><strong>Recommendation:</strong> Eat at The Apron — no transfer, good menu, arrive ~6pm after Swansea.</p>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">🚶 Walking to Emirates Check-in (T3) — 4th July:</h4>
+<ol style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li>Leave hotel via <strong>covered walkway bridge</strong> into T2 car park</li><li>Enter Terminal 2, follow signs for <strong>Terminal 3</strong></li><li>Take <strong>lift or escalator down</strong> to pedestrian underpass</li><li>Follow underpass to <strong>Terminal 3 departures</strong></li><li>Emirates check-in desks in the <strong>T3 check-in hall</strong></li></ol>
+<div class="mob-banner" style="margin-top:.4rem">Allow 20–30 mins with luggage and reduced mobility. Consider requesting a wheelchair or buggy at the T2 information desk, or ask hotel to arrange a T3 drop-off.</div>
+<p style="font-size:.78rem;margin-top:.5rem;color:var(--text2)">Sources: <a href="https://www.hilton.com/en/hotels/lhrhegi-hilton-garden-inn-london-heathrow-terminals-2-and-3/dining/" target="_blank" rel="noopener">Hilton Dining</a> · <a href="https://www.tripadvisor.com/ShowTopic-g186338-i17-k13687986-o20-Heathrow_Airport_Hilton_Garden_Inn_to_T3_walking-London_England.html" target="_blank" rel="noopener">Route guide</a></p></div>`;
+
+  // DoubleTree expanded
+  h+=`<div class="card" style="border-left:3px solid var(--turquoise)"><h3 style="color:var(--ocean)">🌴 DoubleTree by Hilton — Seychelles Allamanda (5th–14th July)</h3>
+<p style="font-size:.88rem;margin-bottom:.4rem">Boutique 30-room beachfront resort at Anse Forbans, surrounded by tropical gardens. Approx. 30 min transfer from airport.</p>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Facilities:</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li>Private beach — direct access, flat paths from room</li><li>Infinity pool with ocean views</li><li><strong>eForea Spa</strong> — massage, manicure/pedicure, body treatments</li><li>24-hour fitness centre</li><li>Concierge and tour desk</li><li>Free parking and EV charging</li><li>Grocery/convenience store on-site</li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Dining:</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li><strong>Les Palms Restaurant</strong> — breakfast buffet (included), lunch and dinner. Seafood, Creole, international.</li><li><strong>Oceanview Bar</strong> — cocktails, light bites, sea views.</li><li><strong>Room service</strong> — available for rest days.</li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Rooms:</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li>Balcony, seating area, flat-screen TV, coffee machine, minibar</li><li>Premium King and Grand Deluxe King options</li><li>Some rooms have hot tub with ocean view</li></ul>
+<p style="font-size:.78rem;margin-top:.5rem;color:var(--text2)">Source: <a href="https://www.hilton.com/en/hotels/sezdtdi-doubletree-seychelles-allamanda-resort-and-spa/" target="_blank" rel="noopener">Hilton — DoubleTree Seychelles</a></p></div>`;
+
+  // Banking & Cards
+  h+=`<div class="card" style="border-left:3px solid var(--ocean)"><h3 style="color:var(--ocean)">💳 Banking &amp; Cards</h3>
+<p style="font-size:.88rem;margin-bottom:.4rem">Both Monzo and Chase are excellent travel cards. Take both — keep one as backup.</p>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Chase UK (recommended primary):</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li><strong>No foreign transaction fees</strong> — Mastercard rate, no markup</li><li><strong>No ATM fees abroad</strong> — up to £500/day, £1,500/month</li><li>Local ATM operators may charge own fee</li><li>Always pay in <strong>local currency (SCR)</strong> — never accept GBP at the till</li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Monzo (backup):</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li><strong>No fees on card spending</strong> — Mastercard rate</li><li><strong>ATM:</strong> first £200 free per 30 days outside EEA, then 2.5%</li><li>Instant spending notifications — great for budget tracking</li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Before you go:</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li>Notify both banks of travel (Seychelles + Dubai, 3rd–15th July)</li><li>Ensure PINs are memorised (chip and PIN in Seychelles)</li><li>Cards accepted at hotels and restaurants — cash for markets and taxis</li><li>ATMs at Mahé airport and in Victoria</li></ul>
+<p style="font-size:.78rem;margin-top:.5rem;color:var(--text2)">Sources: <a href="https://www.chase.co.uk/gb/en/support/travel-with-chase/" target="_blank" rel="noopener">Chase UK Travel</a> · <a href="https://monzo.com/help/travelling/understanding-fees" target="_blank" rel="noopener">Monzo fees abroad</a></p></div>`;
+
+  // Mobile Data & O2
+  h+=`<div class="card" style="border-left:3px solid var(--coral)"><h3 style="color:var(--coral)">📱 Mobile Data &amp; Coverage (O2)</h3>
+<p style="font-size:.88rem;margin-bottom:.4rem">Seychelles is O2 <strong>"Rest of World"</strong>. Standard roaming: up to <strong>£7.20 per MB</strong>. You need a plan or alternative.</p>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Option 1: O2 Travel Bolt On (easiest):</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li><strong>£7.50/day</strong> — only charged on days you connect</li><li>500 mins, 500 texts, 1GB data per day</li><li>Add via My O2 app before travel — add to each account</li><li>10 days on holiday: ~<strong>£75/phone</strong> (£150 total)</li><li><a href="https://www.o2.co.uk/international/using-your-phone-abroad" target="_blank" rel="noopener">Check Seychelles is included →</a></li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Option 2: Travel eSIM (cheaper):</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li>Buy data eSIM before you go — <strong>Airalo</strong>, <strong>Saily</strong>, <strong>Holafly</strong></li><li>~<strong>£6–15 for 1–5GB</strong> over 7–30 days</li><li>Data only — use WhatsApp for calls</li><li>Check phone supports eSIM (iPhone XS+, Samsung S20+)</li><li>Buy and install in UK — activate on arrival</li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Option 3: Hotel Wi-Fi only (free):</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li>DoubleTree has free Wi-Fi — fine for hotel days</li><li>No data when out (taxis, Victoria, beaches)</li><li>Download offline Google Maps for Mahé before you go</li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Before you go:</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li><strong>Turn off data roaming</strong> on both phones before leaving UK</li><li>Download offline maps and entertainment on Wi-Fi</li><li>Coverage on Mahé generally good (Airtel and Cable &amp; Wireless)</li></ul>
+<p style="font-size:.78rem;margin-top:.5rem;color:var(--text2)">Sources: <a href="https://www.o2.co.uk/international/using-your-phone-abroad" target="_blank" rel="noopener">O2 Travel</a> · <a href="https://www.monito.com/en/best-esim-for/seychelles" target="_blank" rel="noopener">Best eSIM for Seychelles</a></p></div>`;
+
   h+='<h2 style="margin-top:1rem">Journey Timeline</h2>';
   JOURNEY.forEach(j=>{
     h+=`<div class="card"><div class="card-date">${j.date} <span class="badge badge-${j.status}">${j.status}</span></div><div class="card-title">${j.title}</div><div class="card-body">${j.body}</div>`;
@@ -581,22 +692,27 @@ renderJourney();
 
 /* ========== TAB 3: EXPLORE ========== */
 const ACTIVITIES=[
-{title:'Anse Forbans Beach',desc:'Hotel doorstep. Calm water, sunbeds, shade. Excellent accessibility.',tags:['Beach','Near Hotel'],feet:1,dist:'0 min'},
-{title:'Anse Royale Beach',desc:'Beautiful long beach. Calm waters, sunbeds, cafés nearby.',tags:['Beach','Half Day'],feet:1,dist:'10 min taxi'},
-{title:'Petite Police Beach',desc:'Quiet, secluded cove. Very peaceful. Limited facilities.',tags:['Beach','Near Hotel'],feet:2,dist:'15 min taxi'},
-{title:'Victoria Botanical Gardens',desc:'Giant tortoises, tropical plants, flat paths throughout. Lovely morning visit.',tags:['Half Day'],feet:2,dist:'20 min taxi'},
-{title:'Morne Seychellois Viewpoint',desc:'Spectacular mountain and jungle views. Entirely by car — no walking.',tags:['Scenic','No Walking'],feet:1,dist:'30 min taxi'},
-{title:'South Mahé Coastal Drive',desc:'Dramatic granite boulders and ocean views. Full scenic drive, stop at viewpoints.',tags:['Scenic','No Walking'],feet:1,dist:'By taxi'},
-{title:'DoubleTree Spa',desc:'On-site spa. Massage, manicure/pedicure, body treatments. Book early.',tags:['Near Hotel','Indoors','No Walking'],feet:1,dist:'0 min'},
-{title:'Glass-Bottom Boat Trip',desc:'See coral and fish without getting wet. Seated throughout. Check mobility with concierge.',tags:['Half Day'],feet:2,dist:'Varies'},
-{title:'Creole Cooking Class',desc:'Learn traditional Seychellois dishes. Seated activity. Check hotel for on-site options.',tags:['Half Day','Indoors'],feet:1,dist:'Hotel or nearby'}
+{title:'Anse Forbans Beach',desc:'Hotel doorstep. Calm water, sunbeds, shade. Excellent accessibility.',tags:['Beach','Near Hotel','No Walking'],feet:1,dist:'0 min',access:'Direct from hotel. Flat path.'},
+{title:'Anse Royale Beach',desc:'Beautiful long beach. Calm waters, sunbeds, cafés nearby.',tags:['Beach','Half Day'],feet:1,dist:'10 min taxi',access:'Short taxi. Taxi drops at beach edge. Minimal walking.'},
+{title:'Petite Police Beach',desc:'Quiet, secluded cove. Very peaceful. Limited facilities.',tags:['Beach','Near Hotel'],feet:2,dist:'15 min taxi',access:'Short taxi. Some uneven ground from road to sand.'},
+{title:'Victoria Botanical Gardens',desc:'Giant tortoises, tropical plants, flat paths throughout. Lovely morning visit.',tags:['Half Day'],feet:2,dist:'20 min taxi',access:'Taxi to Victoria. Flat paths throughout gardens. Fully accessible.'},
+{title:'Victoria Market',desc:'Colourful market — fresh fish, spices, fruits, souvenirs. Authentic Creole atmosphere.',tags:['Half Day'],feet:2,dist:'20 min taxi',access:'Taxi to Victoria (~800 SCR). Short walk from taxi drop. Uneven ground inside — take care.'},
+{title:'Morne Seychellois Viewpoint',desc:'Spectacular mountain and jungle views from Sans Souci viewpoint. Entirely by car — no walking.',tags:['Scenic','Scenic Drive','No Walking'],feet:1,dist:'30 min taxi',access:'Entirely by car. Viewpoints accessible from roadside. No hiking.'},
+{title:'South Mahé Coastal Drive',desc:'Dramatic granite boulders and ocean views. Full scenic drive, stop at viewpoints from car.',tags:['Scenic','Scenic Drive','No Walking'],feet:1,dist:'By taxi',access:'Entirely by car. Stop at viewpoints without leaving vehicle.'},
+{title:'DoubleTree Spa',desc:'On-site eForea Spa. Massage, manicure/pedicure, body treatments. Book early in stay.',tags:['Near Hotel','Indoors','No Walking'],feet:1,dist:'0 min',access:'Within hotel grounds. Flat access.'},
+{title:'Glass-Bottom Boat Trip',desc:'See coral and fish without getting wet. Seated throughout. Check mobility suitability with concierge before booking.',tags:['Half Day'],feet:2,dist:'Varies',access:'Taxi to departure point. May need to step down into boat — ask operator about mobility.'},
+{title:'Creole Cooking Class',desc:'Learn traditional Seychellois dishes. Seated activity. Check hotel for on-site options first.',tags:['Half Day','Indoors'],feet:1,dist:'Hotel or nearby',access:'At hotel or short taxi. Seated activity — excellent for reduced mobility.'}
 ];
 const RESTAURANTS=[
-{title:'DoubleTree Restaurant (Les Palms)',desc:'On-site. Breakfast buffet, lunch, dinner. Fresh seafood and Creole. Easiest option.',tags:['Food','Near Hotel'],feet:1,dist:'0 min',price:'💰💰'},
-{title:'Kaz Kreol, Anse Royale',desc:'Authentic Creole. Grilled fish, octopus curry. Casual beachside.',tags:['Food'],feet:1,dist:'10 min taxi',price:'💰💰'},
-{title:'Marie-Antoinette, Victoria',desc:'Iconic Creole set menu since 1972. Colonial house. Some steps at entrance.',tags:['Food'],feet:2,dist:'20 min taxi',price:'💰💰💰'},
-{title:'Loutier Coco Beach Café',desc:'Casual beachfront. Cold drinks, light meals, very relaxed.',tags:['Food','Beach'],feet:1,dist:'10 min taxi',price:'💰'},
-{title:'Le Reduit, Anse Royale',desc:'Good seafood restaurant. Accessible entrance. Popular for dinner.',tags:['Food'],feet:1,dist:'10 min taxi',price:'💰💰'}
+{title:'DoubleTree Restaurant (Les Palms)',desc:'On-site. Breakfast buffet, lunch, dinner. Fresh seafood and Creole. Easiest option.',tags:['Food','Near Hotel'],feet:1,dist:'0 min',price:'💰💰',access:'Within hotel. Flat access from room.'},
+{title:'Hotel Room Service',desc:'Available at DoubleTree for days when you want to take it easy. No walking required.',tags:['Food','Near Hotel'],feet:1,dist:'0 min',price:'💰💰',access:'In-room. No walking.'},
+{title:'Kaz Kreol, Anse Royale',desc:'Authentic Creole. Grilled fish, octopus curry. Casual beachside.',tags:['Food'],feet:1,dist:'10 min taxi',price:'💰💰',access:'Short taxi. Drops near entrance. Short walk to table.'},
+{title:'Marie-Antoinette, Victoria',desc:'Iconic Creole set menu since 1972. Colonial house. Some steps at entrance — check accessibility.',tags:['Food'],feet:2,dist:'20 min taxi',price:'💰💰💰',access:'25 min taxi to Victoria. Steps at entrance — check before visiting.'},
+{title:'Les Dauphins Heureux, Anse Royale',desc:'Beach café with fresh seafood and cold drinks. Relaxed feet-in-the-sand dining.',tags:['Food','Beach'],feet:1,dist:'10 min taxi',price:'💰💰',access:'10 min taxi. Beach-level seating. Sand surface — plan for foot comfort.'},
+{title:'Surfer Beach Restaurant, Anse Royale',desc:'Casual beachfront. Grilled fish, salads, cocktails. Good for lunch.',tags:['Food','Beach'],feet:1,dist:'10 min taxi',price:'💰💰',access:'10 min taxi. Flat access to seating area.'},
+{title:'Anchor Café, Anse Royale',desc:'Small café for coffee, pastries, and light meals. Good morning stop.',tags:['Food'],feet:1,dist:'10 min taxi',price:'💰',access:'10 min taxi. Easy access from road.'},
+{title:'Loutier Coco Beach Café',desc:'Casual beachfront. Cold drinks, light meals, very relaxed.',tags:['Food','Beach'],feet:1,dist:'10 min taxi',price:'💰',access:'Beach-level, casual. Short walk from taxi drop.'},
+{title:'Le Reduit, Anse Royale',desc:'Good seafood restaurant. Accessible entrance. Popular for dinner.',tags:['Food'],feet:1,dist:'10 min taxi',price:'💰💰',access:'10 min taxi. Accessible entrance. Short walk.'}
 ];
 
 const FIRST_TIMER=[
@@ -644,7 +760,7 @@ const MARKET={
 <p style="font-size:.85rem"><strong>Budget:</strong> ≈60 SCR = £1. Set manually on arrival in the Info tab.</p>`
 };
 
-const EXPLORE_FILTERS=['All','Near Hotel','No Walking','Half Day','Indoors','Scenic','Beach','Food'];
+const EXPLORE_FILTERS=['All','Near Hotel','No Walking','Half Day','Indoors','Scenic','Scenic Drive','Beach','Food'];
 let expFilter='All';
 
 function renderExplore(){
@@ -658,12 +774,12 @@ function renderExplore(){
 
   h+='<div class="sec-title">Activities & Places</div>';
   filtered.filter(a=>!a.price).forEach(a=>{
-    h+=`<div class="card"><div class="card-title">${a.title}</div><p style="font-size:.85rem">${a.desc}</p><div style="margin:.3rem 0">${a.tags.map(t=>`<span class="tag">${t}</span>`).join('')}<span class="tag">${a.dist}</span></div><div class="feet">${feetIcons(a.feet)} ${a.feet===1?'Minimal walking':a.feet===2?'Some walking':'More walking'}</div></div>`;
+    h+=`<div class="card"><div class="card-title">${a.title}</div><p style="font-size:.85rem">${a.desc}</p><div style="margin:.3rem 0">${a.tags.map(t=>`<span class="tag">${t}</span>`).join('')}<span class="tag">${a.dist}</span></div><div class="feet">${feetIcons(a.feet)} ${a.feet===1?'Minimal walking':a.feet===2?'Some walking':'More walking'}</div>${a.access?`<p style="font-size:.78rem;color:var(--text2);margin-top:.25rem">♿ <strong>Access:</strong> ${a.access}</p>`:''}</div>`;
   });
 
   h+='<div class="sec-title">Restaurants</div>';
   filtered.filter(a=>a.price).forEach(a=>{
-    h+=`<div class="card"><div class="card-title">${a.title} <span style="font-size:.8rem">${a.price}</span></div><p style="font-size:.85rem">${a.desc}</p><div style="margin:.3rem 0">${a.tags.map(t=>`<span class="tag">${t}</span>`).join('')}<span class="tag">${a.dist}</span></div><div class="feet">${feetIcons(a.feet)} ${a.feet===1?'Minimal walking':'Some walking'}</div></div>`;
+    h+=`<div class="card"><div class="card-title">${a.title} <span style="font-size:.8rem">${a.price}</span></div><p style="font-size:.85rem">${a.desc}</p><div style="margin:.3rem 0">${a.tags.map(t=>`<span class="tag">${t}</span>`).join('')}<span class="tag">${a.dist}</span></div><div class="feet">${feetIcons(a.feet)} ${a.feet===1?'Minimal walking':'Some walking'}</div>${a.access?`<p style="font-size:.78rem;color:var(--text2);margin-top:.25rem">♿ <strong>Access:</strong> ${a.access}</p>`:''}</div>`;
   });
 
   h+='<div class="sec-title">First Timer\'s Guide</div>';
@@ -734,7 +850,7 @@ function renderPlan(){
 
   // Health tracker
   h+='<h2 style="margin-top:1rem">Health & Wellbeing</h2>';
-  h+=`<div class="card" style="border-left:3px solid var(--coral)"><h3>🦶 Wife\'s Foot Recovery Tracker</h3>
+  h+=`<div class="card" style="border-left:3px solid var(--coral)"><h3>🦶 Lesley\'s Foot Recovery Tracker</h3>
 <label style="font-size:.82rem;font-weight:600">Pain level today (1–5): <select class="efield" style="width:80px" data-save="health.pain"><option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
 <label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Swelling? <select class="efield" style="width:100px" data-save="health.swell"><option value="">-</option><option>None</option><option>Mild</option><option>Moderate</option><option>Severe</option></select></label>
 <label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Elevation rest done today? <select class="efield" style="width:80px" data-save="health.elev"><option value="">-</option><option>Yes</option><option>No</option></select></label>
@@ -746,7 +862,7 @@ function renderPlan(){
 <p style="font-size:.85rem">🚔 Seychelles Police: <strong>999</strong></p>
 <label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Hotel medical: <input class="efield" data-save="health.hotelMed" placeholder="Ask at reception"></label>
 <label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Insurance emergency: <input class="efield" data-save="health.insNum" placeholder="Policy emergency number"></label>
-<label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Wife medical notes: <textarea class="efield" data-save="health.wifeNotes" placeholder="Medications, allergies, GP info..." style="min-height:60px"></textarea></label></div>`;
+<label style="font-size:.82rem;font-weight:600;margin-top:.3rem;display:block">Lesley medical notes: <textarea class="efield" data-save="health.wifeNotes" placeholder="Medications, allergies, GP info..." style="min-height:60px"></textarea></label></div>`;
 
   el.innerHTML=h;
   bindEditable();
@@ -826,8 +942,9 @@ async function renderInfo(){
   h+=`<h2 style="margin-top:1rem">Transport — Mahé</h2>
 <div class="mob-banner">Always use hotel transfer or pre-booked taxi for reduced mobility.</div>
 <div class="card"><h3>🚗 Hotel Transfer (Recommended)</h3><p style="font-size:.85rem">Door-to-door, air-conditioned. Book at reception the day before. Best for mobility.</p></div>
-<div class="card"><h3>🚕 Taxi</h3><p style="font-size:.85rem">Available at hotel or by phone. Not metered — agree fare first.</p><p style="font-size:.82rem;color:var(--text2);margin-top:.3rem">Victoria Market ≈ 800 SCR · Beau Vallon ≈ 1,200 SCR · Anse Royale ≈ 400 SCR · Airport ≈ 600 SCR</p></div>
-<div class="card"><h3>🚌 Bus (reference only)</h3><p style="font-size:.85rem">7 SCR per journey. Limited accessibility — NOT recommended for reduced mobility.</p></div>`;
+<div class="card"><h3>🚕 Taxi</h3><p style="font-size:.85rem">Available at hotel or by phone. Not metered — agree fare first.</p><p style="font-size:.82rem;color:var(--text2);margin-top:.3rem">Victoria Market ≈ 800 SCR · Beau Vallon ≈ 1,200 SCR · Anse Royale ≈ 300 SCR · Airport ≈ 600 SCR</p></div>
+<div class="card"><h3>🏨 Stay Local (Hotel / Anse Forbans)</h3><p style="font-size:.85rem">Hotel beach, pool, spa and restaurant are all within flat, short walks. Anse Forbans beach is directly accessible. Best option on rest days — no taxi needed.</p><p style="font-size:.82rem;color:var(--text2);margin-top:.3rem"><strong>Cost:</strong> Free — hotel facilities included.</p></div>
+<div class="card"><h3>🚌 Bus (reference only)</h3><p style="font-size:.85rem">7 SCR per journey along coast road. Limited accessibility — NOT recommended for reduced mobility.</p></div>`;
 
   // Emergency
   h+=`<h2 style="margin-top:1rem">Emergency Contacts</h2>
@@ -838,7 +955,7 @@ async function renderInfo(){
 <p style="font-size:.88rem"><strong>🇬🇧 UK FCDO Abroad:</strong> +44 207 008 5000</p>
 <label style="font-size:.82rem;font-weight:600;display:block;margin-top:.5rem">DoubleTree hotel: <input class="efield" data-save="emergency.hotel" placeholder="Fill on arrival"></label>
 <label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Travel insurance emergency: <input class="efield" data-save="emergency.insurance" placeholder="Policy emergency number"></label>
-<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Wife medical notes: <textarea class="efield" data-save="emergency.wifeNotes" placeholder="Medications, allergies, GP contact..." style="min-height:60px"></textarea></label>
+<label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Lesley medical notes: <textarea class="efield" data-save="emergency.wifeNotes" placeholder="Medications, allergies, GP contact..." style="min-height:60px"></textarea></label>
 </div>`;
 
   // Currency
