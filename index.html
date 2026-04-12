@@ -801,16 +801,16 @@ renderExplore();
 
 /* ========== TAB 4: PLAN ========== */
 const ITIN_DEFAULT=[
-{day:1,date:'5th July',title:'Arrival & Rest',plan:'Rest day. Arrival morning. Sleep, settle in, gentle hotel explore. Room service or hotel restaurant for all meals. Early night.'},
-{day:2,date:'6th July',title:'Beach & Spa',plan:'Breakfast at hotel. Morning at Anse Forbans beach (hotel beach). Afternoon spa session — book at reception. Dinner at hotel restaurant.'},
-{day:3,date:'7th July',title:'Scenic Drive',plan:'Breakfast at hotel. Mid-morning scenic coastal drive around south Mahé by taxi. Light lunch at a beach café. Afternoon rest at hotel.'},
+{day:1,date:'5th July',title:'Arrival & Rest',plan:'Rest day. Arrival morning. Sleep, settle in, gentle hotel explore. Room service or hotel restaurant for all meals. Early night. ⚽ World Cup R16 at midnight SCT — only if still awake.'},
+{day:2,date:'6th July',title:'Beach & Spa',plan:'Breakfast at hotel. Morning at Anse Forbans beach (hotel beach). Afternoon spa session — book at reception. Dinner at hotel restaurant. ⚽ World Cup R16 at 11pm SCT — evening option.'},
+{day:3,date:'7th July',title:'Scenic Drive',plan:'Breakfast at hotel. Mid-morning scenic coastal drive around south Mahé by taxi. Light lunch at a beach café. Afternoon rest. ⚽ World Cup R16 at 8pm SCT — great evening viewing. Second R16 at midnight.'},
 {day:4,date:'8th July',title:'Botanical Gardens',plan:'Breakfast at hotel. Taxi to Victoria Botanical Gardens — giant tortoises, flat paths. Lunch in Victoria. Afternoon rest. Hotel dinner.'},
-{day:5,date:'9th July',title:'Full Beach Day',plan:'Full beach day at Anse Forbans. Sunbeds, shade, gentle swim. Hotel lunch and dinner. Total relaxation.'},
-{day:6,date:'10th July',title:'Anse Royale',plan:'Breakfast at hotel. Kaz Kreol lunch at Anse Royale. Afternoon on Anse Royale beach. Taxi back. Hotel dinner or room service.'},
+{day:5,date:'9th July',title:'Full Beach Day',plan:'Full beach day at Anse Forbans. Sunbeds, shade, gentle swim. Hotel lunch and dinner. ⚽ World Cup quarter-final at midnight SCT — stay up if England are in it.'},
+{day:6,date:'10th July',title:'Anse Royale',plan:'Breakfast at hotel. Kaz Kreol lunch at Anse Royale. Afternoon on Anse Royale beach. Taxi back. ⚽ World Cup quarter-final at 11pm SCT — evening option after dinner.'},
 {day:7,date:'11th July',title:'Rest Day',plan:'Rest day. Hotel pool, spa, room service. Light evening walk on hotel beach if comfortable. No taxi needed.'},
 {day:8,date:'12th July',title:'Victoria Market',plan:'Victoria market morning (early, before heat). Afternoon rest at hotel. Marie-Antoinette dinner if accessible — check steps.'},
 {day:9,date:'13th July',title:'Boat Trip & Farewell',plan:'Glass-bottom boat trip (check with concierge for mobility). Afternoon at hotel. Farewell dinner at hotel restaurant.'},
-{day:10,date:'14th July',title:'Checkout & Departure',plan:'Morning beach or spa. Checkout 12pm. Lunch at hotel. Afternoon by pool. Transfer to airport by 9:30pm. EK708 departs 11:55pm.'}
+{day:10,date:'14th July',title:'Checkout & Departure',plan:'Morning beach or spa. Checkout 12pm. Lunch at hotel. Afternoon by pool. Transfer to airport by 9:30pm. EK708 departs 11:55pm. ⚽ World Cup semi-final at 11pm SCT — you\'ll be at the airport. Check if SEZ has a screen.'}
 ];
 
 function getItin(){if(S.itin)return S.itin;return ITIN_DEFAULT.map(d=>({...d,note:''}))}
@@ -823,6 +823,30 @@ function renderPlan(){
   data.forEach((d,i)=>{
     h+=`<div class="itin"><div class="itin-day">Day ${d.day} — ${d.date}</div><div class="itin-title">${d.title}</div><p style="font-size:.85rem;line-height:1.6">${d.plan}</p><textarea class="itin-note" placeholder="Personal notes..." data-ni="${i}">${d.note||''}</textarea><div class="itin-actions"><button class="itin-btn" data-mu="${i}" ${i===0?'disabled':''}>▲</button><button class="itin-btn" data-md="${i}" ${i===data.length-1?'disabled':''}>▼</button></div></div>`;
   });
+
+  // World Cup
+  h+=`<h2 style="margin-top:1rem">⚽ FIFA World Cup 2026</h2>`;
+  h+=`<div class="card" style="border-left:3px solid var(--green)"><p style="font-size:.85rem;margin-bottom:.4rem">Matches during your Seychelles stay that kick off at watchable Seychelles times. <strong>Seychelles is UTC+4 (3 hours ahead of UK BST in July).</strong></p><p style="font-size:.82rem;color:var(--text2)">Check hotel TV, SBC+ app, or ask reception about sports channels. ITVX/BBC iPlayer may not work abroad without VPN.</p></div>`;
+  const WC_MATCHES=[
+    {date:'Sat 4th July',day:0,uk:'6:00pm',sct:'9:00pm SCT',match:'Round of 16 — TBC',note:'Arrival eve — you\'re at Hilton Heathrow. Watch in the hotel bar or room.'},
+    {date:'Sun 5th July',day:1,uk:'9:00pm',sct:'12:00am SCT (Mon 6th)',match:'Round of 16 — TBC',note:'Arrival day in Seychelles. Late kick-off — only if you\'re still awake after overnight travel.'},
+    {date:'Mon 6th July',day:2,uk:'8:00pm',sct:'11:00pm SCT',match:'Round of 16 — TBC',note:'Evening viewing at hotel. Ask reception about sports channels.'},
+    {date:'Tue 7th July',day:3,uk:'5:00pm',sct:'8:00pm SCT',match:'Round of 16 — TBC',note:'Prime evening time. Perfect after a beach day. Ask hotel about a good spot to watch.'},
+    {date:'Tue 7th July',day:3,uk:'9:00pm',sct:'12:00am SCT (Wed 8th)',match:'Round of 16 — TBC',note:'Late night. Only if the earlier game gets you hooked.'},
+    {date:'Thu 9th July',day:5,uk:'9:00pm',sct:'12:00am SCT (Fri 10th)',match:'Quarter-final — TBC',note:'Midnight kick-off. Worth staying up if England are involved.'},
+    {date:'Fri 10th July',day:6,uk:'8:00pm',sct:'11:00pm SCT',match:'Quarter-final — TBC',note:'Late evening. Good option if no plans the next morning.'},
+    {date:'Tue 14th July',day:10,uk:'8:00pm',sct:'11:00pm SCT',match:'Semi-final — TBC',note:'Departure day. Flight isn\'t until 11:55pm — you\'ll be at the airport. Check if SEZ has a screen.'}
+  ];
+  WC_MATCHES.forEach(m=>{
+    const holDay2=m.day>=1&&m.day<=10;
+    h+=`<div class="card${holDay2?'':''}" style="border-left:3px solid var(--green)">
+      <div class="card-date">${m.date}</div>
+      <div class="card-title">⚽ ${m.match}</div>
+      <p style="font-size:.85rem">🇬🇧 <strong>${m.uk} UK</strong> → 🇸🇨 <strong>${m.sct}</strong></p>
+      <p style="font-size:.82rem;color:var(--text2);margin-top:.25rem">${m.note}</p>
+    </div>`;
+  });
+  h+=`<div class="card-tip" style="margin-bottom:.75rem">All 104 World Cup matches shared between BBC and ITV in the UK. Specific channel assignments TBC for knockout rounds. Source: Live Football on TV / FANZO.</div>`;
 
   // Special Moments
   h+='<h2 style="margin-top:1rem">Special Moments</h2>';
