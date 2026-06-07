@@ -516,7 +516,7 @@ async function renderToday(){
     arrival:{title:'🛬 Arrival Day (5th July)',items:['Medication taken','Sun cream applied','Hydrated — drink water after flight','Room checked and comfortable','Early check-in status confirmed','Lesley\'s mobility aid accessible']},
     beach:{title:'🏖️ Beach Day',items:['Hat packed','Sun cream SPF 50+ applied (reapply every 2 hours)','Water bottle filled','Shade plan agreed (umbrella or lounger)','Return time agreed','Lesley\'s foot protected from hot sand and direct sun']},
     market:{title:'🏪 Market / Excursion Day',items:['Cash in SCR','Comfortable supportive footwear for Lesley','Water bottle','Rest break plan agreed','Taxi return pre-booked or number saved']},
-    departure:{title:'✈️ Departure Day (14th July)',items:['Luggage weighed (Emirates allowance checked)','Passports checked and accessible','Medication in hand luggage','Airport transfer booked (depart by 9:30pm)','Checkout confirmed','Hotel luggage storage arranged']},
+    departure:{title:'✈️ Departure Day (14th July)',items:['Luggage weighed — 2 pieces at 23kg each per person','Passports checked and accessible','Medication in hand luggage','Mason\'s Travel pickup confirmed (depart by 9:30pm) — call +248 4 28 88 88','Checkout confirmed','Hotel luggage storage arranged','Tourism Levy paid at hotel']},
     daily:{title:'☀️ Daily Reminders',items:['UV reminder — very high in July (8–11). Avoid midday sun 11am–2pm','Hydration — drink at least 2 litres of water per day','Morning weather check — see weather above','Sun cream reapplication every 2 hours when outdoors','Medication check — taken today?']}
   };
   h+='<div class="sec-title">Comfort &amp; Wellbeing Checklists</div>';
@@ -559,7 +559,7 @@ function navTo(tab){
 renderToday();
 
 /* ========== TAB 2: JOURNEY ========== */
-const PRETRIP=['Seychelles Travel Authorisation (TA) submitted for Anthony — apply from 5th June at seychelles.govtas.com','Seychelles Travel Authorisation (TA) submitted for Lesley — apply from 5th June at seychelles.govtas.com','TA approval emails saved and printed for both travellers','Travel insurance confirmed (required for TA application)','Emirates mobility assistance pre-booked for all four flights (EK002, EK705, EK708, EK001)','Medication packed — enough for full trip plus 3-day buffer','Seychellois Rupee obtained','Euros obtained','Priority Pass card packed','Phone roaming activated or eSIM purchased for both phones','O2 data roaming turned off on both phones (re-enable only with bolt-on or eSIM)','Hotel confirmations printed (Hilton Garden Inn T2/T3 + DoubleTree)','DoubleTree early check-in requested (arriving 5th July after overnight flight)','Sun cream SPF 50+ packed','Lesley mobility aid confirmed and packed','Lightweight foldable wheelchair or scooter confirmed if needed','Travel health appointment booked with GP or pharmacy (by mid-May)','Hepatitis A vaccination — at least 2 weeks before travel (by 19th June)','Tetanus booster — if last dose was more than 10 years ago','Check routine UK vaccinations are up to date','Notify Chase bank of travel to Seychelles and Dubai (3rd–15th July)','Notify Monzo of travel to Seychelles and Dubai (3rd–15th July)','Check PINs memorised for both cards','Download offline Google Maps for Mahé'];
+const PRETRIP=['Seychelles Travel Authorisation (TA) submitted for Anthony — apply from 5th June at seychelles.govtas.com','Seychelles Travel Authorisation (TA) submitted for Lesley — apply from 5th June at seychelles.govtas.com','TA approval emails saved and printed for both travellers','Travel insurance confirmed (required for TA application)','Emirates mobility assistance pre-booked for all four flights (EK0002, EK0705, EK0708, EK0001)','Medication packed — enough for full trip plus 3-day buffer','Seychellois Rupee obtained','Euros obtained','Priority Pass card packed','Phone roaming activated or eSIM purchased for both phones','O2 data roaming turned off on both phones (re-enable only with bolt-on or eSIM)','Hotel confirmations printed (Hilton Garden Inn T2/T3 + DoubleTree)','DoubleTree early check-in requested (arriving 5th July after overnight flight)','Sun cream SPF 50+ packed','Lesley mobility aid confirmed and packed','Lightweight foldable wheelchair or scooter confirmed if needed','Travel health appointment booked with GP or pharmacy (by mid-May)','Hepatitis A vaccination — at least 2 weeks before travel (by 19th June)','Tetanus booster — if last dose was more than 10 years ago','Check routine UK vaccinations are up to date','Notify Chase bank of travel to Seychelles and Dubai (3rd–15th July)','Notify Monzo of travel to Seychelles and Dubai (3rd–15th July)','Check PINs memorised for both cards','Download offline Google Maps for Mahé'];
 const RETPACK=['Medication in hand luggage confirmed','Liquids in 100ml containers in clear bag','UK customs: declare any food, plants or wildlife products','Duty free within UK allowance','Coco de mer: check export permit if purchased','Luggage weighed and within limit'];
 
 const JOURNEY=[
@@ -572,23 +572,23 @@ body:`<p>Check out Hilton Garden Inn. <strong>Leave room by 9:30am.</strong></p>
 tip:'Check-in opens approx. 4 hours before departure. Confirm wheelchair assistance at the desk.',mob:['Wheelchair at Emirates check-in','Allow extra time for security','Flag tight Dubai transit at check-in'],lounge:['No.1 Lounge Heathrow T3','Plaza Premium T3 — check Priority Pass app'],tight:false},
 
 {date:'4th–5th July',title:'Dubai Transit (Outbound)',status:'upcoming',
-body:`<p><strong>EK002 arrives Dubai 00:25am</strong> (5th July) — Terminal 3, typically Concourse C.</p><p>Transit to <strong>EK705</strong> — Terminal 3, Concourse B (gate B26 area). Layover: <strong>1hr 50min</strong>.</p><p><strong>EK705 departs Dubai 2:15am.</strong></p><h4 style="margin:.5rem 0 .3rem">Step-by-step transit:</h4><ol style="padding-left:1.2rem;font-size:.85rem;line-height:1.7"><li>Wheelchair meets you at aircraft door (pre-booked)</li><li>Follow "Connections" signs — NOT Arrivals/Immigration</li><li>Transit security — expedited lane for wheelchair</li><li>Concourse C → Concourse B via walkway (15–20 mins by wheelchair)</li><li>Check departure screens for EK705 gate</li><li>Go directly to gate — boarding starts 45 mins before</li></ol><p style="margin-top:.4rem"><strong>Bags:</strong> Tagged through to Seychelles. <strong>Immigration:</strong> Not required.</p>`,
+body:`<p><strong>EK002 arrives Dubai 00:25am</strong> (5th July) — Terminal 3, typically Concourse C.</p><p>Transit to <strong>EK705</strong> — Terminal 3, Concourse B (gate B26 area). Layover: <strong>1hr 50min</strong>.</p><p><strong>EK705 departs Dubai 2:15am.</strong></p><h4 style="margin:.5rem 0 .3rem">Step-by-step transit:</h4><ol style="padding-left:1.2rem;font-size:.85rem;line-height:1.7"><li>Wheelchair meets you at aircraft door (pre-booked)</li><li>Follow "Connections" signs — NOT Arrivals/Immigration</li><li>Transit security — expedited lane for wheelchair</li><li>Concourse C → Concourse B via walkway (15–20 mins by wheelchair)</li><li>Check departure screens for EK705 gate</li><li>Go directly to gate — boarding starts 45 mins before</li></ol><p style="margin-top:.4rem"><strong>Bags:</strong> Tagged through to Seychelles. 2 pieces at 23kg each. <strong>Immigration:</strong> Not required.</p>`,
 tip:'Emirates minimum connection is 75 mins — you have 1hr 50min. Enough but no room for delay. No lounge, no shopping.',mob:['Wheelchair at aircraft door','Fast-track transit security','Escort to Concourse B gate'],lounge:[],tight:true,tightMsg:'TIGHT CONNECTION — 1hr 50min. Go directly to gate. No lounge, no shopping, no detours.'},
 
 {date:'5th July',title:'Arrive Seychelles',status:'upcoming',
-body:`<p><strong>EK705 arrives Seychelles (SEZ) 6:50am.</strong></p><p>Check in: <strong>DoubleTree by Hilton Allamanda Resort &amp; Spa</strong>, Anse Forbans. Check-in 3pm — request early check-in on arrival.</p><p>Mahé airport is small and manageable. Transfer to hotel approx. 30 mins.</p>`,
+body:`<p><strong>EK705 arrives Seychelles (SEZ) 6:50am.</strong> Terminal I.</p><p>Check in: <strong>DoubleTree by Hilton Allamanda Resort &amp; Spa</strong>, Anse Forbans. Check-in 3pm — request early check-in on arrival.</p><p><strong>Room:</strong> King Deluxe Ocean View Room, All Inclusive (2 adults).</p><p><strong>Transfer:</strong> Mason's Travel private car from airport. Meet and greet at arrivals — look for Mason's Travel representative in white branded shirt holding a sign board.</p><p>Mahé airport is small and manageable. Transfer to hotel approx. 30 mins.</p>`,
 tip:'Rest day. After overnight travel, don\'t plan anything. Hotel restaurant, pool, sleep.',mob:['Request wheelchair at SEZ arrival','Pre-arrange hotel transfer'],lounge:[],tight:false},
 
 {date:'14th July',title:'Seychelles Departure',status:'upcoming',
-body:`<p>Check out <strong>12:00pm</strong>. Day at leisure — flight not until 11:55pm.</p><p><strong>EK708 departs SEZ 11:55pm.</strong></p><p>Hotel transfer: depart no later than <strong>9:30pm</strong>.</p>`,
-tip:'Use hotel facilities after checkout. Most will store luggage. Final beach or spa in the afternoon.',mob:['Book hotel transfer to airport','Wheelchair at SEZ check-in'],lounge:[],tight:false},
+body:`<p>Check out <strong>12:00pm</strong>. Day at leisure — flight not until 11:50pm.</p><p><strong>EK708 departs SEZ 11:50pm.</strong></p><p>Hotel transfer: depart no later than <strong>9:30pm</strong>. Mason's Travel private car — confirm pickup 24hrs before.</p>`,
+tip:'Use hotel facilities after checkout. Most will store luggage. Final beach or spa in the afternoon. Confirm Mason\'s Travel pickup 24hrs before departure.',mob:['Confirm Mason\'s Travel pickup by 13th July','Wheelchair at SEZ check-in'],lounge:[],tight:false},
 
 {date:'15th July',title:'Dubai Transit (Return)',status:'upcoming',
-body:`<p><strong>EK708 arrives Dubai 4:20am</strong> — Terminal 3, Concourse B.</p><p>Layover <strong>3hr 25min</strong> — comfortable for a lounge visit.</p><p><strong>EK001 departs Dubai 7:47am</strong> — Concourse C.</p><h4 style="margin:.5rem 0 .3rem">Step-by-step:</h4><ol style="padding-left:1.2rem;font-size:.85rem;line-height:1.7"><li>Wheelchair meets at aircraft door</li><li>Follow "Connections" signs — transit only</li><li>Transit security — expedited lane</li><li>Lounge visit if desired (check Priority Pass for open T3 lounges at 4:30am)</li><li>Concourse B → C via walkway (15–20 mins by wheelchair)</li><li>Be at gate by 7:00am</li></ol><p style="margin-top:.4rem"><strong>Bags:</strong> Tagged through to Heathrow.</p>`,
-tip:'Have breakfast in the lounge, freshen up, then head to gate by 7am. Plenty of time.',mob:['Wheelchair at aircraft door','Escort to lounge','Escort to Concourse C gate'],lounge:['Dubai T3 lounges — check Priority Pass app'],tight:false},
+body:`<p><strong>EK708 arrives Dubai 4:20am</strong> — Terminal 3, Concourse B.</p><p>Layover <strong>3hr 25min</strong> — comfortable for a lounge visit.</p><p><strong>EK001 departs Dubai 7:45am</strong> — Concourse C.</p><h4 style="margin:.5rem 0 .3rem">Step-by-step:</h4><ol style="padding-left:1.2rem;font-size:.85rem;line-height:1.7"><li>Wheelchair meets at aircraft door</li><li>Follow "Connections" signs — transit only</li><li>Transit security — expedited lane</li><li>Lounge visit if desired (check Priority Pass for open T3 lounges at 4:30am)</li><li>Concourse B → C via walkway (15–20 mins by wheelchair)</li><li>Be at gate by 7:00am</li></ol><p style="margin-top:.4rem"><strong>Bags:</strong> Tagged through to Heathrow. 2 pieces at 23kg each.</p>`,
+tip:'Have breakfast in the lounge, freshen up, then head to gate by 7:00am for 7:45am departure. Plenty of time.',mob:['Wheelchair at aircraft door','Escort to lounge','Escort to Concourse C gate'],lounge:['Dubai T3 lounges — check Priority Pass app'],tight:false},
 
 {date:'15th July',title:'Dubai → London → Swansea',status:'upcoming',
-body:`<p><strong>EK001 arrives Heathrow T3 12:25pm.</strong></p><p>Train to Swansea: <span id="rtDisp">earliest realistic departure 2:30pm</span>.</p><p><label style="font-weight:700;font-size:.82rem">Return train time: <input type="text" class="efield efield-sm" data-save="returnTrain.val" placeholder="e.g. 2:30pm"></label></p>`,
+body:`<p><strong>EK001 arrives Heathrow T3 12:25pm.</strong></p><p><strong>Baggage:</strong> 2 pieces at 23kg each.</p><p>Train to Swansea: <span id="rtDisp">earliest realistic departure 2:30pm</span>.</p><p><label style="font-weight:700;font-size:.82rem">Return train time: <input type="text" class="efield efield-sm" data-save="returnTrain.val" placeholder="e.g. 2:30pm"></label></p>`,
 tip:'Allow time for immigration, baggage claim, and getting to the train. Consider wheelchair assistance at Heathrow too.',mob:['Request wheelchair at Heathrow arrival'],lounge:[],tight:false}
 ];
 
@@ -637,6 +637,9 @@ function renderJourney(){
   // DoubleTree expanded
   h+=`<div class="card" style="border-left:3px solid var(--turquoise)"><h3 style="color:var(--ocean)">🌴 DoubleTree by Hilton — Seychelles Allamanda (5th–14th July)</h3>
 <p style="font-size:.88rem;margin-bottom:.4rem">Boutique 30-room beachfront resort at Anse Forbans, surrounded by tropical gardens. Approx. 30 min transfer from airport.</p>
+<p style="font-size:.85rem;margin-bottom:.4rem"><strong>Your room:</strong> King Deluxe Ocean View Room, <strong>All Inclusive</strong> (2 adults). 9 nights, 5th–14th July.</p>
+<p style="font-size:.85rem;margin-bottom:.4rem"><strong>Booking ref:</strong> BND/22617795 · <strong>Flight ref:</strong> NQQYQ6</p>
+<p style="font-size:.85rem;margin-bottom:.4rem;color:var(--coral)"><strong>Tourism Levy:</strong> SCR 100 per person per night — paid directly to hotel at check-in (approx. £34 total for 2 guests, 9 nights).</p>
 <h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Facilities:</h4>
 <ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.7"><li>Private beach — direct access, flat paths from room</li><li>Infinity pool with ocean views</li><li><strong>eForea Spa</strong> — massage, manicure/pedicure, body treatments</li><li>24-hour fitness centre</li><li>Concierge and tour desk</li><li>Free parking and EV charging</li><li>Grocery/convenience store on-site</li></ul>
 <h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Dining:</h4>
@@ -810,7 +813,7 @@ const ITIN_DEFAULT=[
 {day:7,date:'11th July',title:'Rest Day',plan:'Rest day. Hotel pool, spa, room service. Light evening walk on hotel beach if comfortable. No taxi needed.'},
 {day:8,date:'12th July',title:'Victoria Market',plan:'Victoria market morning (early, before heat). Afternoon rest at hotel. Marie-Antoinette dinner if accessible — check steps.'},
 {day:9,date:'13th July',title:'Boat Trip & Farewell',plan:'Glass-bottom boat trip (check with concierge for mobility). Afternoon at hotel. Farewell dinner at hotel restaurant.'},
-{day:10,date:'14th July',title:'Checkout & Departure',plan:'Morning beach or spa. Checkout 12pm. Lunch at hotel. Afternoon by pool. Transfer to airport by 9:30pm. EK708 departs 11:55pm. ⚽ World Cup semi-final at 11pm SCT — you\'ll be at the airport. Check if SEZ has a screen.'}
+{day:10,date:'14th July',title:'Checkout & Departure',plan:'Morning beach or spa. Checkout 12pm. Lunch at hotel. Afternoon by pool. Mason\'s Travel pickup by 9:30pm. EK708 departs 11:50pm from Terminal I. Baggage: 2 pieces at 23kg each. ⚽ World Cup semi-final at 11pm SCT — you\'ll be at the airport. Check if SEZ has a screen.'}
 ];
 
 function getItin(){if(S.itin)return S.itin;return ITIN_DEFAULT.map(d=>({...d,note:''}))}
@@ -835,7 +838,7 @@ function renderPlan(){
     {date:'Tue 7th July',day:3,uk:'9:00pm',sct:'12:00am SCT (Wed 8th)',match:'Round of 16 — TBC',note:'Late night. Only if the earlier game gets you hooked.'},
     {date:'Thu 9th July',day:5,uk:'9:00pm',sct:'12:00am SCT (Fri 10th)',match:'Quarter-final — TBC',note:'Midnight kick-off. Worth staying up if England are involved.'},
     {date:'Fri 10th July',day:6,uk:'8:00pm',sct:'11:00pm SCT',match:'Quarter-final — TBC',note:'Late evening. Good option if no plans the next morning.'},
-    {date:'Tue 14th July',day:10,uk:'8:00pm',sct:'11:00pm SCT',match:'Semi-final — TBC',note:'Departure day. Flight isn\'t until 11:55pm — you\'ll be at the airport. Check if SEZ has a screen.'}
+    {date:'Tue 14th July',day:10,uk:'8:00pm',sct:'11:00pm SCT',match:'Semi-final — TBC',note:'Departure day. Flight isn\'t until 11:50pm — you\'ll be at the airport. Check if SEZ has a screen.'}
   ];
   WC_MATCHES.forEach(m=>{
     const holDay2=m.day>=1&&m.day<=10;
@@ -943,6 +946,10 @@ async function renderInfo(){
   h+=`<h2>DoubleTree Hilton — Anse Forbans</h2>
 <div class="card">
 <p style="font-size:.85rem;margin-bottom:.5rem">30-room beachfront resort. Private beach, infinity pool, eForea Spa, Les Palms Restaurant.</p>
+<p style="font-size:.85rem;margin-bottom:.3rem"><strong>Room:</strong> King Deluxe Ocean View Room, <strong>All Inclusive</strong> · 9 nights (5th–14th July)</p>
+<p style="font-size:.85rem;margin-bottom:.3rem"><strong>Booking:</strong> BND/22617795 · <strong>Flight:</strong> NQQYQ6 · <strong>Package:</strong> £8,890.65</p>
+<p style="font-size:.85rem;margin-bottom:.3rem"><strong>Transfers:</strong> Mason's Travel private car (both ways). Office: +248 4 28 88 88 · After hours: +248 2 52 46 65</p>
+<p style="font-size:.85rem;margin-bottom:.3rem;color:var(--coral)"><strong>Tourism Levy:</strong> SCR 100/person/night — pay at check-in (≈£30 total)</p>
 <p style="font-size:.85rem">📍 Anse Forbans, Mahé, Seychelles</p>
 <div style="margin-top:.5rem">
 <label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Pool hours: <input class="efield" data-save="hotel.pool" placeholder="Fill on arrival"></label>
@@ -976,6 +983,8 @@ async function renderInfo(){
 <p style="font-size:.88rem"><strong>🚔 Seychelles Police:</strong> 999</p>
 <p style="font-size:.88rem"><strong>🏥 Seychelles Hospital Victoria:</strong> +248 438 8000</p>
 <p style="font-size:.88rem"><strong>✈️ Emirates 24hr:</strong> +44 344 800 2777</p>
+<p style="font-size:.88rem"><strong>🚗 Mason's Travel (transfers):</strong> +248 4 28 88 88</p>
+<p style="font-size:.88rem"><strong>🚗 Mason's Travel (after hours):</strong> +248 2 52 46 65</p>
 <p style="font-size:.88rem"><strong>🇬🇧 UK FCDO Abroad:</strong> +44 207 008 5000</p>
 <label style="font-size:.82rem;font-weight:600;display:block;margin-top:.5rem">DoubleTree hotel: <input class="efield" data-save="emergency.hotel" placeholder="Fill on arrival"></label>
 <label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Travel insurance emergency: <input class="efield" data-save="emergency.insurance" placeholder="Policy emergency number"></label>
