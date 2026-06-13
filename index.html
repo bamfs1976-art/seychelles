@@ -9,6 +9,8 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌴</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -265,6 +267,68 @@ color:var(--ocean);font-weight:700;
 :focus-visible{outline:2px solid var(--turquoise);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media(min-width:480px){.nav-btn{font-size:.7rem}}
+
+/* Download buttons */
+.dl-section{margin:.75rem 0}
+.dl-btn{
+display:flex;align-items:center;gap:.6rem;width:100%;
+background:var(--card);border:2px solid var(--turquoise);border-radius:var(--radius);
+padding:.85rem 1rem;margin-bottom:.6rem;cursor:pointer;
+font-family:'Nunito',system-ui,sans-serif;font-size:.88rem;font-weight:700;
+color:var(--turquoise);transition:all .15s;min-height:56px;
+}
+.dl-btn:active,.dl-btn:hover{background:var(--turquoise);color:#fff}
+.dl-btn svg{width:24px;height:24px;min-width:24px}
+.dl-btn .dl-sub{font-size:.72rem;font-weight:600;color:var(--text2);margin-top:2px}
+.dl-btn:active .dl-sub,.dl-btn:hover .dl-sub{color:rgba(255,255,255,.8)}
+.dl-spinner{display:none;width:20px;height:20px;border:3px solid rgba(0,188,212,.3);border-top-color:var(--turquoise);border-radius:50%;animation:dlspin .6s linear infinite;margin-left:auto}
+@keyframes dlspin{to{transform:rotate(360deg)}}
+
+/* Travel card rendering (hidden until capture) */
+.tc-wrap{position:fixed;left:-9999px;top:0;z-index:-1;pointer-events:none}
+.tc{width:420px;font-family:'Inter',-apple-system,sans-serif;background:#0a1628;color:#e2e8f0;border-radius:0}
+.tc-hdr{padding:28px 28px 20px;position:relative}
+.tc-hdr.out{background:linear-gradient(135deg,#0369a1 0%,#0891b2 50%,#059669 100%)}
+.tc-hdr.ret{background:linear-gradient(135deg,#7c3aed 0%,#6366f1 50%,#3b82f6 100%)}
+.tc-hdr .tc-emo{font-size:2.2rem;margin-bottom:6px}
+.tc-hdr h2{font-size:1.35rem;font-weight:900;color:#fff;line-height:1.2;letter-spacing:-.3px;margin:0}
+.tc-hdr .tc-sub{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.8);margin-top:4px}
+.tc-refs{display:flex;gap:12px;padding:12px 28px;background:rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.08)}
+.tc-refs span{font-size:.7rem;font-weight:600;color:#94a3b8}
+.tc-refs b{color:#38bdf8;font-weight:700}
+.tc-body{padding:20px 28px 28px}
+.tc-step{position:relative;padding-left:32px;padding-bottom:20px;border-left:2px solid rgba(255,255,255,.1);margin-left:8px}
+.tc-step:last-child{border-left-color:transparent;padding-bottom:0}
+.tc-dot{position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:#0891b2;border:2px solid #0a1628}
+.tc-step.ret .tc-dot{background:#818cf8}
+.tc-step.warn .tc-dot{background:#f59e0b}
+.tc-step.ok .tc-dot{background:#22c55e;width:14px;height:14px;left:-8px}
+.tc-dt{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#38bdf8;margin-bottom:3px}
+.tc-step.ret .tc-dt{color:#a5b4fc}
+.tc-tt{font-size:.88rem;font-weight:800;color:#f1f5f9;margin-bottom:4px}
+.tc-tx{font-size:.76rem;color:#94a3b8;line-height:1.55}
+.tc-tx strong{color:#cbd5e1;font-weight:700}
+.tc-fl{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;margin:8px 0 4px}
+.tc-fl-top{display:flex;justify-content:space-between;align-items:center}
+.tc-fl-code{font-size:.7rem;font-weight:800;color:#38bdf8;letter-spacing:.5px}
+.tc-step.ret .tc-fl-code{color:#a5b4fc}
+.tc-fl-dur{display:inline-block;background:rgba(255,255,255,.08);border-radius:6px;padding:3px 8px;font-size:.65rem;font-weight:700;color:#94a3b8}
+.tc-fl-route{display:flex;align-items:center;gap:8px;margin:6px 0}
+.tc-fl-ap{text-align:center}
+.tc-fl-ap .iata{font-size:1.1rem;font-weight:900;color:#f1f5f9}
+.tc-fl-ap .tm{font-size:.75rem;font-weight:700;color:#22c55e}
+.tc-fl-ap .lb{font-size:.6rem;color:#64748b;font-weight:600}
+.tc-fl-line{flex:1;height:1px;background:rgba(255,255,255,.15);position:relative;margin:0 4px}
+.tc-fl-line::after{content:'✈';position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:.75rem;color:#64748b}
+.tc-fl-term{font-size:.65rem;color:#64748b;margin-top:4px}
+.tc-alert{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:8px 10px;margin:6px 0 2px;font-size:.72rem;font-weight:700;color:#fbbf24;line-height:1.4}
+.tc-info{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:8px 10px;margin:6px 0 2px;font-size:.72rem;font-weight:600;color:#86efac;line-height:1.4}
+.tc-mob{display:inline-flex;align-items:center;gap:3px;background:rgba(239,68,68,.15);border-radius:6px;padding:3px 8px;font-size:.65rem;font-weight:700;color:#fca5a5;margin:4px 4px 4px 0}
+.tc-div{height:1px;background:rgba(255,255,255,.06);margin:4px 0 16px}
+.tc-foot{background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.08);padding:14px 28px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tc-foot div{font-size:.68rem;color:#64748b;line-height:1.4}
+.tc-foot strong{color:#94a3b8;font-weight:700;display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px}
+.tc-foot .v{color:#cbd5e1;font-weight:600}
 </style>
 </head>
 <body>
@@ -600,7 +664,20 @@ const LOUNGES=[
 
 function renderJourney(){
   const el=document.getElementById('journeyContent');
-  let h='<h2>Pre-Trip Checklist</h2>';
+  let h='<h2>📲 Travel Cards for Your Phone</h2>';
+  h+=`<div class="dl-section">
+<button class="dl-btn" id="dlOutbound" aria-label="Download outbound travel card">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+<div><div>Outbound — Home to Seychelles</div><div class="dl-sub">3rd–5th July · All flights, times & transfers</div></div>
+<div class="dl-spinner" id="dlSpinOut"></div>
+</button>
+<button class="dl-btn" id="dlReturn" aria-label="Download return travel card">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+<div><div>Return — Seychelles to Home</div><div class="dl-sub">14th–15th July · All flights, times & contacts</div></div>
+<div class="dl-spinner" id="dlSpinRet"></div>
+</button>
+</div>`;
+  h+='<h2>Pre-Trip Checklist</h2>';
   h+='<div class="mob-banner">Ensure Emirates mobility assistance is pre-booked for all four flights before departure.</div>';
   h+='<div class="card">'+makeChk(PRETRIP,'pretrip')+'</div>';
 
@@ -1015,6 +1092,92 @@ async function renderInfo(){
   }
 }
 renderInfo();
+
+/* ========== TRAVEL CARD DOWNLOAD ========== */
+function buildOutboundCard(){
+  return `<div class="tc" id="tcOut">
+<div class="tc-hdr out"><div class="tc-emo">🌴</div><h2>Outbound Journey</h2><div class="tc-sub">Swansea → London → Dubai → Seychelles</div></div>
+<div class="tc-refs"><span>Booking <b>BND/22617795</b></span><span>Flight <b>NQQYQ6</b></span><span>Baggage <b>2 × 23kg each</b></span></div>
+<div class="tc-body">
+
+<div class="tc-step"><div class="tc-dot"></div><div class="tc-dt">Thursday 3rd July</div><div class="tc-tt">🚆 Swansea → London Heathrow</div><div class="tc-tx">Train departs <strong>Swansea 2:20pm</strong><br>Arrives Heathrow approx. <strong>6:00pm</strong><br>Transfer to hotel via Elizabeth Line or Heathrow Express</div></div>
+
+<div class="tc-step"><div class="tc-dot"></div><div class="tc-dt">3rd July — Evening</div><div class="tc-tt">🏨 Hilton Garden Inn T2/T3</div><div class="tc-tx">Check-in from <strong>3:00pm</strong><br>Connected to T2 via covered walkway, T3 via underpass<br>Dinner: <strong>The Apron Restaurant</strong> (on-site, 5:30–10:30pm)</div></div>
+
+<div class="tc-div"></div>
+
+<div class="tc-step"><div class="tc-dot"></div><div class="tc-dt">Friday 4th July</div><div class="tc-tt">🏨 Hotel Checkout</div><div class="tc-tx">Leave room by <strong>9:30am</strong><br>Walk to T3: hotel → T2 walkway → underpass → T3 (20–30 mins)</div><div class="tc-mob">♿ Request porter / wheelchair at T2 desk</div></div>
+
+<div class="tc-step"><div class="tc-dot"></div><div class="tc-dt">4th July — Check-in</div><div class="tc-tt">✈️ Emirates Check-in — Heathrow T3</div><div class="tc-tx">Arrive at Emirates desk by <strong>10:30am</strong><br>Flag tight Dubai connection at check-in<br><strong>Lounge:</strong> No.1 Lounge or Plaza Premium T3 (Priority Pass)</div><div class="tc-mob">♿ Wheelchair at Emirates check-in</div></div>
+
+<div class="tc-step"><div class="tc-dot"></div><div class="tc-dt">4th July — Leg 1</div><div class="tc-tt">Heathrow → Dubai</div>
+<div class="tc-fl"><div class="tc-fl-top"><div class="tc-fl-code">EK0002</div><div class="tc-fl-dur">6h 35m</div></div><div class="tc-fl-route"><div class="tc-fl-ap"><div class="iata">LHR</div><div class="tm">14:25</div><div class="lb">Terminal 3</div></div><div class="tc-fl-line"></div><div class="tc-fl-ap"><div class="iata">DXB</div><div class="tm">00:25</div><div class="lb">Terminal 3</div></div></div><div class="tc-fl-term">Arrives 5th July. Concourse C.</div></div></div>
+
+<div class="tc-step warn"><div class="tc-dot"></div><div class="tc-dt">5th July — Dubai Transit</div><div class="tc-tt">⚡ Dubai Connection — 1h 50m</div><div class="tc-alert">⚠️ TIGHT CONNECTION — Go directly to gate. No lounge, no shopping, no detours.</div><div class="tc-tx" style="margin-top:6px">Follow <strong>"Connections"</strong> signs (NOT Arrivals)<br>Transit security → expedited wheelchair lane<br>Concourse C → <strong>Concourse B</strong> (15–20 min by wheelchair)<br>Bags tagged through. No immigration.</div><div class="tc-mob">♿ Wheelchair at aircraft door → escort to gate</div></div>
+
+<div class="tc-step"><div class="tc-dot"></div><div class="tc-dt">5th July — Leg 2</div><div class="tc-tt">Dubai → Seychelles</div>
+<div class="tc-fl"><div class="tc-fl-top"><div class="tc-fl-code">EK0705</div><div class="tc-fl-dur">4h 35m</div></div><div class="tc-fl-route"><div class="tc-fl-ap"><div class="iata">DXB</div><div class="tm">02:15</div><div class="lb">Terminal 3</div></div><div class="tc-fl-line"></div><div class="tc-fl-ap"><div class="iata">SEZ</div><div class="tm">06:50</div><div class="lb">Terminal I</div></div></div></div></div>
+
+<div class="tc-step ok"><div class="tc-dot"></div><div class="tc-dt">5th July — Arrival</div><div class="tc-tt">🌴 Arrive Seychelles!</div><div class="tc-info">✅ Mason's Travel meet & greet at arrivals — look for branded rep with sign board</div><div class="tc-tx" style="margin-top:6px"><strong>Private car transfer</strong> to hotel (~30 mins)<br><strong>DoubleTree by Hilton Allamanda</strong>, Anse Forbans<br>King Deluxe Ocean View Room — <strong>All Inclusive</strong><br>Check-in 3pm — request early check-in on arrival</div><div class="tc-mob">♿ Request wheelchair at SEZ arrival</div></div>
+
+</div>
+<div class="tc-foot"><div><strong>Mason's Travel</strong><span class="v">+248 4 28 88 88</span></div><div><strong>After Hours</strong><span class="v">+248 2 52 46 65</span></div><div><strong>Emirates 24hr</strong><span class="v">+44 344 800 2777</span></div><div><strong>Hotel Check-in</strong><span class="v">3:00pm (5th July)</span></div></div>
+</div>`;
+}
+
+function buildReturnCard(){
+  return `<div class="tc" id="tcRet">
+<div class="tc-hdr ret"><div class="tc-emo">🏠</div><h2>Return Journey</h2><div class="tc-sub">Seychelles → Dubai → London → Swansea</div></div>
+<div class="tc-refs"><span>Booking <b>BND/22617795</b></span><span>Flight <b>NQQYQ6</b></span><span>Baggage <b>2 × 23kg each</b></span></div>
+<div class="tc-body">
+
+<div class="tc-step ret"><div class="tc-dot"></div><div class="tc-dt">Sunday 13th July — Day Before</div><div class="tc-tt">📞 Confirm Transfer</div><div class="tc-tx">Call Mason's Travel to confirm pickup time<br><strong>Office:</strong> +248 4 28 88 88<br><strong>Email:</strong> CustomerService@masonstravel.com</div><div class="tc-alert">⚠️ Must confirm pickup 24hrs before departure or they won't collect you</div></div>
+
+<div class="tc-div"></div>
+
+<div class="tc-step ret"><div class="tc-dot"></div><div class="tc-dt">Monday 14th July</div><div class="tc-tt">🏨 Hotel Checkout</div><div class="tc-tx">Checkout <strong>12:00pm</strong><br>Day at leisure — pool, beach, spa<br>Hotel stores luggage after checkout<br>Pay <strong>Tourism Levy</strong> at checkout (SCR 100/person/night)</div></div>
+
+<div class="tc-step ret"><div class="tc-dot"></div><div class="tc-dt">14th July — Evening</div><div class="tc-tt">🚗 Transfer to Airport</div><div class="tc-tx">Mason's Travel <strong>private car</strong> pickup<br>Depart hotel by <strong>9:30pm</strong> latest<br>~30 min drive to SEZ airport</div><div class="tc-mob">♿ Wheelchair at SEZ check-in</div></div>
+
+<div class="tc-step ret"><div class="tc-dot"></div><div class="tc-dt">14th July — Leg 1</div><div class="tc-tt">Seychelles → Dubai</div>
+<div class="tc-fl"><div class="tc-fl-top"><div class="tc-fl-code">EK0708</div><div class="tc-fl-dur">6h 30m</div></div><div class="tc-fl-route"><div class="tc-fl-ap"><div class="iata">SEZ</div><div class="tm">23:50</div><div class="lb">Terminal I</div></div><div class="tc-fl-line"></div><div class="tc-fl-ap"><div class="iata">DXB</div><div class="tm">04:20</div><div class="lb">Terminal 3</div></div></div><div class="tc-fl-term">Arrives 15th July. Concourse B.</div></div></div>
+
+<div class="tc-step ret"><div class="tc-dot"></div><div class="tc-dt">15th July — Dubai Transit</div><div class="tc-tt">☕ Dubai Connection — 3h 25m</div><div class="tc-info">✅ Comfortable layover — time for a lounge visit and breakfast</div><div class="tc-tx" style="margin-top:6px">Follow <strong>"Connections"</strong> signs (NOT Arrivals)<br>Transit security → expedited wheelchair lane<br><strong>Lounge:</strong> Check Priority Pass app for T3 lounges open at 4:30am<br>Concourse B → <strong>Concourse C</strong> (15–20 min by wheelchair)<br>Be at gate by <strong>7:00am</strong><br>Bags tagged through. No immigration.</div><div class="tc-mob">♿ Wheelchair at aircraft door → escort to lounge → gate</div></div>
+
+<div class="tc-step ret"><div class="tc-dot"></div><div class="tc-dt">15th July — Leg 2</div><div class="tc-tt">Dubai → London Heathrow</div>
+<div class="tc-fl"><div class="tc-fl-top"><div class="tc-fl-code">EK0001</div><div class="tc-fl-dur">7h 40m</div></div><div class="tc-fl-route"><div class="tc-fl-ap"><div class="iata">DXB</div><div class="tm">07:45</div><div class="lb">Terminal 3</div></div><div class="tc-fl-line"></div><div class="tc-fl-ap"><div class="iata">LHR</div><div class="tm">12:25</div><div class="lb">Terminal 3</div></div></div></div></div>
+
+<div class="tc-step ret ok"><div class="tc-dot"></div><div class="tc-dt">15th July — Afternoon</div><div class="tc-tt">🏠 Home to Swansea</div><div class="tc-tx">Immigration, baggage claim, then to train station<br>Earliest realistic train <strong>~2:30pm</strong><br>Arrive Swansea late afternoon</div><div class="tc-mob">♿ Request wheelchair at Heathrow arrival</div></div>
+
+</div>
+<div class="tc-foot"><div><strong>Mason's Travel</strong><span class="v">+248 4 28 88 88</span></div><div><strong>After Hours</strong><span class="v">+248 2 52 46 65</span></div><div><strong>Emirates 24hr</strong><span class="v">+44 344 800 2777</span></div><div><strong>UK FCDO Abroad</strong><span class="v">+44 207 008 5000</span></div></div>
+</div>`;
+}
+
+// Inject hidden cards
+const tcWrap=document.createElement('div');
+tcWrap.className='tc-wrap';
+tcWrap.innerHTML=buildOutboundCard()+buildReturnCard();
+document.body.appendChild(tcWrap);
+
+async function downloadCard(id,filename,spinId){
+  const spin=document.getElementById(spinId);
+  if(spin)spin.style.display='block';
+  try{
+    const el=document.getElementById(id);
+    const canvas=await html2canvas(el,{scale:2,backgroundColor:'#0a1628',useCORS:true,logging:false});
+    const link=document.createElement('a');
+    link.download=filename;
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+  }catch(e){alert('Could not generate image. Try again.')}
+  if(spin)spin.style.display='none';
+}
+
+document.addEventListener('click',e=>{
+  if(e.target.closest('#dlOutbound'))downloadCard('tcOut','Seychelles-Outbound.png','dlSpinOut');
+  if(e.target.closest('#dlReturn'))downloadCard('tcRet','Seychelles-Return.png','dlSpinRet');
+});
 </script>
 </body>
 </html>
