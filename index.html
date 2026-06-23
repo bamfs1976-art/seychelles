@@ -677,6 +677,22 @@ function renderJourney(){
 <div class="dl-spinner" id="dlSpinRet"></div>
 </button>
 </div>`;
+  // Flight tickets & check-in
+  h+=`<h2 style="margin-top:1rem">🎫 Flight Tickets &amp; Check-in</h2>
+<div class="card" style="border-left:3px solid var(--ocean)">
+<p style="font-size:.85rem;margin-bottom:.4rem"><strong>Booking ref:</strong> NQQYQ6 · <strong>Package:</strong> BND/22617795</p>
+<h4 style="font-size:.85rem;margin:.4rem 0 .25rem">E-ticket &amp; Skywards numbers</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.8">
+<li><strong>Anthony Bamford</strong> — Ticket 176&nbsp;2211106844 · Skywards EK1014847481 (Blue)</li>
+<li><strong>Lesley Bamford</strong> — Ticket 176&nbsp;2211106843 · Skywards EK1016207113 (Blue)</li></ul>
+<h4 style="font-size:.85rem;margin:.5rem 0 .25rem">Recommended check-in times</h4>
+<ul style="font-size:.82rem;padding-left:1.2rem;line-height:1.8">
+<li><strong>EK0002 (LHR, 4 Jul):</strong> check-in from <strong>10:25</strong> for 14:25 departure</li>
+<li><strong>EK0705 (DXB, 5 Jul):</strong> transit — bags tagged through, go to the gate</li>
+<li><strong>EK0706 (SEZ, 14 Jul):</strong> check-in from <strong>04:25</strong> for 08:25 departure</li>
+<li><strong>EK0005 (DXB, 14 Jul):</strong> transit — bags tagged through, go to the gate</li></ul>
+<div class="card-tip" style="margin-top:.5rem">Check in online (opens ~48h before). At the airport, arrive <strong>3 hours</strong> before departure (up to 4 with mobility assistance). Be through passport control <strong>90 min</strong> before take-off and at the gate <strong>60 min</strong> before (Premium Economy / Economy). Baggage: 2 × 23kg checked + 1 × 10kg cabin each.</div>
+</div>`;
   h+='<h2>Pre-Trip Checklist</h2>';
   h+='<div class="mob-banner">Ensure Emirates mobility assistance is pre-booked for all four flights before departure.</div>';
   h+='<div class="card">'+makeChk(PRETRIP,'pretrip')+'</div>';
@@ -1027,7 +1043,8 @@ async function renderInfo(){
 <p style="font-size:.85rem;margin-bottom:.3rem"><strong>Booking:</strong> BND/22617795 · <strong>Flight:</strong> NQQYQ6 · <strong>Package:</strong> £8,890.65</p>
 <p style="font-size:.85rem;margin-bottom:.3rem"><strong>Transfers:</strong> Mason's Travel private car (both ways). Office: +248 4 28 88 88 · After hours: +248 2 52 46 65</p>
 <p style="font-size:.85rem;margin-bottom:.3rem;color:var(--coral)"><strong>Tourism Levy:</strong> SCR 100/person/night — pay at check-in (≈£30 total)</p>
-<p style="font-size:.85rem">📍 Anse Forbans, Mahé, Seychelles</p>
+<p style="font-size:.85rem;margin-bottom:.3rem"><strong>Hotel phone:</strong> +248 4 388 800</p>
+<p style="font-size:.85rem">📍 Anse Forbans, South Coast Road, Mahé, Seychelles</p>
 <div style="margin-top:.5rem">
 <label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Pool hours: <input class="efield" data-save="hotel.pool" placeholder="Fill on arrival"></label>
 <label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Spa phone: <input class="efield" data-save="hotel.spa" placeholder="Fill on arrival"></label>
@@ -1059,9 +1076,11 @@ async function renderInfo(){
 <div class="card" style="border-left:3px solid var(--coral)">
 <p style="font-size:.88rem"><strong>🚔 Seychelles Police:</strong> 999</p>
 <p style="font-size:.88rem"><strong>🏥 Seychelles Hospital Victoria:</strong> +248 438 8000</p>
+<p style="font-size:.88rem"><strong>🏨 DoubleTree Allamanda:</strong> +248 4 388 800</p>
 <p style="font-size:.88rem"><strong>✈️ Emirates 24hr:</strong> +44 344 800 2777</p>
-<p style="font-size:.88rem"><strong>🚗 Mason's Travel (transfers):</strong> +248 4 28 88 88</p>
-<p style="font-size:.88rem"><strong>🚗 Mason's Travel (after hours):</strong> +248 2 52 46 65</p>
+<p style="font-size:.88rem"><strong>🧳 Emirates Holidays:</strong> +971 4303 4655 · WhatsApp +971 4303 4664</p>
+<p style="font-size:.88rem"><strong>🚗 Mason's Travel (transfers):</strong> +248 4 28 88 88 · CustomerService@masonstravel.com</p>
+<p style="font-size:.88rem"><strong>🚗 Mason's Travel (after hours):</strong> +248 2 52 46 65 · DutyMgrMahe@masonstravel.com</p>
 <p style="font-size:.88rem"><strong>🇬🇧 UK FCDO Abroad:</strong> +44 207 008 5000</p>
 <label style="font-size:.82rem;font-weight:600;display:block;margin-top:.5rem">DoubleTree hotel: <input class="efield" data-save="emergency.hotel" placeholder="Fill on arrival"></label>
 <label style="font-size:.82rem;font-weight:600;display:block;margin-top:.3rem">Travel insurance emergency: <input class="efield" data-save="emergency.insurance" placeholder="Policy emergency number"></label>
