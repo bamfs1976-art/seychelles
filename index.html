@@ -676,6 +676,11 @@ function renderJourney(){
 <div><div>Return — Seychelles to Home</div><div class="dl-sub">14th July · All flights, times & contacts</div></div>
 <div class="dl-spinner" id="dlSpinRet"></div>
 </button>
+<button class="dl-btn" id="dlPacking" aria-label="Download packing checklist">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+<div><div>Packing Checklist</div><div class="dl-sub">Anthony & Lesley · documents, meds, clothes & more</div></div>
+<div class="dl-spinner" id="dlSpinPack"></div>
+</button>
 </div>`;
   // Flight tickets & check-in
   h+=`<h2 style="margin-top:1rem">🎫 Flight Tickets &amp; Check-in</h2>
@@ -1192,10 +1197,28 @@ function buildReturnCard(){
 </div>`;
 }
 
+function buildPackingCard(){
+  const sec=(emo,title,items)=>`<div class="tc-step"><div class="tc-dot"></div><div class="tc-tt">${emo} ${title}</div><div class="tc-tx">${items.map(i=>'☐ '+i).join('<br>')}</div></div>`;
+  return `<div class="tc" id="tcPack">
+<div class="tc-hdr out"><div class="tc-emo">🧳</div><h2>Packing Checklist</h2><div class="tc-sub">Anthony &amp; Lesley · Seychelles · 3–14 July 2026</div></div>
+<div class="tc-refs"><span>Checked <b>2 × 23kg each</b></span><span>Cabin <b>10kg each</b></span><span>Liquids <b>100ml in clear bag</b></span></div>
+<div class="tc-body">
+${sec('🛂','Documents &amp; Money — hand luggage',['Passports (valid 6+ months)','Travel Authorisations — printed (both)','Emirates boarding passes / e-tickets','Travel insurance documents','Hotel &amp; transfer vouchers','Driving licence / photo ID','Credit &amp; debit cards (banks notified)','Cash — GBP, Euros &amp; some SCR','Priority Pass card','GHIC card &amp; emergency contacts'])}
+${sec('💊','Health &amp; Medication — hand luggage',['Prescription meds + 3-day buffer (original boxes)','Copy of prescriptions / GP letter','Painkillers, antihistamines, anti-diarrhoea','Motion-sickness &amp; rehydration sachets','Plasters, blister plasters, antiseptic','Reef-safe sun cream SPF 50+','After-sun / aloe vera','Insect repellent','Lesley: foot-care kit &amp; mobility aid'])}
+${sec('👕','Clothes — Anthony',['Light shirts / T-shirts (9 days)','Shorts &amp; light trousers','Smart-casual outfit for dinners','Swim shorts × 2','Underwear &amp; socks','Light jumper/fleece (flight &amp; A/C)','Sun hat / cap &amp; sunglasses','Sandals + comfy walking shoes','Sleepwear'])}
+${sec('👗','Clothes — Lesley',['Sundresses / light tops (9 days)','Skirts / shorts / light trousers','Smart-casual evening outfits','Swimsuits × 2 + cover-up / sarong','Underwear &amp; socks','Light cardigan / wrap (A/C &amp; breeze)','Wide-brim sun hat &amp; sunglasses','Supportive comfortable sandals/shoes','Sleepwear'])}
+${sec('🏖️','Beach &amp; Day Bag',['Reusable water bottles','Waterproof phone pouch / dry bag','Snorkel &amp; goggles (optional)','Kindle / book','Small backpack for day trips','Beach flip-flops'])}
+${sec('🔌','Tech',['Phones + chargers','Power bank (in cabin bag)','Camera','Headphones (overnight flight)','Travel pillow &amp; eye mask','Offline Google Maps downloaded','No travel adapter needed — Seychelles &amp; Dubai use UK 3-pin plugs'])}
+${sec('🧴','Toiletries (100ml in clear bag for cabin)',['Toothbrush, toothpaste, deodorant','Razor, hairbrush, hair ties','Glasses / contact lenses + spares','Lip balm with SPF','Hand sanitiser &amp; wet wipes'])}
+</div>
+<div class="tc-foot"><div><strong>Weigh bags before you go</strong><span class="v">2 × 23kg + 10kg cabin each</span></div><div><strong>In hand luggage</strong><span class="v">Meds, docs, valuables, 1 change</span></div></div>
+</div>`;
+}
+
 // Inject hidden cards
 const tcWrap=document.createElement('div');
 tcWrap.className='tc-wrap';
-tcWrap.innerHTML=buildOutboundCard()+buildReturnCard();
+tcWrap.innerHTML=buildOutboundCard()+buildReturnCard()+buildPackingCard();
 document.body.appendChild(tcWrap);
 
 async function downloadCard(id,filename,spinId){
@@ -1215,6 +1238,7 @@ async function downloadCard(id,filename,spinId){
 document.addEventListener('click',e=>{
   if(e.target.closest('#dlOutbound'))downloadCard('tcOut','Seychelles-Outbound.png','dlSpinOut');
   if(e.target.closest('#dlReturn'))downloadCard('tcRet','Seychelles-Return.png','dlSpinRet');
+  if(e.target.closest('#dlPacking'))downloadCard('tcPack','Seychelles-Packing-Checklist.png','dlSpinPack');
 });
 </script>
 </body>
