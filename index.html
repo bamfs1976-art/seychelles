@@ -1228,17 +1228,41 @@ tcWrap.className='tc-wrap';
 tcWrap.innerHTML=buildOutboundCard()+buildReturnCard()+buildPackingCard(PACK_A)+buildPackingCard(PACK_L);
 document.body.appendChild(tcWrap);
 
+function ensureHtml2Canvas(){
+  return new Promise((resolve,reject)=>{
+    if(window.html2canvas)return resolve();
+    let s=document.querySelector('script[data-h2c]');
+    if(!s){
+      s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.setAttribute('data-h2c','1');
+      document.head.appendChild(s);
+    }
+    const t0=Date.now();
+    const iv=setInterval(()=>{
+      if(window.html2canvas){clearInterval(iv);resolve();}
+      else if(Date.now()-t0>10000){clearInterval(iv);reject(new Error('timeout'));}
+    },100);
+  });
+}
 async function downloadCard(id,filename,spinId){
   const spin=document.getElementById(spinId);
   if(spin)spin.style.display='block';
   try{
+    await ensureHtml2Canvas();
     const el=document.getElementById(id);
     const canvas=await html2canvas(el,{scale:2,backgroundColor:'#0a1628',useCORS:true,logging:false});
-    const link=document.createElement('a');
-    link.download=filename;
-    link.href=canvas.toDataURL('image/png');
-    link.click();
-  }catch(e){alert('Could not generate image. Try again.')}
+    const url=canvas.toDataURL('image/png');
+    // Try a direct download for desktop browsers
+    try{const link=document.createElement('a');link.download=filename;link.href=url;document.body.appendChild(link);link.click();link.remove();}catch(_){}
+    // Show a preview so it can be saved on any device (long-press on mobile)
+    const html=`<p style="font-size:.85rem;margin-bottom:.7rem;line-height:1.6"><strong>On iPhone/iPad:</strong> press and hold the image below, then tap <strong>“Add to Photos”</strong> or <strong>“Save Image”</strong>.<br><strong>On a computer:</strong> tap Download, or right-click the image → Save.</p>
+<a class="dl-btn" href="${url}" download="${filename}" style="text-decoration:none;margin-bottom:.9rem"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div>Download image</div></a>
+<img src="${url}" alt="Travel card" style="width:100%;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.25)">`;
+    openDetail('Save Your Card',html);
+  }catch(e){
+    openDetail('Save Your Card','<p style="font-size:.9rem;line-height:1.6">Sorry — the image couldn’t be generated. Please check your internet connection and try again.</p>');
+  }
   if(spin)spin.style.display='none';
 }
 
